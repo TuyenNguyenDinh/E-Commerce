@@ -21,9 +21,11 @@
                                     <tr class="bg-primary">
                                         <th>ID</th>
                                         <th>Danh mục</th>
+                                        <th>Thương hiệu</th>
                                         <th>Tên sản phẩm</th>
                                         <th>Ảnh sản phẩm</th>
                                         <th width='11%'>Giá sản phẩm</th>
+                                        <th>Giá cũ</th>
                                         <th>Số lượng</th>
                                         <th>Thông tin chi tiết</th>
                                         <th>Tùy chọn</th>
@@ -34,11 +36,13 @@
                                     <tr style="text-align: center;">
                                         <td>{{ $product->id}}</td>
                                         <td>{{ $product->categories->name}}</td>
-                                        <td>{{ $product->ten}}</td>
-                                        <td><img src="../upload/{{ $product->anh }}" width="120" height="120" /></td>
-                                        <td>{{number_format($product->gia_sp,0,',','.')}} đ</td>
-                                        <td>{{ $product->so_luong}}</td>
-                                        <td class="label_title"> <?php echo $product->thong_tin_cu_the ?></td>
+                                        <td>{{ $product->brands->name}}</td>
+                                        <td>{{ $product->name_product}}</td>
+                                        <td><img src="../upload/{{ $product->image1 }}" width="120" height="120" /></td>
+                                        <td>{{number_format($product->price,0,',','.')}} đ</td>
+                                        <td>{{number_format($product->old_price,0,',','.')}} đ</td>
+                                        <td>{{ $product->quantity}}</td>
+                                        <td class="label_title"> <?php echo $product->description ?></td>
                                         <td>
                                             <div class="row action-button" style="padding-left: 10px; padding-right:10px">
                                                 <!-- edit button -->

@@ -11,7 +11,6 @@
 
     <div class="row">
         <div class="col-xs-12 col-md-12 col-lg-12">
-
             <div class="panel panel-primary">
                 <div class="panel-heading">Thêm danh mục</div>
                 <div class="panel-body">

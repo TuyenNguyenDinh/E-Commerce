@@ -59,9 +59,9 @@
                     </div>
                     <div class="col-md-6">
                         <div class="header-search">
-                            <form>
-                                <input class="input" placeholder="Search here">
-                                <button class="search-btn">Search</button>
+                            <form action="{{asset('search/')}}" role="search" method="GET" class="full-width">
+                                <input class="input" placeholder="Search here" name="result" aria-label="Search">
+                                <button type="submit" class="search-btn">Search</button>
                             </form>
                         </div>
                     </div>
@@ -116,6 +116,28 @@
         </div>
 
     </header>
+    <nav id="navigation" class="navbar navbar-expand-lg">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="main-nav navbar-nav nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{('/')}}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    @foreach ($categories as $category)
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{('/category/'.$category->id.'.html')}}">{{$category->name}}</a>
+                    </li>
+                    @endforeach
+                </ul>
+
+            </div>
+
+        </div>
+    </nav>
     @yield('main')
     <footer id="footer">
         <div class="section">
@@ -313,6 +335,42 @@
                     }
                 }]
             });
+            $('.product-img_main').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            fade: true,
+            asNavFor: '.product-img_slide',
+
+        });
+        $('.product-img_slide').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            asNavFor: '.product-img_main',
+            centerMode: true,
+            focusOnSelect: true,
+            prevArrow: $('.slick-prev'),
+            nextArrow: $('.slick-next'),
+            responsive: [{
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                }
+            }, {
+                breakpoint: 800,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                }
+            }, {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }]
+        });
     </script>
     <script>
         window.addEventListener("load", () => {

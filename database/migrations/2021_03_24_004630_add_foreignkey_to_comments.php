@@ -14,7 +14,8 @@ class AddForeignkeyToComments extends Migration
     public function up()
     {
         Schema::table('comments', function (Blueprint $table) {
-            //
+            $table->foreign('id_product')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('id_customer')->references('id')->on('customers')->onDelete('cascade');
         });
     }
 
@@ -26,8 +27,7 @@ class AddForeignkeyToComments extends Migration
     public function down()
     {
         Schema::table('comments', function (Blueprint $table) {
-            $table->foreign('id_product')->references('id')->on('products')->onDelete('cascade');
-            $table->foreign('id_customer')->references('id')->on('customers')->onDelete('cascade');
+            
         });
     }
 }

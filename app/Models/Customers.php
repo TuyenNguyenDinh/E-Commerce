@@ -11,6 +11,10 @@ class Customers extends Model
     protected $dateFormat = 'U';
 
 
+    function comments(){
+    return $this->hasMany('App\Models\Customers','id_customer');
+    }
+
     protected $fillable = [
         'name',
         'phone',

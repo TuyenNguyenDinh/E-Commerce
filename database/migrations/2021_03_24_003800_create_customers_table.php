@@ -22,8 +22,10 @@ class CreateCustomersTable extends Migration
             $table->string('address_ship');
             $table->string('email');
             $table->string('city');
-            $table->string('postalcode');
             $table->string('country');
+            $table->timestamp('email_verified_at')->nullable();
+            $table->rememberToken();
+            $table->timestamps();
         });
     }
 

@@ -185,7 +185,7 @@ ol {
 }
 
 .main-nav>li>a {
-    color: #602D6B;
+    color: #D10024;
 }
 
 nav>li>a:focus,
@@ -604,8 +604,6 @@ nav>li>a:focus,
 
 
 /* hot-deal */
-
-#hot-deal {}
 
 .hot-deal {
     text-align: center;

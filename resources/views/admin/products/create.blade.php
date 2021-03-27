@@ -46,7 +46,7 @@
 								</div>
 								<div class="form-group">
 									<label>Ảnh sản phẩm ()</label>
-									<input type="file" name="image1" required="true" id="task-name" class="form-control">
+									<input type="file" name="image1" required="true" id="task-name" class="form-control" multiple>
 									<input type="file" name="image2" required="true" id="task-name" class="form-control">
 									<input type="file" name="image3" required="true" id="task-name" class="form-control">
 									<input type="file" name="image4" required="true" id="task-name" class="form-control">
@@ -66,11 +66,11 @@
 									@endif
 								</div>
 								<div class="form-group">
-									<label>Số lượng</label>
-									<input type="number" name="quantity" class="form-control">
-									@if ($errors->has('quantity'))
+									<label>Giá cũ</label>
+									<input type="number" name="old_price" class="form-control">
+									@if ($errors->has('old_price'))
 									<span class="help-block">
-										<strong style="color: red;">{{ $errors->first('quantity')}}</strong></br>
+										<strong style="color: red;">{{ $errors->first('old_price')}}</strong></br>
 									</span>
 									@endif
 								</div>
@@ -93,20 +93,38 @@
 									@endif
 								</div>
 								<div class="form-group">
-									<label>Kích thước</label>
-									<input type="text" name="size" class="form-control">
-									@if ($errors->has('size'))
+									<label>Độ dài</label>
+									<input type="text" name="lenght" class="form-control">
+									@if ($errors->has('lenght'))
 									<span class="help-block">
-										<strong style="color: red;">{{ $errors->first('size')}}</strong></br>
+										<strong style="color: red;">{{ $errors->first('lenght')}}</strong></br>
+									</span>
+									@endif
+								</div>
+								<div class="form-group">
+									<label>Độ cao</label>
+									<input type="text" name="height" class="form-control">
+									@if ($errors->has('height'))
+									<span class="help-block">
+										<strong style="color: red;">{{ $errors->first('height')}}</strong></br>
+									</span>
+									@endif
+								</div>
+								<div class="form-group">
+									<label>Độ rộng</label>
+									<input type="text" name="widht" class="form-control">
+									@if ($errors->has('widht'))
+									<span class="help-block">
+										<strong style="color: red;">{{ $errors->first('widht')}}</strong></br>
 									</span>
 									@endif
 								</div>
 								<div class="form-group">
 									<label>Miêu tả</label><br>
-									<textarea name="thong_tin_cu_the" class="ckeditor"></textarea>
-									@if ($errors->has('thong_tin_cu_the'))
+									<textarea name="description" class="ckeditor"></textarea>
+									@if ($errors->has('description'))
 									<span class="help-block">
-										<strong style="color: red;">{{ $errors->first('thong_tin_cu_the')}}</strong></br>
+										<strong style="color: red;">{{ $errors->first('description')}}</strong></br>
 									</span>
 									@endif
 								</div>
