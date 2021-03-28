@@ -73,6 +73,10 @@ ol {
     color: #FFF;
 }
 
+.header-links .dropdown-item {
+    color: black;
+}
+
 
 /* Header-main */
 
@@ -703,7 +707,7 @@ nav>li>a:focus,
     padding: 38px 0;
 }
 
-.logo-slick .slick-slide>img {
+.logo-slick .slick-slide a>img {
     display: block;
     margin-left: auto;
     margin-right: auto;

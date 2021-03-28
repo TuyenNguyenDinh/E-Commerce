@@ -19,7 +19,7 @@
                     </div>
                     <div class="filter-group">
                         <div class="filter-group_head">
-                            <p>Theo danh mục</p>
+                            <p>Theo giá</p>
                         </div>
                         <div class="filter-checkbox">
                             <form action="/action_page.php">
@@ -112,13 +112,13 @@
                                                 </div>
                                             </div>
                                             <div class="product-body">
-                                                <p class="product-category">Category</p>
+                                                <p class="product-category">{{$item->categories->name}}</p>
                                                 <h3 class="product-name">
                                                     <a href="#">{{$item->name_product}}</a>
                                                 </h3>
                                                 <h4 class="product-price">
-                                                    {{$item->price}}
-                                                    <del class="product-old-price">{{$item->old_price}}</del>
+                                                {{number_format($item->price,0,',','.')}} đ
+                                                    <del class="product-old-price">{{number_format($item->price,0,',','.')}} đ</del>
                                                 </h4>
                                                 <div class="product-rating">
                                                 @for ($i = 1; $i <= $item->like; $i++)

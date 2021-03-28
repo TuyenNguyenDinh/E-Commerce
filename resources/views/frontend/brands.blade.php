@@ -1,39 +1,21 @@
 @extends('layouts.master')
-@section('title','Categories')
+@section('title','Brands')
 @section('main')
-
 <div class="section">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="section-title">
-                    <h3 class="title">{{$cate_name->name}}</h3>
-                    <div class="section-nav">
-                        <div class="section-tab-nav tab-nav">
-                            <ul class="nav" id="myTab" role="tablist">
-                                <li class="nav-product">
-                                    <a class=" active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
-                                </li>
-                                <li class="nav-product">
-                                    <a id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
-                                </li>
-                                <li class="nav-product">
-                                    <a id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    <h3 class="title">{{$brands->name}}</h3>
                 </div>
-
             </div>
             <div class="col-md-12">
                 <div class="container">
                     <div class="products-tabs">
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane face show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                <div class="products- ">
+                                <div class="products">
                                     <div class="row">
-                                    @foreach($products as $product)
+                                    @foreach($products_brand as $product)
                                         <div class="product col-lg-3 col-md-6 col-sm-6">
                                             <div class="product-img">
                                                 <img src="{{asset('upload/'. $product->image1)}}" alt="">
@@ -48,7 +30,7 @@
                                                 </h3>
                                                 <h4 class="product-price">
                                                 {{number_format($product->price,0,',','.')}} đ
-                                                    <del class="product-old-price">{{number_format($product->old_price,0,',','.')}} đ</del>
+                                                    <del class="product-old-price">{{$product->old_price}} đ</del>
                                                 </h4>
                                                 <div class="product-rating">
                                                 @for($i = 1; $i <= $product->like; $i++)
@@ -78,11 +60,7 @@
                                     @endforeach
                                     </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                ...</div>
-                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                ...</div>
+                          
                         </div>
 
                     </div>

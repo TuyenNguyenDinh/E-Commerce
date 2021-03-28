@@ -69,7 +69,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="col-md-12">
                 <div class="container">
@@ -91,8 +90,8 @@
                                                 <a href="#">{{$product->name_product}}</a>
                                             </h3>
                                             <h4 class="product-price">
-                                                ${{$product->price}}
-                                                <del class="product-old-price">$999</del>
+                                                {{number_format($product->price,0,',','.')}} đ
+                                                <del class="product-old-price">{{number_format($product->old_price,0,',','.')}} đ</del>
                                             </h4>
                                             <div class="product-rating">
                                                 @for($i = 0; $i <= $product->like; $i++)
@@ -524,7 +523,8 @@
         <div class="logo-slick">
             @foreach($brands_image as $brand)
             <div>
-                <img src="{{asset('upload/'.  $brand->image)}}" alt="">
+                <a href="{{asset('brands/'.$brand->id.'.html')}}">
+                <img src="{{asset('upload/'.  $brand->image)}}" alt=""></a>
             </div>
             @endforeach
         </div>
