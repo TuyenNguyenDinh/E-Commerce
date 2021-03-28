@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSkuTable extends Migration
+class AddOldpriceToProducts extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateSkuTable extends Migration
      */
     public function up()
     {
-        Schema::create('sku', function (Blueprint $table) {
-            $table->bigIncrements('id')->unsigned();
-            $table->unsignedBigInteger('id_product');
-            $table->string('SKU_code');
-            $table->timestamps();
+        Schema::table('products', function (Blueprint $table) {
+            $table->double('old_price')->default(0);
         });
     }
 
@@ -28,6 +25,8 @@ class CreateSkuTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sku');
+        Schema::table('products', function (Blueprint $table) {
+            //
+        });
     }
 }

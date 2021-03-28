@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
 </head>
 
 <body>
@@ -34,16 +36,75 @@
                     </li>
                 </ul>
                 <ul class="header-links float-right">
+                @if (Auth::guard('customer')->check())
+               
                     <li>
-                        <a href="#">
-                            <i class="fas fa-dollar-sign"></i> USD
+                        <a href="#" id="dropdownAccount" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="far fa-user"></i>
+                            {{Auth::guard('customer')->user()->name}}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownAccount">
+    <a class="dropdown-item" href="#"> <i class="far fa-user"></i>My Account</a>
+    <a class="dropdown-item" href="#"><i class="fas fa-file-invoice"></i>My order</a>
+  </div>
+                    </li>
+                    <li>
+                        <a href="{{route('logout')}}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" style="color: white;">
+                            <i class="far fa-user"></i>
+                            {{ __('Logout') }}
+                        </a>
+                    </li>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                @else
+                <li>
+                        <a href="#" data-toggle="modal" data-target="#loginModal">
+                            <i class="far fa-user"></i>
+                            Login
                         </a>
                     </li>
                     <li>
-                        <a href="#">
-                            <i class="far fa-user"></i> Login
+                        <a href="{{asset('/registercustomer')}}">
+                            <i class="far fa-user"></i>
+                            Register    
                         </a>
                     </li>
+                @endif
+                    
+                    <!-- login with modal -->
+                    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header border-bottom-0">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-title text-center">
+                                        <h4>Login</h4>
+                                    </div>
+                                    <div class="d-flex flex-column text-center">
+                                        <form method="POST">
+                                            <div class="form-group">
+                                                <input type="email" name="email" class="form-control" id="email" placeholder="Your email address...">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="password" name="password" class="form-control" id="password" placeholder="Your password...">
+                                            </div>
+                                            <button type="submit" class="btn btn-info btn-block btn-round">Login</button>
+                                            {{ csrf_field() }}
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="modal-footer d-flex justify-content-center">
+                                    <div class="signup-section">Not a member yet? <a href="{{asset('/registercustomer')}}" class="text-info"> Sign Up</a>.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end login -->
                 </ul>
             </div>
         </div>
@@ -59,9 +120,9 @@
                     </div>
                     <div class="col-md-6">
                         <div class="header-search">
-                            <form>
-                                <input class="input" placeholder="Search here">
-                                <button class="search-btn">Search</button>
+                            <form action="{{asset('search/')}}" role="search" method="GET" class="full-width">
+                                <input class="input" placeholder="Search here" name="result" aria-label="Search">
+                                <button type="submit" class="search-btn">Search</button>
                             </form>
                         </div>
                     </div>
@@ -116,6 +177,28 @@
         </div>
 
     </header>
+    <nav id="navigation" class="navbar navbar-expand-lg">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="main-nav navbar-nav nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{('/')}}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    @foreach ($categories as $category)
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{('/category/'.$category->id.'.html')}}">{{$category->name}}</a>
+                    </li>
+                    @endforeach
+                </ul>
+
+            </div>
+
+        </div>
+    </nav>
     @yield('main')
     <footer id="footer">
         <div class="section">
@@ -241,9 +324,10 @@
                         </ul>
                         <span class="copyright">
                             Copyright@
-                            <script type="text/javascript" async
-                                src="https://www.google-analytics.com/analytics.js"></script>
-                            <script>document.write(new Date().getFullYear());</script>
+                            <script type="text/javascript" async src="https://www.google-analytics.com/analytics.js"></script>
+                            <script>
+                                document.write(new Date().getFullYear());
+                            </script>
                             All rights reserved | This template is made with
                             <i class="far fa-heart"></i>
                             by
@@ -313,6 +397,42 @@
                     }
                 }]
             });
+        $('.product-img_main').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            fade: true,
+            asNavFor: '.product-img_slide',
+
+        });
+        $('.product-img_slide').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            asNavFor: '.product-img_main',
+            centerMode: true,
+            focusOnSelect: true,
+            prevArrow: $('.slick-prev'),
+            nextArrow: $('.slick-next'),
+            responsive: [{
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                }
+            }, {
+                breakpoint: 800,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                }
+            }, {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }]
+        });
     </script>
     <script>
         window.addEventListener("load", () => {

@@ -32,7 +32,7 @@
                                     <tr style="text-align: center;">
                                         <td>{{$category->id}}</td>
                                         <td>{{$category->name}}</td>
-                                        <td>{{$category->image}}</td>
+                                        <td><img src="{{asset('/upload/'. $category->image)}}" alt="" width="120px" height="120px"></td>
                                             <td>{{$category->description}}</td>
                                         <td>
                                             <div class="row action-button" style="padding-left: 10px;">

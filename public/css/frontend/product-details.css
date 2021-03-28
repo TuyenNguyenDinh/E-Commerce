@@ -64,11 +64,20 @@ ul.breadcrumb li a:hover {
 }
 
 .product_benefits_content ul {
-    list-style: disc;
+    list-style: none;
+    font-size: 19px;
 }
 
 .product_benefits_content {
     padding: 20px
+}
+
+.product_benefits_content li {
+    padding: 5px;
+}
+
+.product_benefits_content i {
+    color: #D10024;
 }
 
 .star_rating {

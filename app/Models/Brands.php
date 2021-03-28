@@ -10,6 +10,10 @@ class Brands extends Model
     public $timestamps = false;
     protected $dateFormat = 'U';
 
+    function products(){
+        return $this->hasMany('App\Models\Products', 'id_brand');
+    }
+
     protected $fillable = [
         'name',
         'image'

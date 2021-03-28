@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 //Frontend
 Route::get('/','FrontendController@getHome');
+Route::get('/category/{id}.html', 'FrontendController@getCategory');
+Route::get('/brands/{id}.html','FrontendController@getBrand');
+Route::get('details/{id}.html', 'FrontendController@getDetail');
+Route::get('search','FrontendController@getSearch');
 
 //Backend
 Route::group(['namespace' => 'Admin'], function () {
@@ -23,8 +28,18 @@ Route::group(['namespace' => 'Admin'], function () {
             return view('admin.index');
         })->name('index');
         Route::resource('categories', 'CategoryController');
+        Route::resource('brands','BrandController');
         Route::resource('products', 'ProductController');
         Route::resource('users', 'UserController');
         Route::resource('customers', 'CustomerController');
     });
 });
+
+//Authentication customer
+Route::post('/', 'FrontendController@postLogin');
+// Route::get('/logincustomer','CustomerController@getLogin');
+Route::get('/registercustomer','CustomerController@getRegister');
+Route::post('/registercustomer', 'CustomerController@register');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

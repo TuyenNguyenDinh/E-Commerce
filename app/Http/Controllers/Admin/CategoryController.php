@@ -18,7 +18,6 @@ class CategoryController extends Controller
         $categories = Categories::all();
         return view('admin.categories.index', array('categories' => $categories));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -37,13 +36,36 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-
+        $fileName = $this->doUpload($request);
+        $data = array_merge($request->all(), ["image" => $fileName]);
         $result = Categories::create($data);
         if ($result) {
             return redirect()->route('categories.index');
         }
         return redirect()->route('categories.create');
+    }
+
+
+    private function doUpload(Request $request)
+    {
+        $fileName = "";
+        //Kiểm tra file
+        if ($request->file('image')->isValid()) {
+			// File này có thực, bắt đầu đổi tên và move
+			$fileExtension = $request->file('image')->getClientOriginalExtension(); // Lấy . của file
+			
+			// Filename cực shock để khỏi bị trùng
+			$fileName = time() . "_" . rand(0,9999999) . "_" . md5(rand(0,9999999)) . "." . $fileExtension;
+						
+			// Thư mục upload
+			$uploadPath = public_path('/upload'); // Thư mục upload
+			
+			// Bắt đầu chuyển file vào thư mục
+			$request->file('image')->move($uploadPath, $fileName);
+		}
+		else {
+        }
+        return $fileName;
     }
 
     /**
@@ -78,8 +100,9 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $fileName = $this->doUpload($request);
         $categories = Categories::find($id);
-        $data = $request->all();
+        $data = array_merge($request->all(), ["image" => $fileName]);
         $categories->update($data);
         if($categories){
             return redirect()->route('categories.index');

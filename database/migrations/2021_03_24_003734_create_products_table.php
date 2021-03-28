@@ -24,8 +24,10 @@ class CreateProductsTable extends Migration
             $table->string('image4');
             $table->double('price')->default(0);
             $table->integer('quantity')->default(0);
+            $table->double('lenght')->default(0);
             $table->double('weight')->default(0);
-            $table->double('size');
+            $table->double('height')->default(0);
+            $table->double('width')->default(0);
             $table->string('description');
             $table->integer('like')->default(0);
         });

@@ -60,6 +60,7 @@
             <li><a href="{{route('index')}}"><i class="fas fa-home"></i> Trang chủ</a></li>
             <li><a href="{{ route('products.index')}}"><i class="fab fa-product-hunt"></i> Sản phẩm</a></li>
             <li><a href="{{ route('categories.index') }}"><i class="fas fa-list"></i> Danh mục</a></li>
+            <li><a href="{{ route('brands.index')}}"><i class="far fa-copyright"></i>Thương hiệu</a></a></li>
             <li><a href="{{ route('customers.index') }}"><i class="fas fa-user-friends"></i> Khách hàng</a></li>
             <li><a href="{{ route('users.index') }}"><i class="fas fa-user-tie"></i> Nhân viên</a></li>
             <li><a href=""><i class="fas fa-file-invoice-dollar"></i> Hóa đơn</a></li>
