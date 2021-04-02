@@ -1,64 +1,123 @@
-<form method="post">
-  <h1>Register</h1>
-  <input name="name" type="text" placeholder="Name">
-  <input name="email" placeholder="Username" type="email" required="">
-  <input name="password" placeholder="Password" type="password" required="">
-  <button>Submit</button>
-  {{ csrf_field() }}
-</form>
-<style type="text/css">
-	form {
-  box-sizing: border-box;
-  width: 260px;
-  margin: 100px auto 0;
-  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
-  padding-bottom: 40px;
-  border-radius: 3px;
-}
-form h1 {
-  box-sizing: border-box;
-  padding: 20px;
-}
- 
-input {
-  margin: 40px 25px;
-  width: 200px;
-  display: block;
-  border: none;
-  padding: 10px 0;
-  border-bottom: solid 1px #1abc9c;
-  transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #1abc9c 4%);
-  background-position: -200px 0;
-  background-size: 200px 100%;
-  background-repeat: no-repeat;
-  color: #0e6252;
-}
-input:focus, input:valid {
-  box-shadow: none;
-  outline: none;
-  background-position: 0 0;
-}
-input:focus::-webkit-input-placeholder, input:valid::-webkit-input-placeholder {
-  color: #1abc9c;
-  font-size: 11px;
-  transform: translateY(-20px);
-  visibility: visible !important;
-}
- 
-button {
-  border: none;
-  background: #1abc9c;
-  cursor: pointer;
-  border-radius: 3px;
-  padding: 6px;
-  width: 200px;
-  color: white;
-  margin-left: 25px;
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
-}
-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.2);
-}
-</style>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row no-gutter">
+      <!-- The image half -->
+      <div class="col-md-6 d-none d-md-flex bg-image"></div>
+
+
+      <!-- The content half -->
+      <div class="col-md-6 bg-light">
+        <div class="login d-flex align-items-center py-5">
+
+          <!-- Demo content-->
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-10 col-xl-7 mx-auto">
+                <h3 class="display-4">Đăng ký</h3>
+                <p class="text-muted mb-4">Register design by Electro</p>
+                <form method="POST">
+                  <div class="form-group mb-3">
+                    <input id="name" name="name" type="text" placeholder="Họ và tên" required="" class="form-control rounded-pill border-0 shadow-sm px-4">
+
+                  </div>
+                  
+                  <div class="form-group mb-3">
+                    <input id="phone" name="phone" type="text" placeholder="Số điện thoại" required="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                  </div>
+                  <div class="form-group mb-3">
+                    <input id="email" name="email" type="email" placeholder="Địa chỉ Email" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                  </div>
+                  <div class="form-group mb-3">
+                    <input id="password" name="password" type="password" placeholder="Password" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                  </div>
+                  <div class="form-group mb-3">
+                    <input id="rePassword" name="rePassword" type="password" placeholder="Password" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                  </div>
+                  <div class="form-group mb-3">
+                    <input id="address" name="address" type="text" placeholder="Address" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                  </div>
+
+                  <div class="form-group mb-3">
+
+                    <select name="province" id="province" class="form-control rounded-pill border-0 shadow-sm px-4">
+                      <option value="0" selected disabled>---Chọn tỉnh---</option>
+                      @foreach($pr as $province)
+                      <option value="{{$province->id}}">{{ucfirst($province->province)}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group mb-3">
+                    <select name="district" id="district" class="form-control rounded-pill border-0 shadow-sm px-4" placeholder="Select Sub Category">
+                      <option value="0" selected disabled>---Chọn Quận(Huyện)---</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Sign in</button>
+                  {{ csrf_field() }}
+                </form>
+              </div>
+            </div>
+          </div><!-- End -->
+
+        </div>
+      </div><!-- End -->
+
+    </div>
+  </div>
+  <script src="http://code.jquery.com/jquery-3.4.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <style type="text/css">
+    /*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+    .login,
+    .image {
+      min-height: 100vh;
+    }
+
+    .bg-image {
+      background-image: url('https://res.cloudinary.com/mhmd/image/upload/v1555917661/art-colorful-contemporary-2047905_dxtao7.jpg');
+      background-size: cover;
+      background-position: center center;
+    }
+  </style>
+  <script>
+    $(document).ready(function() {
+      $('#province').on('change', function() {
+        let id = $(this).val();
+        $('#district').empty();
+        $('#district').append(`<option value="0" disabled selected>Processing...</option>`);
+        $.ajax({
+          type: 'GET',
+          url: 'GetSubCatAgainstMainCatEdit/' + id,
+          success: function(response) {
+            var response = JSON.parse(response);
+            console.log(response);
+            $('#district').empty();
+            response.forEach(element => {
+              $('#district').append(`<option value="${element['id']}">${element['district_name']}</option>`);
+            });
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+
+</html>

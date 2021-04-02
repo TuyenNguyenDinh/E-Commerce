@@ -23,31 +23,41 @@
                                     <label>Tên</label>
                                     <input type="text" name="name" value="{{ $brands->name }}" class="form-control">
                                     @if ($errors->has('name'))
-									<span class="help-block">
-										<strong style="color: red;">{{ $errors->first('name')}}</strong></br>
-									</span>
-									@endif
+                                    <span class="help-block">
+                                        <strong style="color: red;">{{ $errors->first('name')}}</strong></br>
+                                    </span>
+                                    @endif
                                 </div>
                                 <div class="form-group">
                                     <label>Ảnh sản phẩm</label>
-                                    <input type="file" name="image"  id="task-name" class="form-control">
-										@if ($errors->has('image'))
-										<span class="help-block">
-											<strong style="color: red;"> {{ $errors->first('image')}}</strong>
-										</span>
-										@endif
+                                    <input type="file" name="image" id="task-name" class="form-control">
+                                    @if ($errors->has('image'))
+                                    <span class="help-block">
+                                        <strong style="color: red;"> {{ $errors->first('image')}}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label>Miêu tả</label><br>
+                                    <textarea name="description" class="ckeditor"></textarea>
+                                    @if ($errors->has('description'))
+                                    <span class="help-block">
+                                        <strong style="color: red;">{{ $errors->first('description')}}</strong></br>
+                                    </span>
+                                    @endif
                                 </div>
                                 <input type="submit" name="submit" value="Thêm" class="btn btn-primary">
                                 <a href="{{ route('brands.index')}}" class="btn btn-danger">Hủy bỏ</a>
                             </div>
                         </div>
-                        </>
-                        <div class="clearfix"></div>
                 </div>
+                </>
+                <div class="clearfix"></div>
             </div>
         </div>
     </div>
-    <!--/.row-->
+</div>
+<!--/.row-->
 </div>
 <!--/.main-->
 @stop

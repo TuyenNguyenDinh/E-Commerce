@@ -14,12 +14,28 @@ class Customers extends Authenticatable
     protected $table = 'customers';
     protected $guard = 'cus';
     protected $primaryKey = 'id';
-    public $timestamps = false;
     protected $dateFormat = 'U';
 
 
-    function comments(){
-    return $this->hasMany('App\Models\Customers','id_customer');
+    function comments()
+    {
+        return $this->hasMany('App\Models\Customers', 'id_customer');
+    }
+
+    function wishlist(){
+        return $this->hasMany('App\Models\Wishlist','id_customer');
+    }
+
+    function customer_shipping_address(){
+        return $this->hasMany('App\Models\Customer_shipping_address','id_customer');
+    }
+
+    function district(){
+        return $this->belongsTo('App\Models\District', 'id_district');
+    }
+
+    function provinces(){
+        return $this->belongsTo('App\Models\Province', 'id_province');
     }
 
     protected $fillable = [
@@ -27,14 +43,13 @@ class Customers extends Authenticatable
         'phone',
         'password',
         'address',
-        'address_ship',
+        'id_district',
+        'id_province',
         'email',
-        'city',
-        'country'
+        'image_acc',
     ];
 
     protected $hidden = [
         'password', 'remember_token',
     ];
-
 }

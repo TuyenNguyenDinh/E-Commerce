@@ -12,7 +12,10 @@
                             <div class="col-lg-6 right">
                                 <div style="margin-top:20px; margin-bottom:20px">
                                     <a href="{{ route('products.create') }}" class="btn btn-primary">Thêm sản phẩm</a>
+                                    <a href="{{ route('discount.index') }}" class="btn btn-primary">Giảm giá sản phẩm</a>
+
                                 </div>
+                                
                                 <!-- add modal -->
 
                             </div>

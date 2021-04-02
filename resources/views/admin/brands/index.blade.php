@@ -34,21 +34,17 @@
                                         <td>
                                             <div class="row action-button" style="padding-left: 10px;">
                                                 <!-- edit button -->
-                                                
-                                                    <div class="action-edit">
-                                                        <p><a href="{{ route('brands.edit', $brand->id) }}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</a></p>
-                                                    </div>
-                                               
+                                                <div class="action-edit">
+                                                    <p><a href="{{ route('brands.edit', $brand->id) }}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</a></p>
+                                                </div>
                                                 <!-- delete button -->
-                                                
-                                                    <div class="action-delete">
-                                                        <form action="{{ route('brands.destroy', $brand->id) }}" method="post">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <p><input class="btn btn-danger" type="submit" value="Xóa"></p>
-                                                        </form>
-                                                    </div>
-                                                
+                                                <div class="action-delete">
+                                                    <form action="{{ route('brands.destroy', $brand->id) }}" method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <p><input class="btn btn-danger" type="submit" value="Xóa"></p>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>

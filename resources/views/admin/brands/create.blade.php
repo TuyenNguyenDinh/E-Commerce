@@ -36,15 +36,26 @@
                                     </span>
                                     @endif
                                 </div>
+                                <div class="form-group">
+                                    <label>Miêu tả</label><br>
+                                    <textarea name="description" class="ckeditor"></textarea>
+                                    @if ($errors->has('description'))
+                                    <span class="help-block">
+                                        <strong style="color: red;">{{ $errors->first('description')}}</strong></br>
+                                    </span>
+                                    @endif
+                                </div>
                                 <input type="submit" name="submit" value="Thêm" class="btn btn-primary">
                                 <a href="{{ route('categories.index')}}" class="btn btn-danger">Hủy bỏ</a>
                             </div>
+
                         </div>
-                    </form>
-                    <div class="clearfix"></div>
                 </div>
+                </form>
+                <div class="clearfix"></div>
             </div>
         </div>
     </div>
+</div>
 </div>
 @endsection

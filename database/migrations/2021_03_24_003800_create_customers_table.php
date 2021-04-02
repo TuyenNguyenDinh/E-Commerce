@@ -15,14 +15,13 @@ class CreateCustomersTable extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->string('name');
+            $table->string('name',30);
             $table->string('phone');
             $table->string('password');
-            $table->string('address');
-            $table->string('address_ship');
+            $table->string('address',100);
             $table->string('email');
-            $table->string('city');
-            $table->string('country');
+            $table->unsignedBigInteger('id_district');
+            $table->unsignedBigInteger('id_province');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

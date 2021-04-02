@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->bigIncrements('id')->unsigned();
             $table->unsignedBigInteger('id_category');
             $table->unsignedBigInteger('id_brand');
-            $table->string('name_product');
+            $table->string('name_product',100);
             $table->string('image1');
             $table->string('image2');
             $table->string('image3');
@@ -28,7 +28,7 @@ class CreateProductsTable extends Migration
             $table->double('weight')->default(0);
             $table->double('height')->default(0);
             $table->double('width')->default(0);
-            $table->string('description');
+            $table->text('description')->nullable(false);
             $table->integer('like')->default(0);
         });
     }

@@ -100,8 +100,10 @@
                                             </div>
                                             <div class="product-btns">
                                                 <button class="add-to-compare">
-                                                    <i class="fas fa-exchange-alt"></i>
-                                                    <span class="tooltipp"> add to compare</span>
+                                                    <a href="{{asset('wishlist/add/'.$product->id.'.html')}}">
+                                                        <i class="fas fa-exchange-alt"></i>
+                                                        <span class="tooltipp"> add to wishlist</span>
+                                                    </a>
                                                 </button>
                                                 <button class="details">
                                                     <a href="{{asset('details/'.$product->id.'.html')}}" style="color: black;">
@@ -524,7 +526,7 @@
             @foreach($brands_image as $brand)
             <div>
                 <a href="{{asset('brands/'.$brand->id.'.html')}}">
-                <img src="{{asset('upload/'.  $brand->image)}}" alt=""></a>
+                    <img src="{{asset('upload/'.  $brand->image)}}" alt=""></a>
             </div>
             @endforeach
         </div>

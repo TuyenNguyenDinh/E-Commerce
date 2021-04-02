@@ -66,15 +66,6 @@
 									@endif
 								</div>
 								<div class="form-group">
-									<label>Giá cũ</label>
-									<input type="number" name="old_price" class="form-control">
-									@if ($errors->has('old_price'))
-									<span class="help-block">
-										<strong style="color: red;">{{ $errors->first('old_price')}}</strong></br>
-									</span>
-									@endif
-								</div>
-								<div class="form-group">
 									<label>Số lượng</label>
 									<input type="number" name="quantity" class="form-control">
 									@if ($errors->has('quantity'))

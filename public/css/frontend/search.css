@@ -71,6 +71,14 @@
     text-decoration: none;
 }
 
+.rating_stars_collection {
+    cursor: pointer;
+    margin-top: .3125rem;
+    height: 1.5625rem;
+    padding: 0 .75rem;
+    white-space: nowrap;
+}
+
 @media only screen and (max-width: 991px) {
     .filter-group,
     .filter-button_submit {

@@ -18,11 +18,11 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('id_customer');
             $table->date('order_date');
             $table->date('ship_date');
-            $table->string('payment_method');
-            $table->string('delivery_address');
+            $table->string('payment_method',50);
+            $table->string('delivery_address',100);
             $table->double('total_price');
-            $table->string('notes');
-            $table->string('status');
+            $table->text('notes');
+            $table->string('status',50);
         });
     }
 

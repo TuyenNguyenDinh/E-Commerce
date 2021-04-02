@@ -36,17 +36,17 @@
                     </li>
                 </ul>
                 <ul class="header-links float-right">
-                @if (Auth::guard('customer')->check())
-               
+                    @if (Auth::guard('customer')->check())
+
                     <li>
                         <a href="#" id="dropdownAccount" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="far fa-user"></i>
                             {{Auth::guard('customer')->user()->name}}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownAccount">
-    <a class="dropdown-item" href="#"> <i class="far fa-user"></i>My Account</a>
-    <a class="dropdown-item" href="#"><i class="fas fa-file-invoice"></i>My order</a>
-  </div>
+                            <a class="dropdown-item" href="{{asset('user/account/profile')}}"> <i class="far fa-user"></i>My Account</a>
+                            <a class="dropdown-item" href="#"><i class="fas fa-file-invoice"></i>My order</a>
+                        </div>
                     </li>
                     <li>
                         <a href="{{route('logout')}}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" style="color: white;">
@@ -58,8 +58,8 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
-                @else
-                <li>
+                    @else
+                    <li>
                         <a href="#" data-toggle="modal" data-target="#loginModal">
                             <i class="far fa-user"></i>
                             Login
@@ -68,11 +68,11 @@
                     <li>
                         <a href="{{asset('/registercustomer')}}">
                             <i class="far fa-user"></i>
-                            Register    
+                            Register
                         </a>
                     </li>
-                @endif
-                    
+                    @endif
+
                     <!-- login with modal -->
                     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -87,7 +87,7 @@
                                         <h4>Login</h4>
                                     </div>
                                     <div class="d-flex flex-column text-center">
-                                        <form method="POST">
+                                        <form method="post" action={{asset('/')}}>
                                             <div class="form-group">
                                                 <input type="email" name="email" class="form-control" id="email" placeholder="Your email address...">
                                             </div>
@@ -98,15 +98,31 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </div>
-                                </div>
-                                <div class="modal-footer d-flex justify-content-center">
-                                    <div class="signup-section">Not a member yet? <a href="{{asset('/registercustomer')}}" class="text-info"> Sign Up</a>.</div>
+                                    <div class="text-center text-muted delimiter">or use a social network</div>
+                                    <div class="d-flex justify-content-center social-buttons">
+                                        <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip" data-placement="top" title="Twitter">
+                                            <i class="fab fa-twitter"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip" data-placement="top" title="Facebook">
+                                            <i class="fab fa-facebook"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip" data-placement="top" title="Linkedin">
+                                            <i class="fab fa-linkedin"></i>
+                                        </button>
+                                        </di>
+                                    </div>
+                                    <div class="modal-footer d-flex justify-content-center">
+                                        <div class="signup-section">Not a member yet? <a href="{{asset('/registercustomer')}}" class="text-info"> Sign Up</a>.</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- end login -->
-                </ul>
+
+                    </div>
             </div>
+            <!-- end login -->
+            </ul>
+        </div>
         </div>
         <div id="header">
             <div class="container">
@@ -120,8 +136,8 @@
                     </div>
                     <div class="col-md-6">
                         <div class="header-search">
-                            <form action="{{asset('search/')}}" role="search" method="GET" class="full-width">
-                                <input class="input" placeholder="Search here" name="result" aria-label="Search">
+                            <form role="search" method="GET" class="full-width" action="{{asset('/product')}}">
+                                <input class="input" type="search" placeholder="Search here" name="key" aria-label="Search" required>
                                 <button type="submit" class="search-btn">Search</button>
                             </form>
                         </div>
@@ -129,10 +145,14 @@
                     <div class="col-md-3 clearfix">
                         <div class="header-ctn">
                             <div>
-                                <a href="#">
+                                <a href="{{asset('wishlist.html')}}">
                                     <i class="fal fa-heart"></i>
                                     <span>Your Wishlist</span>
-                                    <div class="qty">2</div>
+                                    @if(Auth::guard('customer')->check())
+                                    <div class="qty">{{Auth::guard('customer')->user()->wishlist->count()}}</div>
+                                    @else
+                                    <div class="qty">0</div>
+                                    @endif
                                 </a>
                             </div>
                             <div>
@@ -342,6 +362,7 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script>
         $('.products-slick').slick({
                 slidesToShow: 4,
@@ -451,6 +472,7 @@
             });
         });
     </script>
+    @include('sweetalert::alert')
 </body>
 
 

@@ -6,9 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Wishlist extends Model
 {
-    protected $table = 'whistlist';
+    protected $table = 'wishlist';
     public $timestamps = false;
     protected $dateFormat = 'U';
+
+
+    function products(){
+        return $this->belongsTo('App\Models\Products','id_product');
+    }
 
     protected $fillable = [
         'id_customer',

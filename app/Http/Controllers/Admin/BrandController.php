@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Brands;
 use Illuminate\Http\Request;
+Use Alert;
+use RealRashid\SweetAlert\Facades\Alert as FacadesAlert;
 
 class BrandController extends Controller
 {
@@ -41,6 +43,7 @@ class BrandController extends Controller
         $data = array_merge($request->all(), ["image" => $fileName]);
         $result = Brands::create($data);
         if ($result) {
+            Alert::success('Dusss','dumppp');
             return redirect()->route('brands.index');
         }
         return redirect()->route('brands.create');
@@ -65,6 +68,7 @@ class BrandController extends Controller
 			$request->file('image')->move($uploadPath, $fileName);
 		}
 		else {
+           
         }
         return $fileName;
     }

@@ -57,8 +57,10 @@
                                                 </div>
                                                 <div class="product-btns">
                                                     <button class="add-to-compare">
+                                                    <a href="{{asset('wishlist/add/'.$product->id.'.html')}}">
                                                         <i class="fas fa-exchange-alt"></i>
-                                                        <span class="tooltipp"> add to compare</span>
+                                                        <span class="tooltipp"> add to wishlist</span>
+                                                    </a>
                                                     </button>
                                                     <button class="details">
                                                     <a href="{{asset('details/'.$product->id.'.html')}}" style="color: black;">

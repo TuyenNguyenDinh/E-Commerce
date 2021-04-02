@@ -47,7 +47,8 @@ class ProductController extends Controller
         $fileName2 = $this->doUploadImage2($request);
         $fileName3 = $this->doUploadImage3($request);
         $fileName4 = $this->doUploadImage4($request);
-        $products = Products::create(array_merge($request->all(), ["image1" =>$fileName1], ["image2" => $fileName2], ["image3" => $fileName3], ["image4" => $fileName4]));
+        $old_price = 0;
+        $products = Products::create(array_merge($request->all(), ["old_pice" => $old_price], ["image1" =>$fileName1], ["image2" => $fileName2], ["image3" => $fileName3], ["image4" => $fileName4]));
         if ($products) {
             return redirect()->route('products.index');
         }
