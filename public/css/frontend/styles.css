@@ -447,6 +447,7 @@ nav>li>a:focus,
 .product .product-body .product-name {
     text-transform: uppercase;
     font-size: 14px;
+    height: 48px;
 }
 
 .product .product-body .product-name>a {

@@ -35,21 +35,6 @@ class Products extends Model
     }
 
 
-    function discount()
-    {
-        return $this->hasMany('App\Models\Discount', 'id_product');
-    }
-
-    public function filterResult($query, $request)
-    {
-        return $query->where('name_product', 'like', '%' . $request . '%');
-    }
-
-    public function filterprice_orderby($query, $request)
-    {
-        return $query->orderBy('price',$request);
-    }
-
 
     protected $fillable = [
         'id_category',
@@ -60,6 +45,7 @@ class Products extends Model
         'image3',
         'image4',
         'price',
+        'discount',
         'quantity',
         'lenght',
         'weight',

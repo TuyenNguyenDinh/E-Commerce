@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Categories;
+use App\Models\Province;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

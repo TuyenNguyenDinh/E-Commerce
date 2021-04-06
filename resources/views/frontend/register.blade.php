@@ -29,28 +29,54 @@
                 <p class="text-muted mb-4">Register design by Electro</p>
                 <form method="POST">
                   <div class="form-group mb-3">
-                    <input id="name" name="name" type="text" placeholder="Họ và tên" required="" class="form-control rounded-pill border-0 shadow-sm px-4">
-
-                  </div>
-                  
-                  <div class="form-group mb-3">
-                    <input id="phone" name="phone" type="text" placeholder="Số điện thoại" required="" class="form-control rounded-pill border-0 shadow-sm px-4">
-                  </div>
-                  <div class="form-group mb-3">
-                    <input id="email" name="email" type="email" placeholder="Địa chỉ Email" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                    <input id="name" name="name" type="text" placeholder="Họ và tên" required="" class="form-control @error('name') is-invalid @enderror rounded-pill border-0 shadow-sm px-4">
+                    @error('name')
+                    <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                   </div>
                   <div class="form-group mb-3">
-                    <input id="password" name="password" type="password" placeholder="Password" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                    <input id="phone" name="phone" type="text" placeholder="Số điện thoại" required="" class="form-control @error('phone') is-invalid @enderror rounded-pill border-0 shadow-sm px-4">
+                    @error('phone')
+                    <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                   </div>
                   <div class="form-group mb-3">
-                    <input id="rePassword" name="rePassword" type="password" placeholder="Password" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                    <input id="email" name="email" type="email" placeholder="Địa chỉ Email" required="" autofocus="" class="form-control @error('email') is-invalid @enderror rounded-pill border-0 shadow-sm px-4">
+                    @error('email')
+                    <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                   </div>
                   <div class="form-group mb-3">
-                    <input id="address" name="address" type="text" placeholder="Address" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                    <input id="password" name="password" type="password" placeholder="Password" required="" class="form-control @error('password') is-invalid @enderror rounded-pill border-0 shadow-sm px-4 text-primary">
+                    @error('password')
+                    <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                   </div>
-
                   <div class="form-group mb-3">
-
+                    <input id="rePassword" name="rePassword" type="password" placeholder="Password" required="" class="form-control @error('rePassword') is-invalid @enderror rounded-pill border-0 shadow-sm px-4 text-primary">
+                    @error('rePassword')
+                    <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                  </div>
+                  <div class="form-group mb-3">
+                    <input id="address" name="address" type="text" placeholder="Address" required="" class="form-control @error('address') is-invalid @enderror rounded-pill border-0 shadow-sm px-4 text-primary">
+                    @error('address')
+                    <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                  </div>
+                  <div class="form-group mb-3">
                     <select name="province" id="province" class="form-control rounded-pill border-0 shadow-sm px-4">
                       <option value="0" selected disabled>---Chọn tỉnh---</option>
                       @foreach($pr as $province)

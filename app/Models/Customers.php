@@ -14,7 +14,6 @@ class Customers extends Authenticatable
     protected $table = 'customers';
     protected $guard = 'cus';
     protected $primaryKey = 'id';
-    protected $dateFormat = 'U';
 
 
     function comments()
@@ -34,7 +33,7 @@ class Customers extends Authenticatable
         return $this->belongsTo('App\Models\District', 'id_district');
     }
 
-    function provinces(){
+    function province(){
         return $this->belongsTo('App\Models\Province', 'id_province');
     }
 

@@ -58,7 +58,23 @@ Route::get('GetSubCatAgainstMainCatEdit/{id}','CustomerController@GetSubCatAgain
 
 Route::group(['middleware' => 'checklogin', 'prefix' => 'user/account'], function(){
     Route::get('profile','CustomerController@getInfo');
+    Route::post('change_profile','CustomerController@changeProfile')->name('changeProfile');
+    Route::post('verify_email', 'CustomerController@verifyEmail')->name('verifyemail');
+    Route::get('change_email', 'CustomerController@getChangeEmail')->name('changeEmail');
+    Route::post('change_email','CustomerController@changeEmail');
+    Route::post('verify_phone','CustomerController@verifyPhone')->name('verifyphone');
+    Route::get('change_phone', 'CustomerController@getChangePhone')->name('changePhone');
+    Route::post('change_phone','CustomerController@changePhone');
+    Route::get('GetDistrict/{id}','CustomerController@GetSubCatAgainstMainCatEdit');
+    Route::post('changeProvinceDistrict','CustomerController@changeProvinceDistrict')->name('changeProvinceDistrict');
+});
 
+Route::group(['middleware' => 'checklogin', 'prefix' => 'cart'], function(){
+    Route::get('add/{id}', 'CartController@getAddCart');
+    Route::get('show','CartController@getShowCart');
+    Route::get('delete/{id}', 'CartController@getDeleteCart');
+    Route::get('update', 'CartController@getUpdateCart');
+    Route::post('show', 'CartController@postComplete');
 });
 Auth::routes();
 

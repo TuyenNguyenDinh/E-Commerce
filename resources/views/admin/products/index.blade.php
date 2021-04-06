@@ -6,6 +6,7 @@
         <div class="col-xs-12 col-md-12 col-lg-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">Danh sách sản phẩm</div>
+                
                 <div class="panel-body">
                     <div class="bootstrap-table">
                         <div class="table-responsive">
@@ -15,7 +16,7 @@
                                     <a href="{{ route('discount.index') }}" class="btn btn-primary">Giảm giá sản phẩm</a>
 
                                 </div>
-                                
+
                                 <!-- add modal -->
 
                             </div>
@@ -43,6 +44,7 @@
                                         <td>{{ $product->name_product}}</td>
                                         <td><img src="../upload/{{ $product->image1 }}" width="120" height="120" /></td>
                                         <td>{{number_format($product->price,0,',','.')}} đ</td>
+                                        
                                         <td>{{number_format($product->old_price,0,',','.')}} đ</td>
                                         <td>{{ $product->quantity}}</td>
                                         <td class="label_title"> <?php echo $product->description ?></td>
@@ -68,7 +70,7 @@
                                 </tbody>
                             </table>
                             <div id="pagination">
-                               
+
                             </div>
                         </div>
                     </div>

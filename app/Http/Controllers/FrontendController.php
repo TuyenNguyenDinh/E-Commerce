@@ -7,7 +7,6 @@ use App\Models\Categories;
 use App\Models\Comments;
 use App\Models\Products;
 use Illuminate\Http\Request;
-use App\Models\Customers;
 use App\Models\Wishlist;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +24,7 @@ class FrontendController extends Controller
     public function getCategory($id)
     {
         $data['cate_name'] = Categories::find($id);
-        $data['products'] = Products::all();
+        $data['products'] = Products::where('id_category',$id)->get();
         return view('frontend.category', $data);
     }
 
@@ -88,32 +87,6 @@ class FrontendController extends Controller
 
         $listProduct = $query->paginate(2);
         return view('frontend.search', ['listProduct' => $listProduct], $data);
-
-        // $result = $request->key;
-        // $result = str_replace(' ', '%', $result); //bỏ khoảng trắng
-        // $data['brands'] = Brands::all();
-        // $data['items'] = Products::where('name_product', 'like', '%' . $result . '%')->get();
-        // $data['keyword'] = $result;
-        // $query = Products::select('*');
-        // if($request->has('sort')){
-        //     switch ($request->sort) {
-        //         case 1://a-z
-        //             $query->orderBy('name','asc');
-        //             break;
-        //         case 2://z-a
-        //             $query->orderBy('name','desc');
-        //             break;
-        //         case 3:
-        //             $query->orderBy('price_sell','asc');
-        //             break;
-        //         case 4:
-        //             $query->orderBy('price_sell','desc');
-        //             break;
-        //     }
-        // }
-
-        // return view('frontend.search', $data);
-        // // dd($pr);
     }
 
     public function indexFiltering(Request $request)

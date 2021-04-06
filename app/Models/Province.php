@@ -12,7 +12,11 @@ class Province extends Model
 
 
     function disctrict(){
-        return $this->hasMany('App\Models\District','id_province');
+        return $this->hasMany('App\Models\District','id_district');
+    }
+
+    function customers(){
+        return $this->hasMany('App\Models\Customers', 'id_province');
     }
 
     protected $fillable = [

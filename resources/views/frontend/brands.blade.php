@@ -52,11 +52,13 @@
                                             </div>
                                         </div>
                                         <div class="add-to-cart">
-                                            <button class="add-to-cart-btn">
-                                                <i class="far fa-shopping-cart">
-                                                </i>
-                                                add to cart
-                                            </button>
+                                            <a href="{{asset('cart/add/'.$product->id)}}">
+                                                <button class="add-to-cart-btn">
+                                                    <i class="far fa-shopping-cart">
+                                                    </i>
+                                                    add to cart
+                                                </button>
+                                            </a>
                                         </div>
                                     </div>
                                     @endforeach

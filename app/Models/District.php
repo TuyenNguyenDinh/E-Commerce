@@ -15,6 +15,10 @@ class District extends Model
         return $this->belongsTo('App\Models\Province','id_province');
     }
 
+    function customers(){
+        return $this->hasMany('App\Models\Customers', 'id_district');
+    }
+
     protected $fillable = [
        'id_province',
        'district_name'

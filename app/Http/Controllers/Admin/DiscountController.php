@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Discount;
 use App\Models\Products;
-use App\Models\Wishlist;
 use Illuminate\Http\Request;
 
 class DiscountController extends Controller
@@ -41,12 +40,15 @@ class DiscountController extends Controller
      */
     public function store(Request $request)
     {
+
         $data = array_merge($request->all());
         $result = Discount::create($data);
-        if ($result) {
-            return redirect()->route('discount.index');
-        }
-        return redirect()->route('discount.create');
+        // $pro = Products::where('id',$result->id_product)->update(array('email' => $newEmail));
+        // if ($result) {
+        //     return redirect()->route('discount.index');
+        // }
+        // return redirect()->route('discount.create');
+        return dd($pro);
     }
 
     /**

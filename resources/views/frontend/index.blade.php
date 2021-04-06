@@ -53,6 +53,7 @@
             <div class="col-md-12">
                 <div class="section-title">
                     <h3 class="title">New Products</h3>
+
                     <div class="section-nav">
                         <div class="section-tab-nav tab-nav">
                             <ul class="nav" id="myTab" role="tablist">
@@ -81,20 +82,23 @@
                                         <div class="product-img">
                                             <img src="{{asset('upload/'.$product->image1)}}" alt="">
                                             <div class="product-label">
+                                                <span class="sale">-{{$product->discount}}%</span>
                                                 <span class="new">new</span>
                                             </div>
                                         </div>
                                         <div class="product-body">
                                             <p class="product-category">{{$product->categories->name}}</p>
+
                                             <h3 class="product-name">
                                                 <a href="#">{{$product->name_product}}</a>
                                             </h3>
                                             <h4 class="product-price">
+
                                                 {{number_format($product->price,0,',','.')}} đ
                                                 <del class="product-old-price">{{number_format($product->old_price,0,',','.')}} đ</del>
                                             </h4>
                                             <div class="product-rating">
-                                                @for($i = 0; $i <= $product->like; $i++)
+                                                @for($i = 1; $i <= $product->like; $i++)
                                                     <i class="fas fa-star"></i>
                                                     @endfor
                                             </div>
@@ -114,7 +118,7 @@
                                             </div>
                                         </div>
                                         <div class="add-to-cart">
-                                            <a href="#">
+                                            <a href="{{asset('cart/add/'.$product->id)}}">
                                                 <button class="add-to-cart-btn">
                                                     <i class="far fa-shopping-cart">
                                                     </i>

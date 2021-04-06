@@ -14,7 +14,7 @@ class AddDescriptionToBrands extends Migration
     public function up()
     {
         Schema::table('brands', function (Blueprint $table) {
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
         });
     }
 

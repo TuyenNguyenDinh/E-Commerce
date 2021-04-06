@@ -7,7 +7,7 @@
         <div class="breadcrumb-bar">
             <ul class="breadcrumb">
                 <li><a href="#">Home</a></li>
-               
+
                 <li><a href="#">{{$items->categories->name}}</a></li>
                 <li>{{$items->name_product}}</li>
             </ul>
@@ -27,7 +27,7 @@
                             <img src="{{asset('/upload/' .$items->image4)}}" alt="">
                         </div>
                         <div class="product-img_slide">
-                        <img src="{{asset('/upload/' .$items->image1)}}" alt="">
+                            <img src="{{asset('/upload/' .$items->image1)}}" alt="">
                             <img src="{{asset('/upload/' .$items->image2)}}" alt="">
                             <img src="{{asset('/upload/' .$items->image3)}}" alt="">
                             <img src="{{asset('/upload/' .$items->image4)}}" alt="">
@@ -51,32 +51,41 @@
                         </div>
                         <div class="star-reviews-rating">
                             <div class="star_rating">
+                                @if( round($comments->avg('rate')) == 0)
                                 <div class="star_rating_number">
-                                    {{$items->like}}
+                                    Chưa có đánh giá
+                                </div>
+                                @else
+                                <div class="star_rating_number">
+                                    {{round($comments->avg('rate'))}}
                                 </div>
                                 <div class="star-icon">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
+                                    @for($i = 1; $i <= round($comments->avg('rate')); $i++)
+                                        <i class="fas fa-star"></i>
+                                        @endfor
                                 </div>
+                                @endif
                             </div>
                         </div>
                         <div class="product_price">
                             <div class="product_price_current">
-                                {{$items->price}}
+                                {{number_format($items->price,0,',','.')}} đ
                             </div>
                             <div class="product_price_old">
-                                <del>$999</del>
+                                <del>{{number_format($items->old_price,0,',','.')}} đ</del>
+                            </div>
+                            <div class="product_discount">
+                                -{{$items->discount}}%
                             </div>
                         </div>
                         <div class="product-details_sku text-uppercase">
-                            
+
                         </div>
                         <div class="product_track_side d-flex">
-                            <h5>OEM track side:</h5>
-                            <span>{{$items->size}}</span>
+                            <h5>Kích thước:</h5>
+                            <span> Dài {{$items->lenght}} cm</span>
+                            <span> Dài {{$items->weight}} cm</span>
+                            <span> Dài {{$items->height}} cm</span>
                         </div>
                         <div class="transport d-flex flex-column">
                             <div class="flex_nowrapper d-flex ">
@@ -104,7 +113,14 @@
                                                 <p>Vận chuyển tới</p>
                                                 <div class="d-flex">
                                                     <div class="address d-flex item-center">
-                                                        <span>Huyện Quảng Điền, Thừa Thiên Huế</span>
+                                                        @if(Auth::guard('customer')->check())
+                                                        <span>{{Auth::guard('customer')->user()->district->district_name}}</span>
+                                                        <span>,</span>
+                                                        <span> <span>{{Auth::guard('customer')->user()->province->province}}</span></span>
+                                                        @else
+                                                        <span>Chọn địa chỉ</span>
+                                                        @endif
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -133,17 +149,20 @@
                                 <div style="margin-right: 15px">
                                     <div class="button_quant_input">
                                         <button class="_quant">-</button>
-                                        <input class="_quant input_quant" type="text" value="1">
+                                        <input class="_quant input_quant" type="text" id="qty_number" name="qty_number" value="1">
                                         <button class="_quant">+</button>
                                     </div>
                                 </div>
-                                <p>Sản phẩm có sẵn</p>
+                                <p>{{$items->quantity}}Sản phẩm có sẵn</p>
                             </div>
                         </div>
                         <div class="button-add_cart">
-                            <button type="button" class="btn btn-primary add_wishlist">
-                                <i class="fal fa-cart-plus"></i>
-                                Thêm vào giỏ hàng</button>
+                            <a href="{{asset('cart/add/'.$items->id)}}">
+                                <button type="button" class="btn btn-primary add_wishlist">
+                                    <i class="fal fa-cart-plus"></i>
+                                    Thêm vào giỏ hàng
+                                </button>
+                            </a>
                             <button type="button" class="btn btn-primary">Mua ngay</button>
                         </div>
                     </div>
@@ -205,15 +224,18 @@
                                 lúc giao hàng
                             </li>
                             <li><i class="far fa-undo-alt"></i>
-                            Hư gì đổi nấy 
-                            <b>12 tháng</b>
-                            tận nhà (miễn phí tháng đầu) </li>
+                                Hư gì đổi nấy
+                                <b>12 tháng</b>
+                                tận nhà (miễn phí tháng đầu)
+                            </li>
                             <li><i class="fad fa-mobile-android-alt"></i>
-                            Đổi trả và bảo hành cực dễ
-                            <b>chỉ cần số điện thoại</b></li>
+                                Đổi trả và bảo hành cực dễ
+                                <b>chỉ cần số điện thoại</b>
+                            </li>
                             <li>
-                            <i class="fad fa-shield-check"></i>
-                            Bảo hành <b>chính hãng 2 năm</b>, có người đến tận nhà</li>
+                                <i class="fad fa-shield-check"></i>
+                                Bảo hành <b>chính hãng 2 năm</b>, có người đến tận nhà
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -229,14 +251,21 @@
                     <div class="product_reviews_title text-uppercase">
                         <h4>đánh giá sản phẩm</h4>
                     </div>
+                    @if(round($comments->avg('rate')) == 0)
+
+                    <h1>Chưa có đánh giá</h1>
+                    @else
                     <div class="product_reviews_content">
                         @foreach ($comments as $comment)
-                        <div class="reviews_wrapper">
+                        @for($i = 1; $i <= round($comment->avg('rate')); $i++)
+                            <i class="fas fa-star"></i>
+                            @endfor
+                            <div class="reviews_wrapper">
                                 <div class="row">
                                     <div class="col-lg-1 col-md-2">
                                         <div class="logo_acc">
                                             <div>
-                                                <img src="Capture.PNG" height="50px" width="50px">
+                                                <img src="{{ asset('upload/'.$comment->customers->image_acc) }}" height="50px" width="50px">
                                             </div>
                                         </div>
                                     </div>
@@ -255,10 +284,10 @@
                                     <div class="col-lg-2 col-md-3">
                                         <div class="user_rating">
                                             <div class="star-icon">
-                                            @for($i = 1; $i <= $comment->rate; $i++)
-                                                <i class="fas fa-star"></i>
-                                                
-                                            @endfor
+                                                @for($i = 1; $i <= $comment->rate; $i++)
+                                                    <i class="fas fa-star"></i>
+
+                                                    @endfor
                                             </div>
                                         </div>
                                     </div>
@@ -268,8 +297,10 @@
                                     </p>
                                 </div>
                             </div>
-                        @endforeach
+                            @endforeach
                     </div>
+                    @endif
+
                 </div>
             </div>
         </div>

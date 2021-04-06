@@ -33,6 +33,7 @@
                                         <td>{{ $product_discount->id}}</td>
                                         <td>{{ $product_discount->products->name_product}}</td>
                                         <td><img src="{{asset('upload/'. $product_discount->products->image1)}}" width="120px" height="120px"></td>
+                                        
                                         <td>{{ $product_discount->discount_percent}}</td>
                                         <td>
                                             <div class="row action-button" style="padding-left: 10px; padding-right:10px">

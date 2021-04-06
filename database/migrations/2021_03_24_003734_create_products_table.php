@@ -23,6 +23,7 @@ class CreateProductsTable extends Migration
             $table->string('image3');
             $table->string('image4');
             $table->double('price')->default(0);
+            $table->integer('discount(%)')->default(0);
             $table->integer('quantity')->default(0);
             $table->double('lenght')->default(0);
             $table->double('weight')->default(0);

@@ -11,9 +11,9 @@ class Discount extends Model
     protected $dateFormat = 'U';
 
 
-    function categories(){
-        return $this->belongsTo('App\Models\Categories','id_category');
-    }
+    // function categories(){
+    //     return $this->belongsTo('App\Models\Categories','id_category');
+    // }
 
     function products(){
         return $this->belongsTo('App\Models\Products','id_product');

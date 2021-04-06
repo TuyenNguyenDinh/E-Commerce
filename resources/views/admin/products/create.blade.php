@@ -66,6 +66,15 @@
 									@endif
 								</div>
 								<div class="form-group">
+									<label>Phần trăm giảm giá (nếu có)</label>
+									<select name="discount" id="discount">
+										@for ($i = 0; $i <= 100; $i++)
+										<option value="{{$i}}">{{$i}}</option>
+										@endfor
+									</select>
+									
+								</div>
+								<div class="form-group">
 									<label>Số lượng</label>
 									<input type="number" name="quantity" class="form-control">
 									@if ($errors->has('quantity'))
@@ -103,10 +112,10 @@
 								</div>
 								<div class="form-group">
 									<label>Độ rộng</label>
-									<input type="text" name="widht" class="form-control">
-									@if ($errors->has('widht'))
+									<input type="text" name="width" class="form-control">
+									@if ($errors->has('width'))
 									<span class="help-block">
-										<strong style="color: red;">{{ $errors->first('widht')}}</strong></br>
+										<strong style="color: red;">{{ $errors->first('width')}}</strong></br>
 									</span>
 									@endif
 								</div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Brands;
 use App\Models\Categories;
+use App\Models\Discount;
 use App\Models\Products;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,11 @@ class ProductController extends Controller
         $products = Products::all();
         $categories = Categories::all();
         $brands = Brands::all();
-        return view('admin.products.index', array('products' => $products, 'categories' =>$categories, 'brands' => $brands));
+
+        return view('admin.products.index', array(
+            'products' => $products,
+            'categories' => $categories, 'brands' => $brands
+        ));
     }
 
     /**
@@ -47,12 +52,19 @@ class ProductController extends Controller
         $fileName2 = $this->doUploadImage2($request);
         $fileName3 = $this->doUploadImage3($request);
         $fileName4 = $this->doUploadImage4($request);
-        $old_price = 0;
-        $products = Products::create(array_merge($request->all(), ["old_pice" => $old_price], ["image1" =>$fileName1], ["image2" => $fileName2], ["image3" => $fileName3], ["image4" => $fileName4]));
+        $old_price = $request->price;
+        $discount = $request->discount;
+        $price = $old_price * ((100 - $discount) / 100);
+        $products = Products::create(array_merge($request->all(), ["old_price" => $old_price],
+         ["price" => $price],
+         ["discount" => $discount],
+         ["image1" =>$fileName1], ["image2" => $fileName2], 
+         ["image3" => $fileName3], ["image4" => $fileName4]));
         if ($products) {
             return redirect()->route('products.index');
         }
         return redirect()->route('products.create');
+        
     }
 
 
@@ -61,72 +73,66 @@ class ProductController extends Controller
     {
         $fileName = "";
         //Kiểm tra file
-            if ($request->file('image1')->isValid()) {
-                // File này có thực, bắt đầu đổi tên và move
-                $fileExtension = $request->file('image1')->getClientOriginalExtension(); // Lấy . của file
-                
-                // Filename cực shock để khỏi bị trùng
-                $fileName = time() . "_" . rand(0,9999999) . "_" . md5(rand(0,9999999)) . "." . $fileExtension;
-                            
-                // Thư mục upload
-                $uploadPath = public_path('/upload'); // Thư mục upload
-                
-                // Bắt đầu chuyển file vào thư mục
-                $request->file('image1')->move($uploadPath, $fileName);
-            }
-            else {
-            }
-            
-        return $fileName; 
-        
+        if ($request->file('image1')->isValid()) {
+            // File này có thực, bắt đầu đổi tên và move
+            $fileExtension = $request->file('image1')->getClientOriginalExtension(); // Lấy . của file
+
+            // Filename cực shock để khỏi bị trùng
+            $fileName = time() . "_" . rand(0, 9999999) . "_" . md5(rand(0, 9999999)) . "." . $fileExtension;
+
+            // Thư mục upload
+            $uploadPath = public_path('/upload'); // Thư mục upload
+
+            // Bắt đầu chuyển file vào thư mục
+            $request->file('image1')->move($uploadPath, $fileName);
+        } else {
+        }
+
+        return $fileName;
     }
 
     private function doUploadImage2(Request $request)
     {
         $fileName = "";
         //Kiểm tra file
-            if ($request->file('image2')->isValid()) {
-                // File này có thực, bắt đầu đổi tên và move
-                $fileExtension = $request->file('image2')->getClientOriginalExtension(); // Lấy . của file
-                
-                // Filename cực shock để khỏi bị trùng
-                $fileName = time() . "_" . rand(0,9999999) . "_" . md5(rand(0,9999999)) . "." . $fileExtension;
-                            
-                // Thư mục upload
-                $uploadPath = public_path('/upload'); // Thư mục upload
-                
-                // Bắt đầu chuyển file vào thư mục
-                $request->file('image2')->move($uploadPath, $fileName);
-            }
-            else {
-            }
-            
-        return $fileName; 
-        
+        if ($request->file('image2')->isValid()) {
+            // File này có thực, bắt đầu đổi tên và move
+            $fileExtension = $request->file('image2')->getClientOriginalExtension(); // Lấy . của file
+
+            // Filename cực shock để khỏi bị trùng
+            $fileName = time() . "_" . rand(0, 9999999) . "_" . md5(rand(0, 9999999)) . "." . $fileExtension;
+
+            // Thư mục upload
+            $uploadPath = public_path('/upload'); // Thư mục upload
+
+            // Bắt đầu chuyển file vào thư mục
+            $request->file('image2')->move($uploadPath, $fileName);
+        } else {
+        }
+
+        return $fileName;
     }
 
     private function doUploadImage3(Request $request)
     {
         $fileName = "";
         //Kiểm tra file
-            if ($request->file('image3')->isValid()) {
-                // File này có thực, bắt đầu đổi tên và move
-                $fileExtension = $request->file('image3')->getClientOriginalExtension(); // Lấy . của file
-                
-                // Filename cực shock để khỏi bị trùng
-                $fileName = time() . "_" . rand(0,9999999) . "_" . md5(rand(0,9999999)) . "." . $fileExtension;
-                            
-                // Thư mục upload
-                $uploadPath = public_path('/upload'); // Thư mục upload
-                
-                // Bắt đầu chuyển file vào thư mục
-                $request->file('image3')->move($uploadPath, $fileName);
-            }
-            else {
-            }
-            
-        return $fileName; 
-        
+        if ($request->file('image3')->isValid()) {
+            // File này có thực, bắt đầu đổi tên và move
+            $fileExtension = $request->file('image3')->getClientOriginalExtension(); // Lấy . của file
+
+            // Filename cực shock để khỏi bị trùng
+            $fileName = time() . "_" . rand(0, 9999999) . "_" . md5(rand(0, 9999999)) . "." . $fileExtension;
+
+            // Thư mục upload
+            $uploadPath = public_path('/upload'); // Thư mục upload
+
+            // Bắt đầu chuyển file vào thư mục
+            $request->file('image3')->move($uploadPath, $fileName);
+        } else {
+        }
+
+        return $fileName;
     }
 
 
@@ -134,24 +140,22 @@ class ProductController extends Controller
     {
         $fileName = "";
         //Kiểm tra file
-            if ($request->file('image4')->isValid()) {
-                // File này có thực, bắt đầu đổi tên và move
-                $fileExtension = $request->file('image4')->getClientOriginalExtension(); // Lấy . của file
-                
-                // Filename cực shock để khỏi bị trùng
-                $fileName = time() . "_" . rand(0,9999999) . "_" . md5(rand(0,9999999)) . "." . $fileExtension;
-                            
-                // Thư mục upload
-                $uploadPath = public_path('/upload'); // Thư mục upload
-                
-                // Bắt đầu chuyển file vào thư mục
-                $request->file('image4')->move($uploadPath, $fileName);
-            }
-            else {
-            }
-            
-        return $fileName; 
-        
+        if ($request->file('image4')->isValid()) {
+            // File này có thực, bắt đầu đổi tên và move
+            $fileExtension = $request->file('image4')->getClientOriginalExtension(); // Lấy . của file
+
+            // Filename cực shock để khỏi bị trùng
+            $fileName = time() . "_" . rand(0, 9999999) . "_" . md5(rand(0, 9999999)) . "." . $fileExtension;
+
+            // Thư mục upload
+            $uploadPath = public_path('/upload'); // Thư mục upload
+
+            // Bắt đầu chuyển file vào thư mục
+            $request->file('image4')->move($uploadPath, $fileName);
+        } else {
+        }
+
+        return $fileName;
     }
 
 
@@ -176,7 +180,8 @@ class ProductController extends Controller
     {
         $categories = Categories::all();
         $products = Products::find($id);
-        return view('admin.products.edit', array('products'=>$products, 'categories' => $categories));
+        $brands = Brands::all();
+        return view('admin.products.edit', array('products' => $products, 'categories' => $categories, 'brands' => $brands));
     }
 
     /**
@@ -188,9 +193,12 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $fileName = $this->doUpload($request);
+        $fileName1 = $this->doUploadImage1($request);
+        $fileName2 = $this->doUploadImage2($request);
+        $fileName3 = $this->doUploadImage3($request);
+        $fileName4 = $this->doUploadImage4($request);
         $products = Products::find($id);
-        $products->update(array_merge($request->all(), ["anh" =>$fileName]));
+        $products->update(array_merge($request->all(), ["image1" =>$fileName1], ["image2" => $fileName2], ["image3" => $fileName3], ["image4" => $fileName4]));
         if($products){
             return redirect()->route('products.index');
         }

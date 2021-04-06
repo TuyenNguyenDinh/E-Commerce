@@ -12,8 +12,8 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
-</head>
 
+</head>
 <body>
     <header>
         <div id="top-header">
@@ -40,7 +40,7 @@
 
                     <li>
                         <a href="#" id="dropdownAccount" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="far fa-user"></i>
+                            <img src="{{ asset('upload/'.Auth::guard('customer')->user()->image_acc) }}" alt="" style="width: 22px;height: 22px;border-radius: 50%;">
                             {{Auth::guard('customer')->user()->name}}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownAccount">
@@ -156,10 +156,10 @@
                                 </a>
                             </div>
                             <div>
-                                <a href="#">
+                                <a href="{{ asset('cart/show') }}">
                                     <i class="far fa-shopping-cart"></i>
                                     <span>Your Cart</span>
-                                    <div class="qty">3</div>
+                                    <div class="qty">{{Cart::count()}}</div>
                                 </a>
                             </div>
                             <div class="menu-toggle" id="btnNav">
@@ -359,10 +359,10 @@
             </div>
         </div>
     </footer>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://code.jquery.com/jquery-3.4.1.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         $('.products-slick').slick({
                 slidesToShow: 4,

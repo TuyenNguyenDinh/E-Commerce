@@ -33,7 +33,7 @@
                             <div class="tab-pane face show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="products- ">
                                     <div class="row">
-                                    @foreach($products as $product)
+                                        @foreach($products as $product)
                                         <div class="product col-lg-3 col-md-6 col-sm-6">
                                             <div class="product-img">
                                                 <img src="{{asset('upload/'. $product->image1)}}" alt="">
@@ -47,37 +47,39 @@
                                                     <a href="#">{{$product->name_product}}</a>
                                                 </h3>
                                                 <h4 class="product-price">
-                                                {{number_format($product->price,0,',','.')}} đ
+                                                    {{number_format($product->price,0,',','.')}} đ
                                                     <del class="product-old-price">{{number_format($product->old_price,0,',','.')}} đ</del>
                                                 </h4>
                                                 <div class="product-rating">
-                                                @for($i = 1; $i <= $product->like; $i++)
-                                                    <i class="fas fa-star"></i>
-                                                   @endfor 
+                                                    @for($i = 1; $i <= $product->like; $i++)
+                                                        <i class="fas fa-star"></i>
+                                                        @endfor
                                                 </div>
                                                 <div class="product-btns">
                                                     <button class="add-to-compare">
-                                                    <a href="{{asset('wishlist/add/'.$product->id.'.html')}}">
-                                                        <i class="fas fa-exchange-alt"></i>
-                                                        <span class="tooltipp"> add to wishlist</span>
-                                                    </a>
+                                                        <a href="{{asset('wishlist/add/'.$product->id.'.html')}}">
+                                                            <i class="fas fa-exchange-alt"></i>
+                                                            <span class="tooltipp"> add to wishlist</span>
+                                                        </a>
                                                     </button>
                                                     <button class="details">
-                                                    <a href="{{asset('details/'.$product->id.'.html')}}" style="color: black;">
-                                                        <i class="fas fa-eye"></i>
-                                                        <span class="tooltipp">details</span>
-                                                    </a>
+                                                        <a href="{{asset('details/'.$product->id.'.html')}}" style="color: black;">
+                                                            <i class="fas fa-eye"></i>
+                                                            <span class="tooltipp">details</span>
+                                                        </a>
                                                 </div>
                                             </div>
                                             <div class="add-to-cart">
-                                                <button class="add-to-cart-btn">
-                                                    <i class="far fa-shopping-cart">
-                                                    </i>
-                                                    add to cart
-                                                </button>
+                                                <a href="{{asset('cart/add/'.$product->id)}}">
+                                                    <button class="add-to-cart-btn">
+                                                        <i class="far fa-shopping-cart">
+                                                        </i>
+                                                        add to cart
+                                                    </button>
+                                                </a>
                                             </div>
                                         </div>
-                                    @endforeach
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>

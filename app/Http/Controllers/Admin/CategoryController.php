@@ -43,6 +43,7 @@ class CategoryController extends Controller
             return redirect()->route('categories.index');
         }
         return redirect()->route('categories.create');
+        return dd($data);
     }
 
 

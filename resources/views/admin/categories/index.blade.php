@@ -22,8 +22,6 @@
                                         <th>ID</th>
                                         <th>Tên danh mục</th>
                                         <th>Ảnh</th>
-                                            <th>Mô tả</th>
-
                                         <th>Tùy chọn</th>
                                     </tr>
                                 </thead>
@@ -33,25 +31,24 @@
                                         <td>{{$category->id}}</td>
                                         <td>{{$category->name}}</td>
                                         <td><img src="{{asset('/upload/'. $category->image)}}" alt="" width="120px" height="120px"></td>
-                                            <td>{{$category->description}}</td>
                                         <td>
                                             <div class="row action-button" style="padding-left: 10px;">
                                                 <!-- edit button -->
-                                                
-                                                    <div class="action-edit">
-                                                        <p><a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</a></p>
-                                                    </div>
-                                               
+
+                                                <div class="action-edit">
+                                                    <p><a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</a></p>
+                                                </div>
+
                                                 <!-- delete button -->
-                                                
-                                                    <div class="action-delete">
-                                                        <form action="{{ route('categories.destroy', $category->id) }}" method="post">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <p><input class="btn btn-danger" type="submit" value="Xóa"></p>
-                                                        </form>
-                                                    </div>
-                                                
+
+                                                <div class="action-delete">
+                                                    <form action="{{ route('categories.destroy', $category->id) }}" method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <p><input class="btn btn-danger" type="submit" value="Xóa"></p>
+                                                    </form>
+                                                </div>
+
                                             </div>
                                         </td>
                                     </tr>
