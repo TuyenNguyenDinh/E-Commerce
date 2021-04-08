@@ -30,12 +30,20 @@ class CartController extends Controller
     {
         
             Cart::remove($id);
-            return back();
+            
     }
 
     public function getUpdateCart(Request $request)
     {
         $cart = Cart::update($request->rowId, $request->qty);
         return response()->json($cart);
+     
     }
+
+    public function cartdata(){
+        $data['items'] = Cart::content();
+        $data['total'] = Cart::total(0);
+        return view('frontend.cartdata',$data);
+    }
+
 }

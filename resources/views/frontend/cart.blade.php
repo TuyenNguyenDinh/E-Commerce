@@ -35,13 +35,10 @@
                             </td>
                             <td id="price" data-th="Price">{{number_format($product->price*$product->qty,0,',','.')}} đ</td>
                             <td data-th="Quantity">
-                                <input type="number" id="update" class="form-control form-control-lg text-center" value="{{ $product->qty }}">
+                                <input type="number" name="qty" id="qty" class="form-control form-control-lg text-center" value="{{ $product->qty }}" onchange="btUpdate(this.value, '{{$product->rowId}}')">
                             </td>
                             <td class="actions" data-th="">
                                 <div class="text-right">
-                                    <button type="button" class="btn btn-white border-secondary bg-white btn-md mb-2" id="btUpdate" onclick="btUpdate('{{ $product->qty }}','{{$product->rowId}}')">
-                                        <i class="fas fa-sync"></i>
-                                    </button>
                                     <a href="{{asset('cart/delete/'.$product->rowId)}}">
                                         <button class="btn btn-white border-secondary bg-white btn-md mb-2">
                                             <i class="fas fa-trash"></i>
@@ -53,7 +50,13 @@
                         @endforeach
                     </tbody>
                 </table>
-                <div class="float-right text-right">
+                <div class="text-right">
+                    <button type="button" id="bt" class="btn btn-white border-secondary bg-white btn-md mb-2">
+                        <i class="fas fa-sync"></i>
+                    </button>
+                </div>
+                <div id="subtotal" class="float-right text-right">
+
                     <h4>Subtotal:</h4>
                     <h1>{{$total}} đ</h1>
                 </div>
@@ -72,9 +75,7 @@
     </div>
 </section>
 <script type="text/javascript">
-
     function btUpdate(qty, rowId) {
-        qty = document.getElementById("update").value;
         var url = "{{asset('cart/update')}}";
         $.ajax({
             method: 'get',
@@ -84,11 +85,16 @@
                 rowId: rowId
             },
             success: function(response) {
-               console.log(response);
+                console.log(response);
+
+                // location.reload();
             }
         });
-    }
+    };
 
-
+    $('#bt').click(function() {
+        alert('jyfjyuklb');
+        $('#listCart').load("{{route('cartdata')}}");
+    })
 </script>
 @stop

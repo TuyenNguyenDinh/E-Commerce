@@ -8,9 +8,13 @@
                 <div class="section-title">
                     <h3 class="title">Wishlist</h3>
                 </div>
-
             </div>
             <div class="col-md-12">
+                @if(\DB::table('wishlist')->count() == 0)
+                <div class="wrapper">
+                    <h3>Chưa có sản phẩm nào</h3>
+                </div>
+                @else
                 <div class="container">
                     <div class="products-tabs">
                         <div class="products">
@@ -52,7 +56,7 @@
                                             </button>
                                             <button class="delete">
                                                 <a href="{{asset('wishlist/delete/'.$product_list->id.'.html')}}" style="color: black;">
-                                                <i class="fas fa-trash-alt"></i>
+                                                    <i class="fas fa-trash-alt"></i>
                                                     <span class="tooltipp">delete</span>
                                                 </a>
                                             </button>
@@ -71,6 +75,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>

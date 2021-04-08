@@ -339,6 +339,21 @@ ul.breadcrumb li a:hover {
     padding: 20px 10px 20px 93px;
 }
 
+.showmore-button {
+    width: 240px;
+    display: block;
+    overflow: hidden;
+    position: relative;
+    line-height: 40px;
+    font-size: 14px;
+    color: #288ad6;
+    margin: 10px auto;
+    cursor: pointer;
+    border: 1px solid #288ad6;
+    border-radius: 4px;
+    text-align: center;
+}
+
 
 /* responsive */
 

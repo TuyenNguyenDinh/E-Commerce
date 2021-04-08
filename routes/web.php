@@ -75,6 +75,7 @@ Route::group(['middleware' => 'checklogin', 'prefix' => 'cart'], function(){
     Route::get('delete/{id}', 'CartController@getDeleteCart');
     Route::get('update', 'CartController@getUpdateCart');
     Route::post('show', 'CartController@postComplete');
+    Route::get('cartdata','CartController@cartdata')->name('cartdata');
 });
 Auth::routes();
 

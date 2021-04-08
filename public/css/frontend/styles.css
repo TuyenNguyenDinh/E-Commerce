@@ -11,6 +11,14 @@ body {
     padding-bottom: 20px;
 }
 
+.wrapper {
+    display: flex;
+    justify-content: center;
+    height: 200px;
+    align-items: center;
+    opacity: 0.6;
+}
+
 
 /* Header */
 

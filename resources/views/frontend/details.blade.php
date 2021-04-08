@@ -207,9 +207,8 @@
                 <div class="product_description_title text-uppercase">
                     <h4>mô tả sản phẩm</h4>
                 </div>
-                <div class="product_description_content">
-                    <p><?php echo $items->description ?></p>
-
+                <div id="product_description_content" class="product_description_content">
+                    <?php echo $items->description ?>
                 </div>
             </div>
             <div class="product_benefits">
@@ -286,7 +285,6 @@
                                             <div class="star-icon">
                                                 @for($i = 1; $i <= $comment->rate; $i++)
                                                     <i class="fas fa-star"></i>
-
                                                     @endfor
                                             </div>
                                         </div>
@@ -306,6 +304,16 @@
         </div>
     </div>
 </div>
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="{{ asset('js/frontend/showmore/jquery.show-more.js') }}"></script>
+<script type="text/javascript">
+    $('#product_description_content').showMore({
+        minheight:150,
+        animationspeed: 250,
+        buttontxtmore:"read more",
+        buttontxtless:"read less",
 
+    })
+</script>
 
 @stop
