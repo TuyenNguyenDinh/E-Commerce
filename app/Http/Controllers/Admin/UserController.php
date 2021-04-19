@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UsersRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -15,7 +17,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        return view('admin.users.index', ['users' => $users]);
     }
 
     /**
@@ -25,7 +28,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.users.create');
     }
 
     /**
@@ -34,9 +37,14 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UsersRequest $request)
     {
-        //
+        $users = $request->all();
+        $result = User::create($users);
+        if($result){
+            return redirect()->route('users.index');
+        }
+        return redirect()->route('users.create');
     }
 
     /**
@@ -58,7 +66,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $users = User::find($id);
+        return view('admin.users.edit', ['users' => $users]);
     }
 
     /**
@@ -70,7 +79,12 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $result = $request->all();
+        $users = User::find($id)->update($result);
+        if($users){
+            return redirect()->route('users.index');
+        }
+        return redirect()->route('users.update');
     }
 
     /**
@@ -81,6 +95,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::find($id)->delete();
+        return response()->json("ok");
     }
 }

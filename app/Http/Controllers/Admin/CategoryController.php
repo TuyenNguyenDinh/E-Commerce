@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use App\Models\Categories;
 use Illuminate\Http\Request;
 
@@ -34,40 +35,16 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $fileName = $this->doUpload($request);
-        $data = array_merge($request->all(), ["image" => $fileName]);
+        $data = array_merge($request->all());
         $result = Categories::create($data);
         if ($result) {
             return redirect()->route('categories.index');
         }
         return redirect()->route('categories.create');
-        return dd($data);
     }
 
-
-    private function doUpload(Request $request)
-    {
-        $fileName = "";
-        //Kiểm tra file
-        if ($request->file('image')->isValid()) {
-			// File này có thực, bắt đầu đổi tên và move
-			$fileExtension = $request->file('image')->getClientOriginalExtension(); // Lấy . của file
-			
-			// Filename cực shock để khỏi bị trùng
-			$fileName = time() . "_" . rand(0,9999999) . "_" . md5(rand(0,9999999)) . "." . $fileExtension;
-						
-			// Thư mục upload
-			$uploadPath = public_path('/upload'); // Thư mục upload
-			
-			// Bắt đầu chuyển file vào thư mục
-			$request->file('image')->move($uploadPath, $fileName);
-		}
-		else {
-        }
-        return $fileName;
-    }
 
     /**
      * Display the specified resource.
@@ -99,11 +76,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
-        $fileName = $this->doUpload($request);
         $categories = Categories::find($id);
-        $data = array_merge($request->all(), ["image" => $fileName]);
+        $data = $request->all();
         $categories->update($data);
         if($categories){
             return redirect()->route('categories.index');

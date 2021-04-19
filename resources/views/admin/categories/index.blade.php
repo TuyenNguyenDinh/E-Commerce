@@ -1,67 +1,79 @@
 @extends('layouts.admin')
 @section('title','Categories')
 @section('main')
-<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-    <div class="row">
-        <div class="col-xs-12 col-md-12 col-lg-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">Danh sách danh mục</div>
-                <div class="panel-body">
-                    <div class="bootstrap-table">
-                        <div class="table-responsive">
-                            <div class="col-lg-6 right">
-                                <div style="margin-top:20px; margin-bottom:20px">
-                                    <a href="{{ route('categories.create') }}" class="btn btn-primary">Thêm danh mục</a>
-                                </div>
-                                <!-- add modal -->
-
-                            </div>
-                            <table class="table table-bordered" style="margin-top:20px;">
-                                <thead>
-                                    <tr class="bg-primary">
-                                        <th>ID</th>
-                                        <th>Tên danh mục</th>
-                                        <th>Ảnh</th>
-                                        <th>Tùy chọn</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($categories as $category)
-                                    <tr style="text-align: center;">
-                                        <td>{{$category->id}}</td>
-                                        <td>{{$category->name}}</td>
-                                        <td><img src="{{asset('/upload/'. $category->image)}}" alt="" width="120px" height="120px"></td>
-                                        <td>
-                                            <div class="row action-button" style="padding-left: 10px;">
-                                                <!-- edit button -->
-
-                                                <div class="action-edit">
-                                                    <p><a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</a></p>
-                                                </div>
-
-                                                <!-- delete button -->
-
-                                                <div class="action-delete">
-                                                    <form action="{{ route('categories.destroy', $category->id) }}" method="post">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <p><input class="btn btn-danger" type="submit" value="Xóa"></p>
-                                                    </form>
-                                                </div>
-
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/.row-->
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">List Category</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
+                    <li class="breadcrumb-item active">List Category</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
 </div>
+
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">DataTable with minimal features & hover style</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="bg-primary text-center">
+                                    <th>ID</th>
+                                    <th>Name category</th>
+                                    <th>Option</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($categories as $category)
+                                <tr class="text-center">
+                                    <td>{{$category->id}}</td>
+                                    <td>{{$category->name}}</td>
+                                    <td class="text-center py-0 align-middle">
+                                        <div class="btn-group btn-group-sm">
+                                            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                            <a href="{{ route('categories.destroy', $category->id) }}" class="btn btn-danger" onclick="event.preventDefault();document.getElementById('delete_pr').submit();"><i class="fas fa-trash"></i></a>
+                                            <form id="delete_pr" action="{{ route('categories.destroy', $category->id) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                            <tfoot>
+                                <tr class="text-center">
+                                <th>ID</th>
+                                    <th>Name category</th>
+                                    <th>Option</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row (main row) -->
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
 @endsection

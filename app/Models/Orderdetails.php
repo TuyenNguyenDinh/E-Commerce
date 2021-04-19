@@ -11,6 +11,13 @@ class Orderdetails extends Model
     protected $dateFormat = 'U';
 
 
+    function orders(){
+        return $this->belongsTo('App\Models\Orders','id_order');
+    }
+    function products(){
+        return $this->belongsTo('App\Models\Products','id_product');
+    }
+
     protected $fillable = [
         'id_order',
         'id_product',

@@ -183,6 +183,10 @@ ol {
     background-color: #D10024;
 }
 
+.header-ctn>div>a>.qty>i {
+    color: #FFF!important;
+}
+
 
 /* Navigation */
 

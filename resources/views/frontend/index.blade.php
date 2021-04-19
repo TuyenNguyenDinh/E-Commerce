@@ -82,8 +82,12 @@
                                         <div class="product-img">
                                             <img src="{{asset('upload/'.$product->image1)}}" alt="">
                                             <div class="product-label">
+                                                @if($product->discount == 0)
+                                                <span class="new">new</span>
+                                                @else
                                                 <span class="sale">-{{$product->discount}}%</span>
                                                 <span class="new">new</span>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="product-body">
@@ -93,9 +97,11 @@
                                                 <a href="#">{{$product->name_product}}</a>
                                             </h3>
                                             <h4 class="product-price">
-
                                                 {{number_format($product->price,0,',','.')}} đ
+                                                @if($product->price == $product->old_price)
+                                                @else
                                                 <del class="product-old-price">{{number_format($product->old_price,0,',','.')}} đ</del>
+                                                @endif
                                             </h4>
                                             <div class="product-rating">
                                                 @for($i = 1; $i <= $product->like; $i++)

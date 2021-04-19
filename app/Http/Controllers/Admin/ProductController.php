@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
 use App\Models\Brands;
 use App\Models\Categories;
 use App\Models\Discount;
 use App\Models\Products;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 class ProductController extends Controller
 {
     /**
@@ -46,24 +47,24 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
+
         $fileName1 = $this->doUploadImage1($request);
         $fileName2 = $this->doUploadImage2($request);
         $fileName3 = $this->doUploadImage3($request);
         $fileName4 = $this->doUploadImage4($request);
         $old_price = $request->price;
-        $discount = $request->discount;
-        $price = $old_price * ((100 - $discount) / 100);
+        $price = $old_price;
         $products = Products::create(array_merge($request->all(), ["old_price" => $old_price],
          ["price" => $price],
-         ["discount" => $discount],
+         ["discount" => 0],
          ["image1" =>$fileName1], ["image2" => $fileName2], 
          ["image3" => $fileName3], ["image4" => $fileName4]));
-        if ($products) {
-            return redirect()->route('products.index');
-        }
-        return redirect()->route('products.create');
+
+
+        return response()->json($products);
+        // return redirect()->route('products.create');
         
     }
 
@@ -215,6 +216,7 @@ class ProductController extends Controller
     {
         $products = Products::find($id);
         $products->delete();
-        return redirect()->route('products.index');
+        // return redirect()->route('products.index');
+        return response()->json("ok");
     }
 }

@@ -16,9 +16,8 @@ class DiscountController extends Controller
      */
     public function index()
     {
-        $discount = Discount::all();
         $products = Products::all();
-        return view('admin.discount.index', array('discount' => $discount, 'products' => $products));
+        return view('admin.discount.index', ['products' => $products]);
     }
 
     /**
@@ -28,8 +27,8 @@ class DiscountController extends Controller
      */
     public function create()
     {
-        $products = Products::all();
-        return view('admin.discount.create', array('products' => $products));
+        // $products = Products::all();
+        // return view('admin.discount.create', array('products' => $products));
     }
 
     /**
@@ -41,14 +40,14 @@ class DiscountController extends Controller
     public function store(Request $request)
     {
 
-        $data = array_merge($request->all());
-        $result = Discount::create($data);
-        // $pro = Products::where('id',$result->id_product)->update(array('email' => $newEmail));
-        // if ($result) {
-        //     return redirect()->route('discount.index');
-        // }
-        // return redirect()->route('discount.create');
-        return dd($pro);
+        // $data = array_merge($request->all());
+        // $result = Discount::create($data);
+        // // $pro = Products::where('id',$result->id_product)->update(array('email' => $newEmail));
+        // // if ($result) {
+        // //     return redirect()->route('discount.index');
+        // // }
+        // // return redirect()->route('discount.create');
+        // return dd($pro);
     }
 
     /**
@@ -70,7 +69,8 @@ class DiscountController extends Controller
      */
     public function edit($id)
     {
-        //
+        $discount = Products::find($id);
+        return view('admin.discount.edit', ['discount' => $discount]);
     }
 
     /**
@@ -81,8 +81,14 @@ class DiscountController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {   $products = Products::find($id);
+        $old_price = $request->old_price;
+        $price = $old_price * ((100 - $request->discount) / 100);
+        $products->update(array_merge($request->all(),['old_price' => $old_price, 'price' => $price]));
+        if($products){
+            return redirect()->route('discount.index');
+        }
+        return redirect()->route('admin.discount.edit');
     }
 
     /**

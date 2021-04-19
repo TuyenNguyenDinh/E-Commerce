@@ -35,6 +35,12 @@ class Products extends Model
     }
 
 
+    function orderdetails()
+    {
+        return $this->hasMany('App\Models\Orderdetails','id_product');
+    }
+
+
 
     protected $fillable = [
         'id_category',
@@ -50,6 +56,7 @@ class Products extends Model
         'lenght',
         'weight',
         'height',
+        'width',
         'description',
         'like',
         'old_price'
