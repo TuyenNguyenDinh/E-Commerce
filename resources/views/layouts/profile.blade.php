@@ -5,12 +5,12 @@
 <div class="section">
     <div class="container-fluid">
         <div class="row">
-            <div class="d-flex container-fluid">
-                <div class="userpage-sidebar col-lg-3">
+            <div class="userpage container-fluid">
+                <div class="userpage-sidebar col-lg-3 col-md-12">
                     <div class="user-page-brief d-flex">
                         <a href="" class="user-page-brief__avatar">
                             <div class="avatar">
-                                <img class="avatar__img" src="{{asset('image/img_user.jpg')}}"></img>
+                                <img class="avatar__img" src="{{asset('upload/'.$cus->image_acc)}}"></img>
                             </div>
                         </a>
                         <div class="user-page-brief__right d-flex justify-content-center ">
@@ -24,7 +24,7 @@
                     </div>
                     <div class="userpage-sidebar-menu">
                         <div class="stardust-dropdown__item-header">
-                            <a href="#" class="userpage-sidebar-menu-entry">
+                            <a href="{{asset('user/account/profile')}}" class="userpage-sidebar-menu-entry">
                                 <div class="userpage-sidebar-menu-entry__icon">
                                     <img src="{{asset('image/user_interface.png')}}">
                                 </div>
@@ -32,11 +32,10 @@
                                     Hồ sơ
                                 </div>
                             </a>
-                            <a href="#" class="userpage-sidebar-menu-entry">
+                            <a href="{{asset('user/account/orders')}}" class="userpage-sidebar-menu-entry">
                                 <div class="userpage-sidebar-menu-entry__icon">
                                     <img src="{{asset('image/order_interface.png')}}" alt="">
                                 </div>
-
                                 <div class="userpage-sidebar-menu-entry__text">
                                     Đơn mua
                                 </div>
@@ -91,6 +90,7 @@
         })
         event.preventDefault();
     });
+    
     $('#verifyPassword').on('submit', function(event) {
         var route = $('#verifyPassword').data('route');
         var form_data = $(this);

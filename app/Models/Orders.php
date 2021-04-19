@@ -9,6 +9,17 @@ class Orders extends Model
     protected $table = 'orders';
     public $timestamps = false;
     protected $dateFormat = 'U';
+    
+
+    function Customers()
+    {
+        return $this->belongsTo('App\Models\Customers', 'id_customer');
+    }
+
+    function orderdetails()
+    {
+        return $this->hasMany('App\Models\Orderdetails','id_order');
+    }
 
 
     protected $fillable = [

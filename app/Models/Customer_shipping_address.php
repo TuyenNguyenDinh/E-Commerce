@@ -15,7 +15,7 @@ class Customer_shipping_address extends Model
         return $this->belongsTo('App\Models\Customers','id_customer');
     }
 
-    function provinces(){
+    function province(){
         return $this->belongsTo('App\Models\Province','id_province');
     }
 

@@ -25,6 +25,10 @@ class Customers extends Authenticatable
         return $this->hasMany('App\Models\Wishlist','id_customer');
     }
 
+    function orders(){
+        return $this->hasMany('App\Models\Orders','id_customer');
+    }
+
     function customer_shipping_address(){
         return $this->hasMany('App\Models\Customer_shipping_address','id_customer');
     }

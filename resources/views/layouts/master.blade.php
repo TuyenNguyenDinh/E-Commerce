@@ -4,16 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{asset('css/frontend/styles.css')}}">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{asset('plugins/select2/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
     <script src="http://code.jquery.com/jquery-3.4.1.js"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
 </head>
+
 <body>
     <header>
         <div id="top-header">
@@ -114,6 +120,9 @@
                                     <div class="modal-footer d-flex justify-content-center">
                                         <div class="signup-section">Not a member yet? <a href="{{asset('/registercustomer')}}" class="text-info"> Sign Up</a>.</div>
                                     </div>
+                                    <div class="modal-footer d-flex justify-content-center">
+                                        <div class="signup-section"><a href="{{asset('/forget-password')}}" class="text-info">Forgot password</a>.</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -159,7 +168,7 @@
                                 <a href="{{ asset('cart/show') }}">
                                     <i class="far fa-shopping-cart"></i>
                                     <span>Your Cart</span>
-                                    <div class="qty">{{Cart::count()}}</div>
+                                    <div id="qty_cart" class="qty">{{Cart::count()}}</div>
                                 </a>
                             </div>
                             <div class="menu-toggle" id="btnNav">
@@ -172,17 +181,19 @@
                                 <nav class="nav">
                                     <div class="nav__links">
                                         <ul class="main-nav nav navbar-nav">
+                                            @foreach($categories as $category)
                                             <li>
-                                                <a href="#">Home</a>
+                                                <a href="{{asset('category/'.$category->id)}}">{{$category->name}}</a>
+                                            </li>
+                                            @endforeach
+                                            @if(Request::is('user/account/profile') || Request::is('user/account/orders'))
+                                            <li>
+                                                <a href="{{ asset('user/account/orders') }}">Hồ sơ</a>
                                             </li>
                                             <li>
-                                                <a href="#">Hot Deals</a>
+                                                <a href="{{ asset('user/account/orders') }}">Đơn hàng</a>
                                             </li>
-                                            <li>
-                                                <a href="#">
-                                                    Categories
-                                                </a>
-                                            </li>
+                                            @endif
                                         </ul>
 
                                     </div>
@@ -360,6 +371,9 @@
         </div>
     </footer>
     <script src="http://code.jquery.com/jquery-3.4.1.js"></script>
+    <!-- Select2 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="{{ asset('js/frontend/select2.full.min.js') }}"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Orderdetails;
+use App\Models\Orders;
 use Illuminate\Http\Request;
 
 class OrderDetailController extends Controller
@@ -14,7 +16,7 @@ class OrderDetailController extends Controller
      */
     public function index()
     {
-        //
+        // 
     }
 
     /**
@@ -46,7 +48,9 @@ class OrderDetailController extends Controller
      */
     public function show($id)
     {
-        //
+        $data['orders'] = Orders::find($id);
+        $data['order_details'] = Orderdetails::where('id_order',$id)->get();
+        return view('admin.orderdetails.show', $data);
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Models\Brands;
 use App\Models\Categories;
 use App\Models\Comments;
 use App\Models\Products;
+use App\Models\Province;
 use Illuminate\Http\Request;
 use App\Models\Wishlist;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +40,7 @@ class FrontendController extends Controller
     {
         $data['items'] = Products::find($id);
         $data['comments'] = Comments::where('id_product', $id)->get();
+        $data['provinces'] = Province::all();
         return view('frontend.details', $data);
     }
 

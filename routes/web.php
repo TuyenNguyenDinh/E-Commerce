@@ -22,6 +22,10 @@ Route::get('category/{id}.html', 'FrontendController@getCategory');
 Route::get('brands/{id}.html','FrontendController@getBrand');
 Route::get('details/{id}.html', 'FrontendController@getDetail');
 Route::get('product','FrontendController@getSearch');
+Route::get('forget-password','CustomerController@getEmail');
+Route::post('forget-password','CustomerController@postEmail');
+Route::get('/reset-password/{token}', 'ResetPasswordController@getPassword');
+Route::post('/reset-password', 'ResetPasswordController@updatePassword');
 
 
 // Wishlist
@@ -32,10 +36,25 @@ Route::group(['middleware' => 'checklogin'], function(){
     Route::get('wishlist/delete/{id}.html','FrontendController@deleteWishItems');
 });
 
-;
+
+
+Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admin'], function(){
+    Route::resource('categories', 'CategoryController');
+        Route::resource('brands','BrandController');
+        Route::resource('products', 'ProductController');
+        Route::resource('users', 'UserController');
+        Route::resource('customers', 'CustomerController');
+        Route::resource('discount', 'DiscountController');  
+        Route::get('customers/{id}/orders','OrderController@getOrders');
+        Route::get('orders','OrderController@index');
+        // Route::get('orders/{$id}/details', 'OrderDetailController@show');
+        Route::resource('orderdetails','OrderDetailController');
+
+});
+
 
 //Backend
-Route::group(['namespace' => 'Admin'], function () {
+Route::group(['middleware' => ['web', 'admin'],'namespace' => 'Admin'], function () {
     Route::prefix('admin')->group(function () {
         Route::get('/', function () {
             return view('admin.index');
@@ -46,6 +65,10 @@ Route::group(['namespace' => 'Admin'], function () {
         Route::resource('users', 'UserController');
         Route::resource('customers', 'CustomerController');
         Route::resource('discount', 'DiscountController');
+        Route::get('customers/{id}/orders','OrderController@getOrders');
+        // Route::get('orders/{$id}/details', 'OrderDetailController@show');
+        Route::resource('orderdetails','OrderDetailController');
+
     });
 });
 
@@ -58,6 +81,7 @@ Route::get('GetSubCatAgainstMainCatEdit/{id}','CustomerController@GetSubCatAgain
 
 Route::group(['middleware' => 'checklogin', 'prefix' => 'user/account'], function(){
     Route::get('profile','CustomerController@getInfo');
+    Route::get('orders','CustomerController@getOrders');
     Route::post('change_profile','CustomerController@changeProfile')->name('changeProfile');
     Route::post('verify_email', 'CustomerController@verifyEmail')->name('verifyemail');
     Route::get('change_email', 'CustomerController@getChangeEmail')->name('changeEmail');
@@ -71,12 +95,17 @@ Route::group(['middleware' => 'checklogin', 'prefix' => 'user/account'], functio
 
 Route::group(['middleware' => 'checklogin', 'prefix' => 'cart'], function(){
     Route::get('add/{id}', 'CartController@getAddCart');
-    Route::get('show','CartController@getShowCart');
+    Route::get('show','CartController@getShowCart')->name('cartshow');
     Route::get('delete/{id}', 'CartController@getDeleteCart');
     Route::get('update', 'CartController@getUpdateCart');
-    Route::post('show', 'CartController@postComplete');
     Route::get('cartdata','CartController@cartdata')->name('cartdata');
+    Route::get('checkout','CartController@getCheckout')->name('checkout');
+    Route::post('checkout', 'PurchaseController@postPurchase')->name('purchase');
+    Route::post('add-address','CartController@addAddress')->name('addAddress');
 });
+
+Route::get('complete','PurchaseController@getComplete')->name('complete');
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/admin', 'HomeController@index')->name('admin');

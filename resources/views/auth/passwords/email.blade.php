@@ -1,60 +1,49 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="limiter">
-    <div class="container-login100">
-        <div class="wrap-login100">
-            <div class="login100-pic js-tilt" data-tilt>
-                <img src="https://colorlib.com/etc/lf/Login_v1/images/img-01.png" alt="IMG">
-            </div>
-            <form method="POST" action="{{ route('password.email') }}" class="login100-form validate-form">
-                @csrf
-
-                <span class="login100-form-title">
-                    Forgot Password
+<div class="card">
+    <div class="card-body login-card-body">
+        <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>
+        <form method="POST" action="{{ route('password.email') }}">
+            @csrf
+            <div class="input-group mb-3">
+                <input type="email" name="email" class="form-control input100 @error('email') is-invalid @enderror" placeholder="Email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-envelope"></span>
+                    </div>
+                </div>
+                @error('email')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
                 </span>
-
-                <span class="input-mail">Please input email address</span>
-                <div class="wrap-input100 validate-input">
-                    <input id="email" class="input100 @error('email') is-invalid @enderror" type="text" name="email" placeholder="Email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                    @error('email')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-                        <i class="fa fa-envelope" aria-hidden="true"></i>
-                    </span>
+                @enderror
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary btn-block">Request new password</button>
                 </div>
+                <!-- /.col -->
+            </div>
 
-                <div class="container-login100-form-btn">
-                    <button class="login100-form-btn">
-                        Send password reset link
-                    </button>
-                </div>
-                @if (session('status'))
-                <div class="text-center p-t-12" style="color: red; font-size:18px; ">
-                    <span class="txt1">
-                        Send mail success
-                    </span>
-                    <a class="txt2" href="{{ route('login') }}">
-                        Login now
-                    </a>
-                </div>
-                @endif
-                @if (Route::has('register'))
-                <div class="text-center p-t-136">
-                    <a class="txt2" href="{{ route('register') }}">
-                        Create your Account
-                        <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-                    </a>
-                </div>
-                @endif
-            </form>
-        </div>
+            @if (session('status'))
+            <div class="text-center p-t-12" style="color: red; font-size:18px; ">
+                <span class="txt1">
+                    Send mail success
+                </span>
+            </div>
+            @endif
+        </form>
+
+        <p class="mt-3 mb-1">
+            <a href="{{route('login')}}">Login</a>
+        </p>
+        <!-- @if (Route::has('register'))
+        <p class="mb-0">
+            <a href="{{route('register')}}" class="text-center">Register a new membership</a>
+        </p>
+        @endif -->
     </div>
+    <!-- /.login-card-body -->
 </div>
 @endsection

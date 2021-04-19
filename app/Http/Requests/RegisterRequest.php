@@ -26,7 +26,7 @@ class RegisterRequest extends FormRequest
         return [
             'name' => 'bail|required|max: 30',
             'phone' => 'required|numeric|',
-            'password' => 'required|max: 10|min:5',
+            'password' => 'required|max:10|min:5',
             'rePassword' =>'required|same:password',
             'address' => 'required|max: 100',
             'email' => 'required|email|unique:customers,email',

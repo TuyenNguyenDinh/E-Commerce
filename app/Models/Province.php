@@ -19,6 +19,10 @@ class Province extends Model
         return $this->hasMany('App\Models\Customers', 'id_province');
     }
 
+    function customers_shipping_address(){
+        return $this->hasMany('App\Models\Customers_shipping_address', 'id_province');
+    }
+
     protected $fillable = [
        'province',
     ];

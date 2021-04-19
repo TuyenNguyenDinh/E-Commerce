@@ -15,48 +15,55 @@
 
     <!-- Fonts -->
     <!-- <link rel="dns-prefetch" href="//fonts.gstatic.com"> -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
 
     <!-- Styles -->
     <!-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
 
-    <link rel="stylesheet" href="{{ asset('css/backend/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/backend/util.css') }}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/backend/hamburgers.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/backend/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/backend/select2.min.css') }}">
-    <script src="{{ asset('js/backend/jquery-3.2.1.min.js') }}"></script>
-    <script src="{{ asset('js/backend/select2.min.js') }}"></script>
-    <script src="{{ asset('js/backend/tilt.jquery.min.js') }}"></script>
-    <script src="{{ asset('js/backend/bootstrap.min.js') }}"></script>
-    <script src="https://colorlib.com/etc/lf/Login_v1/vendor/bootstrap/js/popper.js"></script>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="{{asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{asset('css/backend/adminlte.min.css')}}">
 
-    <script src="{{ asset('js/backend/main.js') }}"></script>
+    <!-- jquery -->
+    <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+
+    <!-- show password -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
+
 
 </head>
 
-<body>
 
-    @yield('content')
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="../../index2.html"><b>Admin</b>LTE</a>
+        </div>
+        <!-- /.login-logo -->
+        @yield('content')
 
+    </div>
+    <!-- /.login-box -->
+    <!-- jQuery -->
+    <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+
+    <!-- Bootstrap 4 -->
+    <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <!-- AdminLTE App -->
+    <script src="{{asset('js/backend/adminlte.min.js')}}"></script>
     <script>
-        $('.js-tilt').tilt({
-            scale: 1.1
-        })
-    </script>
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
+        function showhide() {
+            var x = document.getElementById("password");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
         }
-        gtag('js', new Date());
-
-        gtag('config', 'UA-23581568-13');
     </script>
 </body>
 

@@ -1,84 +1,149 @@
 @extends('layouts.admin')
 @section('title','Products')
 @section('main')
-<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-    <div class="row">
-        <div class="col-xs-12 col-md-12 col-lg-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">Danh sách sản phẩm</div>
-                
-                <div class="panel-body">
-                    <div class="bootstrap-table">
-                        <div class="table-responsive">
-                            <div class="col-lg-6 right">
-                                <div style="margin-top:20px; margin-bottom:20px">
-                                    <a href="{{ route('products.create') }}" class="btn btn-primary">Thêm sản phẩm</a>
-                                    <a href="{{ route('discount.index') }}" class="btn btn-primary">Giảm giá sản phẩm</a>
-
-                                </div>
-
-                                <!-- add modal -->
-
-                            </div>
-                            <table class="table table-bordered" style="margin-top:20px;">
-                                <thead>
-                                    <tr class="bg-primary">
-                                        <th>ID</th>
-                                        <th>Danh mục</th>
-                                        <th>Thương hiệu</th>
-                                        <th>Tên sản phẩm</th>
-                                        <th>Ảnh sản phẩm</th>
-                                        <th width='11%'>Giá sản phẩm</th>
-                                        <th>Giá cũ</th>
-                                        <th>Số lượng</th>
-                                        <th>Thông tin chi tiết</th>
-                                        <th>Tùy chọn</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($products as $product)
-                                    <tr style="text-align: center;">
-                                        <td>{{ $product->id}}</td>
-                                        <td>{{ $product->categories->name}}</td>
-                                        <td>{{ $product->brands->name}}</td>
-                                        <td>{{ $product->name_product}}</td>
-                                        <td><img src="../upload/{{ $product->image1 }}" width="120" height="120" /></td>
-                                        <td>{{number_format($product->price,0,',','.')}} đ</td>
-                                        
-                                        <td>{{number_format($product->old_price,0,',','.')}} đ</td>
-                                        <td>{{ $product->quantity}}</td>
-                                        <td class="label_title"> <?php echo $product->description ?></td>
-                                        <td>
-                                            <div class="row action-button" style="padding-left: 10px; padding-right:10px">
-                                                <!-- edit button -->
-                                                <div class="action-edit">
-                                                    <p><a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</a></p>
-
-                                                </div>
-                                                <!-- delete button -->
-                                                <div class="action-delete">
-                                                    <form action="{{ route('products.destroy', $product->id) }}" method="post">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <p><input class="btn btn-danger" type="submit" value="Xóa"></p>
-                                                    </form>
-                                                </div>
-                                        </td>
-
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            <div id="pagination">
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/.row-->
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">List Products</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">List Products</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
 </div>
+
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">DataTable with minimal features & hover style</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="bg-primary text-center">
+                                    <th>ID</th>
+                                    <th>Categories</th>
+                                    <th>Brands</th>
+                                    <th>Name Products</th>
+                                    <th>Image</th>
+                                    <th width='11%'>Price</th>
+                                    <th>Old Price</th>
+                                    <th>Quanity</th>
+                                    <th>Option</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($products as $product)
+                                <tr style="text-align: center;">
+                                    <td>{{ $product->id}}</td>
+                                    <td>{{ $product->categories->name}}</td>
+                                    <td>{{ $product->brands->name}}</td>
+                                    <td>{{ $product->name_product}}</td>
+                                    <td><img src="../upload/{{ $product->image1 }}" width="120" height="120" /></td>
+                                    <td>{{number_format($product->price,0,',','.')}} đ</td>
+
+                                    <td>{{number_format($product->old_price,0,',','.')}} đ</td>
+                                    <td>{{ $product->quantity}}</td>
+                                    <!-- <td class="label_title">
+                                        <div id="description_content_{{$product->id}}">
+                                        <?php echo $product->description ?>
+                                        </div>
+                                    </td> -->
+                                    <td class="text-right py-0 align-middle">
+                                        <div class="btn-group btn-group-sm">
+                                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                            <a href="#" class="btn btn-danger" onclick="deletePr('{{$product->id}}')"><i class="fas fa-trash"></i></a>
+                                            <form id="delete_product_{{$product->id}}" data-route="{{ route('products.destroy', $product->id) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                <th>ID</th>
+                                    <th>Categories</th>
+                                    <th>Brands</th>
+                                    <th>Name Products</th>
+                                    <th>Image</th>
+                                    <th width='11%'>Price</th>
+                                    <th>Old Price</th>
+                                    <th>Quanity</th>
+                                    <th>Option</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row (main row) -->
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+<script>
+    function deletePr(id) {
+        var deletepr = document.getElementById('delete_product_' + id);
+        var route = $('#delete_product_' + id).data('route');
+
+        swal({
+                title: "Xóa?",
+                text: "Bạn có muốn xóa sản phẩm này?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        method: 'DELETE',
+                        url: route,
+                        processData: false, // Important!
+                        contentType: false,
+                        cache: false,
+                        data: {
+                            id: id
+                        },
+                        success: function(response) {
+                            console.log(response)
+                            swal({
+                                closeOnClickOutside: false,
+                                icon: "success",
+                                title: 'Thành công, xóa thành công!',
+                                showSpinner: true
+                            });
+                        },
+                        error: function(response) {
+                            console.log(response)
+                            swal({
+                                closeOnClickOutside: false,
+                                icon: "warning",
+                                title: 'Có lỗi, vui lòng kiểm tra lại!',
+                                showSpinner: true
+                            });
+                        }
+                    })
+                }
+            });
+    }
+</script>
 @endsection

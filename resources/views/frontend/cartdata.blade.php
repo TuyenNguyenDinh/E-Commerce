@@ -2,7 +2,7 @@
     <div class="col-lg-12 col-md-12 col-12">
         <h3 class="display-5 mb-2 text-center">Shopping Cart</h3>
         <p class="mb-5 text-center">
-            <i class="text-info font-weight-bold">{{Cart::count()}}</i> items in your cart
+            <i id="cart_count" class="text-info font-weight-bold">{{Cart::count()}}</i> items in your cart
         </p>
         @if(Cart::count()>=1)
         <table class="table table-condensed table-responsive">
@@ -58,7 +58,7 @@
 </div>
 <div class="row mt-4 d-flex align-items-center">
     <div class="col-sm-6 order-md-2 text-right">
-        <a href="catalog.html" class="btn btn-primary mb-4 btn-lg pl-5 pr-5">Checkout</a>
+        <a href="{{ route('checkout') }}" class="btn btn-primary mb-4 btn-lg pl-5 pr-5">Checkout</a>
     </div>
     <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
         <a href="catalog.html">
@@ -87,5 +87,7 @@
     $('#bt').click(function() {
         alert('jyfjyuklb');
         $('#listCart').load("{{route('cartdata')}}");
+        $('#qty_cart').load("{{route('cartdata')}} #cart_count")
+
     })
 </script>

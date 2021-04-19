@@ -7,11 +7,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Customers;
 use App\Models\District;
+use App\Models\Orderdetails;
+use App\Models\Orders;
 use App\Models\Province;
+use Carbon\Carbon;
 use CKSource\CKFinder\Image;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Str;
 
 
 class CustomerController extends Controller
@@ -61,20 +66,30 @@ class CustomerController extends Controller
 
     }
 
-    public function changeProfile(Request $request){
+    public function changeProfile(Request $request)
+    {
         $id = Auth::guard('customer')->user()->id;
         $fileName = $this->doUpload($request);
         $customers = Customers::find($id);
         $data = array_merge($request->all(), ["image_acc" => $fileName]);
         $customers->update($data);
-        if($customers){
-            Alert::success('Thành công','Cập nhật hồ sơ thành công');
+        if ($customers) {
+            Alert::success('Thành công', 'Cập nhật hồ sơ thành công');
             return redirect('/');
-        }else{
-            Alert::warring('Lỗi','Có lỗi');
+        } else {
+            Alert::warring('Lỗi', 'Có lỗi');
             return redirect('/');
         }
-        
+    }
+
+
+    public function getOrders(){
+        $data['id'] = Auth::guard('customer')->user()->id;
+        $data['cus'] = Customers::find($data['id']);
+        $data['orders'] = Orders::where('id_customer', $data['id'])->get();
+        $data['orders_details'] = Orderdetails::all();
+        return view('frontend.orders',$data);
+        // return dd($data);
     }
 
     private function doUpload(Request $request)
@@ -82,19 +97,18 @@ class CustomerController extends Controller
         $fileName = "";
         //Kiểm tra file
         if ($request->file('image_acc')->isValid()) {
-			// File này có thực, bắt đầu đổi tên và move
-			$fileExtension = $request->file('image_acc')->getClientOriginalExtension(); // Lấy . của file
-			
-			// Filename cực shock để khỏi bị trùng
-			$fileName = time() . "_" . rand(0,9999999) . "_" . md5(rand(0,9999999)) . "." . $fileExtension;
-						
-			// Thư mục upload
-			$uploadPath = public_path('/upload'); // Thư mục upload
-			
-			// Bắt đầu chuyển file vào thư mục
-			$request->file('image_acc')->move($uploadPath, $fileName);
-		}
-		else {
+            // File này có thực, bắt đầu đổi tên và move
+            $fileExtension = $request->file('image_acc')->getClientOriginalExtension(); // Lấy . của file
+
+            // Filename cực shock để khỏi bị trùng
+            $fileName = time() . "_" . rand(0, 9999999) . "_" . md5(rand(0, 9999999)) . "." . $fileExtension;
+
+            // Thư mục upload
+            $uploadPath = public_path('/upload'); // Thư mục upload
+
+            // Bắt đầu chuyển file vào thư mục
+            $request->file('image_acc')->move($uploadPath, $fileName);
+        } else {
         }
         return $fileName;
     }
@@ -161,7 +175,33 @@ class CustomerController extends Controller
         $newDistrict = $request->district;
         Customers::where('id_province', '=', Auth::guard('customer')->user()->id_province)
             ->update(array('id_province' => $newProvince, 'id_district' => $newDistrict));
-            Alert::success('Thành công', 'Đổi số điện thoại thành công');
-            return redirect("/");
+        Alert::success('Thành công', 'Đổi số điện thoại thành công');
+        return redirect("/");
+    }
+
+
+    public function getEmail()
+    {
+        return view('frontend.email');
+    }
+
+    public function postEmail(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:customers',
+        ]);
+
+        $token = Str::random(64);
+
+        DB::table('password_resets')->insert(
+            ['email' => $request->email, 'token' => $token, 'created_at' => Carbon::now()]
+        );
+
+        Mail::send('frontend.verify', ['token' => $token], function ($message) use ($request) {
+            $message->to($request->email);
+            $message->subject('Reset Password Notification');
+        });
+
+        return back()->with('message', 'We have e-mailed your password reset link!');
     }
 }

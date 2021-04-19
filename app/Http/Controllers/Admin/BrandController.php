@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Brands;
 use Illuminate\Http\Request;
-Use Alert;
+use Alert;
+use App\Http\Requests\BrandRequest;
 use RealRashid\SweetAlert\Facades\Alert as FacadesAlert;
 
 class BrandController extends Controller
 {
 
-     /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -37,16 +38,21 @@ class BrandController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BrandRequest $request)
     {
         $fileName = $this->doUpload($request);
-        $data = array_merge($request->all(), ["image" => $fileName]);
-        $result = Brands::create($data);
-        if ($result) {
-            Alert::success('Dusss','dumppp');
-            return redirect()->route('brands.index');
-        }
-        return redirect()->route('brands.create');
+        $data = array_merge($request->all(), ['image' => $fileName]);
+        $result =  Brands::create($data);
+        // if ($result) {
+        //     Alert::success('Thành công', 'tạo thành công');
+        //     return redirect()->route('brands.index');
+        //     // return response()->json($result);
+        // }
+        // return redirect()->route('brands.create');
+        return response()->json($result);
+        // return dd($data);
+        
+
     }
 
 
@@ -55,20 +61,18 @@ class BrandController extends Controller
         $fileName = "";
         //Kiểm tra file
         if ($request->file('image')->isValid()) {
-			// File này có thực, bắt đầu đổi tên và move
-			$fileExtension = $request->file('image')->getClientOriginalExtension(); // Lấy . của file
-			
-			// Filename cực shock để khỏi bị trùng
-			$fileName = time() . "_" . rand(0,9999999) . "_" . md5(rand(0,9999999)) . "." . $fileExtension;
-						
-			// Thư mục upload
-			$uploadPath = public_path('/upload'); // Thư mục upload
-			
-			// Bắt đầu chuyển file vào thư mục
-			$request->file('image')->move($uploadPath, $fileName);
-		}
-		else {
-           
+            // File này có thực, bắt đầu đổi tên và move
+            $fileExtension = $request->file('image')->getClientOriginalExtension(); // Lấy . của file
+
+            // Filename cực shock để khỏi bị trùng
+            $fileName = time() . "_" . rand(0, 9999999) . "_" . md5(rand(0, 9999999)) . "." . $fileExtension;
+
+            // Thư mục upload
+            $uploadPath = public_path('/upload'); // Thư mục upload
+
+            // Bắt đầu chuyển file vào thư mục
+            $request->file('image')->move($uploadPath, $fileName);
+        } else {
         }
         return $fileName;
     }
@@ -93,7 +97,7 @@ class BrandController extends Controller
     public function edit($id)
     {
         $brands = Brands::find($id);
-        return view('admin.brands.edit', array('brands'=>$brands));
+        return view('admin.brands.edit', array('brands' => $brands));
     }
 
     /**
@@ -103,16 +107,20 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BrandRequest $request, $id)
     {
+        
         $fileName = $this->doUpload($request);
-        $brands = Brands::find($id);
-        $data = array_merge($request->all(), ["image" => $fileName]);
-        $brands->update($data);
-        if($brands){
-            return redirect()->route('brands.index');
-        }
-        return redirect()->route('brands.edit');
+        $data = array_merge($request->all(), ['image' => $fileName]);
+        $result =  Brands::find($id)->update($data);
+        // if ($result) {
+        //     Alert::success('Thành công', 'tạo thành công');
+        //     return redirect()->route('brands.index');
+        //     // return response()->json($result);
+        // }
+        // return redirect()->route('brands.create');
+        return response()->json($result);
+        
     }
 
     /**
@@ -125,7 +133,9 @@ class BrandController extends Controller
     {
         $brands = Brands::find($id);
         $brands->delete();
-        return redirect()->route('brands.index');
+        // return redirect()->route('brands.index');
+        return response()->json("ok");
     }
-
 }
+
+

@@ -1,63 +1,127 @@
 @extends('layouts.admin')
 @section('title','Brands')
 @section('main')
-<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-    <div class="row">
-        <div class="col-xs-12 col-md-12 col-lg-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">Danh sách thương hiệu</div>
-                <div class="panel-body">
-                    <div class="bootstrap-table">
-                        <div class="table-responsive">
-                            <div class="col-lg-6 right">
-                                <div style="margin-top:20px; margin-bottom:20px">
-                                    <a href="{{ route('brands.create') }}" class="btn btn-primary">Thêm thương hiệu</a>
-                                </div>
-                                <!-- add modal -->
-
-                            </div>
-                            <table class="table table-bordered" style="margin-top:20px;">
-                                <thead>
-                                    <tr class="bg-primary">
-                                        <th>ID</th>
-                                        <th>Tên thương hiệu</th>
-                                        <th>Ảnh</th>
-                                        <th>Tùy chọn</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($brands as $brand)
-                                    <tr style="text-align: center;">
-                                        <td>{{$brand->id}}</td>
-                                        <td>{{$brand->name}}</td>
-                                        <td><img src="{{asset('upload/'.$brand->image)}}" alt="" width="120px" height="120px"></td>
-                                        <td>
-                                            <div class="row action-button" style="padding-left: 10px;">
-                                                <!-- edit button -->
-                                                <div class="action-edit">
-                                                    <p><a href="{{ route('brands.edit', $brand->id) }}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</a></p>
-                                                </div>
-                                                <!-- delete button -->
-                                                <div class="action-delete">
-                                                    <form action="{{ route('brands.destroy', $brand->id) }}" method="post">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <p><input class="btn btn-danger" type="submit" value="Xóa"></p>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/.row-->
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">List Brands</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
+                    <li class="breadcrumb-item active">List Brands</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
 </div>
+
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">DataTable with minimal features & hover style</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="bg-primary text-center">
+                                    <th>ID</th>
+                                    <th>Name brands</th>
+                                    <th>Image</th>
+                                    <th>Option</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($brands as $brand)
+                                <tr class="text-center">
+                                    <td>{{$brand->id}}</td>
+                                    <td>{{$brand->name}}</td>
+                                    <td><img src="{{asset('upload/'.$brand->image)}}" alt="" width="120px" height="120px"></td>
+                                    <td class="text-center py-0 align-middle">
+                                        <div class="btn-group btn-group-sm">
+                                            <a href="{{ route('brands.edit', $brand->id) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                            <a href="#" class="btn btn-danger" onclick="deleteBr('{{ $brand->id }}')"><i class="fas fa-trash"></i></a>
+                                            <form id="delete_brand_{{$brand->id}}" data-route="{{ route('brands.destroy', $brand->id) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                            <tfoot>
+                                <tr class="text-center">
+                                <th>ID</th>
+                                    <th>Name brands</th>
+                                    <th>Image</th>
+                                    <th>Option</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row (main row) -->
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+<script>
+    function deleteBr(id) {
+        var deletebr = document.getElementById('delete_brand_' + id);
+        var route = $('#delete_brand_' + id).data('route');
+        swal({
+                title: "Delete?",
+                text: "Are you sure delete this brand?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        method: 'DELETE',
+                        url: route,
+                        processData: false, // Important!
+                        contentType: false,
+                        cache: false,
+                        data: {
+                            id: id
+                        },
+                        success: function(response) {
+                            console.log(response)
+                            swal({
+                                closeOnClickOutside: false,
+                                icon: "success",
+                                title: 'Success, Delete successfully!',
+                                showSpinner: true
+                            });
+                        },
+                        error: function(response) {
+                            console.log(response)
+                            swal({
+                                closeOnClickOutside: false,
+                                icon: "warning",
+                                title: 'Error found, Please check again!',
+                                showSpinner: true
+                            });
+                        }
+                    })
+                }
+            });
+    }
+</script>
 @endsection

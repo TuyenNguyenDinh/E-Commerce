@@ -1,65 +1,62 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="limiter">
-    <div class="container-login100">
-        <div class="wrap-login100">
-            <div class="login100-pic js-tilt" data-tilt>
-                <img src="https://colorlib.com/etc/lf/Login_v1/images/img-01.png" alt="IMG">
-            </div>
-            <form method="POST" action="{{ route('password.update') }}" class="login100-form validate-form">
-                @csrf
+<div class="card">
+    <div class="card-body login-card-body">
+        <p class="login-box-msg">You are only one step a way from your new password, recover your password now.</p>
 
-                <input type="hidden" name="token" value="{{ $token }}">
+        <form method="POST" action="{{ route('password.update') }}">
+            @csrf
+            <input type="hidden" name="token" value="{{ $token }}">
 
-                <span class="login100-form-title">
-                    Reset Password
+            <div class="input-group mb-3">
+                <input id="email" class="form-control input100 @error('email') is-invalid @enderror" type="email" name="email" placeholder="Email" value="{{ $email ?? old('email') }}" required autocomplete="email" readonly>
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-envelope"></span>
+                    </div>
+                </div>
+                @error('email')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
                 </span>
-                <div class="wrap-input100 validate-input">
-                    <input id="email" class="input100 @error('email') is-invalid @enderror" type="email" name="email" placeholder="Email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
+                @enderror
+            </div>
 
-                    @error('email')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
+            <div class="input-group mb-3">
+                <input type="password" id="password" name="password" class="form-control input100 @error('password') is-invalid @enderror" placeholder="Password" required autocomplete="new-password">
+                <div class="input-group-append" style="cursor: pointer;" onclick="showhide()">
+                    <div class="input-group-text">
+                        <span class="fa icon-eye-open fa-eye"></span>
+                    </div>
+                </div>
+                @error('password')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+            <div class="input-group mb-3">
+                <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password" required autocomplete="new-password">
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-lock"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary btn-block">Change password</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        </form>
 
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-                        <i class="fa fa-envelope" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <div class="wrap-input100 validate-input">
-                    <input id="password" class="input100 @error('password') is-invalid @enderror" type="password" name="password" placeholder="Password" required autocomplete="new-password">
-
-                    @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-                        <i class="fa fa-lock" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <div class="wrap-input100 validate-input">
-                    <input id="password-confirm" class="input100" type="password" name="password_confirmation" placeholder="Confirm Password" required autocomplete="new-password">
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-                        <i class="fa fa-lock" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <div class="container-login100-form-btn">
-                    <button type="submit" class="login100-form-btn">
-                        Reset Password
-                    </button>
-                </div>
-
-                <div class="text-center p-t-136">
-                </div>
-            </form>
-        </div>
+        <p class="mt-3 mb-1">
+            <a href="{{route('login')}}">Login</a>
+        </p>
     </div>
+    <!-- /.login-card-body -->
 </div>
+
 @endsection

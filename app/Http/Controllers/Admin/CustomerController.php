@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CustomerRequest;
+use App\Models\Customers;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -14,7 +16,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        $customers = Customers::all();
+        return view('admin.customers.index', ['customers' => $customers]);
     }
 
     /**
@@ -24,7 +27,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        // 
     }
 
     /**
@@ -33,9 +36,9 @@ class CustomerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CustomerRequest $request)
     {
-        //
+        // 
     }
 
     /**
@@ -57,7 +60,7 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        //
+        // 
     }
 
     /**

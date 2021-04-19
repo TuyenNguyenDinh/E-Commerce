@@ -1,142 +1,164 @@
 @extends('layouts.admin')
 @section('title','Add Product')
 @section('main')
-<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-	<div class="row">
-		<div class="col-lg-12">
-			<h1 class="page-header">Sản phẩm</h1>
-		</div>
-	</div>
-	<!--/.row-->
+<!-- Content Header (Page header) -->
+<div class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="m-0">Create Products</h1>
+			</div><!-- /.col -->
+			<div class="col-sm-6">
+				<ol class="breadcrumb float-sm-right">
+					<li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
+					<li class="breadcrumb-item"><a href="{{ route('products.index') }}">Products</a></li>
+					<li class="breadcrumb-item active">Create Products</li>
+				</ol>
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+	</div><!-- /.container-fluid -->
+</div>
 
-	<div class="row">
-		<div class="col-xs-12 col-md-12 col-lg-12">
+<!-- /.content-header -->
 
-			<div class="panel panel-primary">
-				<div class="panel-heading">Thêm sản phẩm</div>
-				<div class="panel-body">
-					<form method="post" action="{{ route('products.store') }}" enctype="multipart/form-data">
-						{{ csrf_field() }}
-						<div class="row" style="margin-bottom:40px">
-							<div class="col-xs-8">
-								<div class="form-group">
-									<label>Danh mục</label>
-									<select type="number" name="id_category" class="form-control">
-										@foreach ($categories as $category)
-										<option value="{{ $category->id}}">{{ $category->name}}</option>
-										@endforeach
-									</select>
-								</div>
-								<div class="form-group">
-									<label>Tên thương hiệu</label>
-									<select type="number" name="id_brand" class="form-control">
-										@foreach ($brands as $brand)
-										<option value="{{ $brand->id}}">{{ $brand->name}}</option>
-										@endforeach
-									</select>
-								</div>
-								<div class="form-group">
-									<label>Tên sản phẩm</label>
-									<input type="text" name="name_product" class="form-control">
-									@if ($errors->has('name_product'))
-									<span class="help-block">
-										<strong style="color: red;">{{ $errors->first('ten')}}</strong></br>
-									</span>
-									@endif
-								</div>
-								<div class="form-group">
-									<label>Ảnh sản phẩm ()</label>
-									<input type="file" name="image1" required="true" id="task-name" class="form-control" multiple>
-									<input type="file" name="image2" required="true" id="task-name" class="form-control">
-									<input type="file" name="image3" required="true" id="task-name" class="form-control">
-									<input type="file" name="image4" required="true" id="task-name" class="form-control">
-									@if ($errors->has('image1'))
-									<span class="help-block">
-										<strong style="color: red;"> {{ $errors->first('anh')}}</strong>
-									</span>
-									@endif
-								</div>
-								<div class="form-group">
-									<label>Giá sản phẩm</label>
-									<input type="number" name="price" class="form-control">
-									@if ($errors->has('price'))
-									<span class="help-block">
-										<strong style="color: red;">{{ $errors->first('price')}}</strong></br>
-									</span>
-									@endif
-								</div>
-								<div class="form-group">
-									<label>Phần trăm giảm giá (nếu có)</label>
-									<select name="discount" id="discount">
-										@for ($i = 0; $i <= 100; $i++)
-										<option value="{{$i}}">{{$i}}</option>
-										@endfor
-									</select>
-									
-								</div>
-								<div class="form-group">
-									<label>Số lượng</label>
-									<input type="number" name="quantity" class="form-control">
-									@if ($errors->has('quantity'))
-									<span class="help-block">
-										<strong style="color: red;">{{ $errors->first('quantity')}}</strong></br>
-									</span>
-									@endif
-								</div>
-								<div class="form-group">
-									<label>Trọng lượng</label>
-									<input type="number" name="weight" class="form-control">
-									@if ($errors->has('weight'))
-									<span class="help-block">
-										<strong style="color: red;">{{ $errors->first('weight')}}</strong></br>
-									</span>
-									@endif
-								</div>
-								<div class="form-group">
-									<label>Độ dài</label>
-									<input type="text" name="lenght" class="form-control">
-									@if ($errors->has('lenght'))
-									<span class="help-block">
-										<strong style="color: red;">{{ $errors->first('lenght')}}</strong></br>
-									</span>
-									@endif
-								</div>
-								<div class="form-group">
-									<label>Độ cao</label>
-									<input type="text" name="height" class="form-control">
-									@if ($errors->has('height'))
-									<span class="help-block">
-										<strong style="color: red;">{{ $errors->first('height')}}</strong></br>
-									</span>
-									@endif
-								</div>
-								<div class="form-group">
-									<label>Độ rộng</label>
-									<input type="text" name="width" class="form-control">
-									@if ($errors->has('width'))
-									<span class="help-block">
-										<strong style="color: red;">{{ $errors->first('width')}}</strong></br>
-									</span>
-									@endif
-								</div>
-								<div class="form-group">
-									<label>Miêu tả</label><br>
-									<textarea name="description" class="ckeditor"></textarea>
-									@if ($errors->has('description'))
-									<span class="help-block">
-										<strong style="color: red;">{{ $errors->first('description')}}</strong></br>
-									</span>
-									@endif
-								</div>
-								<input type="submit" name="submit" value="Thêm" class="btn btn-primary">
-								<a href="{{ route('products.index')}}" class="btn btn-danger">Hủy bỏ</a>
+<!-- Main content -->
+<section class="content">
+	<form id="create_product" method="POST" data-route="{{ route('products.store') }}" enctype="multipart/form-data">
+		{{ csrf_field() }}
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+					<div class="card card-primary">
+						<div class="card-header">
+							<h3 class="card-title">General</h3>
+							<div class="card-tools">
+								<button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+									<i class="fas fa-minus"></i>
+								</button>
 							</div>
 						</div>
-					</form>
-					<div class="clearfix"></div>
+						<div class="card-body">
+							<div class="form-group">
+								<label>Category</label>
+								<select type="number" id="id_category" name="id_category" class="form-control">
+									@foreach ($categories as $category)
+									<option value="{{ $category->id}}">{{ $category->name}}</option>
+									@endforeach
+								</select>
+							</div>
+							<div class="form-group">
+								<label>Brand</label>
+								<select type="number" id="id_brand" name="id_brand" class="form-control">
+									@foreach ($brands as $brand)
+									<option value="{{ $brand->id}}">{{ $brand->name}}</option>
+									@endforeach
+								</select>
+							</div>
+							<div class="form-group">
+								<label>Name product</label>
+								<input type="text" name="name_product" class="form-control input100 @error('name_product') is-invalid @enderror">
+							</div>
+							<div class="form-group">
+								<label>Image (max: 4 image)</label>
+								<input type="file" name="image1" required id="image1" class="form-control" style="display:none">
+								<input type="file" name="image2" required id="image2" class="form-control" style="display:none">
+								<input type="file" name="image3" required id="image3" class="form-control" style="display:none">
+								<input type="file" name="image4" required id="image4" class="form-control" style="display:none">
+							</div>
+							<div class="form-group">
+								<label for="image1">
+									<img id="blah1" src="{{ asset('image/add-image.png') }}" alt="your image" width="100px" height="100px" />
+								</label>
+								<label for="image2">
+									<img id="blah2" src="{{ asset('image/add-image.png') }}" alt="your image" width="100px" height="100px" />
+								</label>
+								<label for="image3">
+									<img id="blah3" src="{{ asset('image/add-image.png') }}" alt="your image" width="100px" height="100px" />
+								</label>
+								<label for="image4">
+									<img id="blah4" src="{{ asset('image/add-image.png') }}" alt="your image" width="100px" height="100px" />
+								</label>
+							</div>
+							<div class="form-group">
+								<label>Price</label>
+								<input type="number" name="price" class="form-control input100 @error('price') is-invalid @enderror">
+							</div>
+
+							<div class="form-group">
+								<label>Quantity</label>
+								<input type="number" name="quantity" class="form-control input100 @error('quantity') is-invalid @enderror">
+							</div>
+							<div class="form-group">
+								<label>Weight</label>
+								<input type="number" name="weight" class="form-control input100 @error('weight') is-invalid @enderror">
+							</div>
+							<div class="form-group">
+								<label>Lenght</label>
+								<input type="text" name="lenght" class="form-control input100 @error('lenght') is-invalid @enderror">
+							</div>
+							<div class="form-group">
+								<label>Height</label>
+								<input type="text" name="height" class="form-control input100 @error('height') is-invalid @enderror">
+							</div>
+							<div class="form-group">
+								<label>Width</label>
+								<input type="text" name="width" class="form-control input100 @error('width') is-invalid @enderror">
+							</div>
+							<div class="form-group">
+								<label>Description</label><br>
+								<textarea name="description" id="summernote" class="input100 @error('description') is-invalid @enderror"></textarea>
+							</div>
+							<div class="alert alert-danger print-error-msg" style="display:none">
+							<ul></ul>
+    						</div>
+						</div>
+					</div>
+					<!-- /.card-body -->
 				</div>
+				<!-- /.card -->
+			</div>
+			<!-- /.col -->
+		</div>
+		<!-- /.container-fluid -->
+		<div class="row">
+			<div class="col-12">
+				<a href="{{ route('products.index')}}" class="btn btn-secondary">Cancel</a>
+				<input id="sub" type="submit" value="Create new brands" class="btn btn-success float-right">
 			</div>
 		</div>
-	</div>
-</div>
+	</form>
+</section>
+<script>
+
+	$('#create_product').submit(function(event) {
+		var route = $('#create_product').data('route');
+		var form_data = $(this);
+		$.ajax({
+			method: 'POST',
+			url: route,
+			processData: false, // Important!
+			contentType: false,
+			cache: false,
+			data: new FormData(this),
+			success: function(response) {
+					swal({
+						closeOnClickOutside: false,
+						icon: "success",
+						title: 'Success, create sussecfully!',
+						showSpinner: true
+					});
+			},
+			error: function(response) {
+				$(".print-error-msg").find("ul").html('');
+            		$(".print-error-msg").css('display','block');
+				var err = JSON.parse(response.responseText);
+				$.each(err.errors, function (key, value){
+					$(".print-error-msg").find("ul").append('<li>'+value[0]+'</li>');
+				})
+
+			}
+		})
+		event.preventDefault();
+	});
+</script>
 @endsection
