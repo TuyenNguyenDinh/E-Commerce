@@ -60,25 +60,59 @@
 							</div>
 							<div class="form-group">
 								<label>Image (max: 4 image)</label>
-								<input type="file" name="image1" required id="image1" class="form-control" style="display:none">
-								<input type="file" name="image2" required id="image2" class="form-control" style="display:none">
-								<input type="file" name="image3" required id="image3" class="form-control" style="display:none">
-								<input type="file" name="image4" required id="image4" class="form-control" style="display:none">
+								<div class="image-upload-wrap image1">
+									<input class="file-upload-input upload1" name="image1" id="img1" type='file' accept="image/*" onchange="readURL(this, $('.image-upload1'), $('.image1'), $('.content1'))" />
+									<div class="drag-text">
+										<h3>Drag and drop a file or select add Image</h3>
+									</div>
+								</div>
+								<div class="file-upload-content content1">
+									<img class="file-upload-image image-upload1" src="#" alt="your image" />
+									<div class="image-title-wrap">
+										<button type="button" onclick="removeUpload($('.upload1'), $('.content1'), $('.image1'))" class="remove-image" class="remove-image">Remove </button>
+									</div>
+								</div>
+								<!--  -->
+								<div class="image-upload-wrap image2">
+									<input class="file-upload-input upload2" name="image2" id="img2" type='file' accept="image/*" onchange="readURL(this, $('.image-upload2'), $('.image2'), $('.content2'))" />
+									<div class="drag-text">
+										<h3>Drag and drop a file or select add Image</h3>
+									</div>
+								</div>
+								<div class="file-upload-content content2">
+									<img class="file-upload-image image-upload2" src="#" alt="your image" />
+									<div class="image-title-wrap">
+										<button type="button" onclick="removeUpload($('.upload2'), $('.content2'), $('.image2'))" class="remove-image">Remove </button>
+									</div>
+								</div>
+								<!--  -->
+								<div class="image-upload-wrap image3">
+									<input class="file-upload-input upload3" name="image3" id="img3" type='file' accept="image/*" onchange="readURL(this, $('.image-upload3'), $('.image3'), $('.content3'))" />
+									<div class="drag-text">
+										<h3>Drag and drop a file or select add Image</h3>
+									</div>
+								</div>
+								<div class="file-upload-content content3">
+									<img class="file-upload-image image-upload3" src="#" alt="your image" />
+									<div class="image-title-wrap">
+										<button type="button" onclick="removeUpload($('.upload3'), $('.content3'), $('.image3'))" class="remove-image">Remove </button>
+									</div>
+								</div>
 							</div>
-							<div class="form-group">
-								<label for="image1">
-									<img id="blah1" src="{{ asset('image/add-image.png') }}" alt="your image" width="100px" height="100px" />
-								</label>
-								<label for="image2">
-									<img id="blah2" src="{{ asset('image/add-image.png') }}" alt="your image" width="100px" height="100px" />
-								</label>
-								<label for="image3">
-									<img id="blah3" src="{{ asset('image/add-image.png') }}" alt="your image" width="100px" height="100px" />
-								</label>
-								<label for="image4">
-									<img id="blah4" src="{{ asset('image/add-image.png') }}" alt="your image" width="100px" height="100px" />
-								</label>
+							<!--  -->
+							<div class="image-upload-wrap image4">
+								<input class="file-upload-input upload4" name="image4" id="img4" type='file' accept="image/*" onchange="readURL(this, $('.image-upload4'), $('.image4'), $('.content4'))" />
+								<div class="drag-text">
+									<h3>Drag and drop a file or select add Image</h3>
+								</div>
 							</div>
+							<div class="file-upload-content content4">
+								<img class="file-upload-image image-upload4" src="#" alt="your image" />
+								<div class="image-title-wrap">
+									<button type="button" onclick="removeUpload($('.upload4'), $('.content4'), $('.image4'))" class="remove-image">Remove </button>
+								</div>
+							</div>
+							<!--  -->
 							<div class="form-group">
 								<label>Price</label>
 								<input type="number" name="price" class="form-control input100 @error('price') is-invalid @enderror">
@@ -109,8 +143,8 @@
 								<textarea name="description" id="summernote" class="input100 @error('description') is-invalid @enderror"></textarea>
 							</div>
 							<div class="alert alert-danger print-error-msg" style="display:none">
-							<ul></ul>
-    						</div>
+								<ul></ul>
+							</div>
 						</div>
 					</div>
 					<!-- /.card-body -->
@@ -129,7 +163,6 @@
 	</form>
 </section>
 <script>
-
 	$('#create_product').submit(function(event) {
 		var route = $('#create_product').data('route');
 		var form_data = $(this);
@@ -141,19 +174,19 @@
 			cache: false,
 			data: new FormData(this),
 			success: function(response) {
-					swal({
-						closeOnClickOutside: false,
-						icon: "success",
-						title: 'Success, create sussecfully!',
-						showSpinner: true
-					});
+				swal({
+					closeOnClickOutside: false,
+					icon: "success",
+					title: 'Success, create sussecfully!',
+					showSpinner: true
+				});
 			},
 			error: function(response) {
 				$(".print-error-msg").find("ul").html('');
-            		$(".print-error-msg").css('display','block');
+				$(".print-error-msg").css('display', 'block');
 				var err = JSON.parse(response.responseText);
-				$.each(err.errors, function (key, value){
-					$(".print-error-msg").find("ul").append('<li>'+value[0]+'</li>');
+				$.each(err.errors, function(key, value) {
+					$(".print-error-msg").find("ul").append('<li>' + value[0] + '</li>');
 				})
 
 			}

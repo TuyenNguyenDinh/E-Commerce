@@ -7,9 +7,19 @@ use App\Http\Requests\UsersRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Repositories\UserEloquentRepository;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+
+
+    protected $users;
+
+    public function __construct(UserEloquentRepository $users){
+        $this->users = $users;   
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +27,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = $this->users->getAll();
         return view('admin.users.index', ['users' => $users]);
     }
 
@@ -39,8 +49,8 @@ class UserController extends Controller
      */
     public function store(UsersRequest $request)
     {
-        $users = $request->all();
-        $result = User::create($users);
+        $password = Hash::make($request->password);
+        $result = $this->users->create(array_merge($request->all(),[ 'password' => $password]));
         if($result){
             return redirect()->route('users.index');
         }
@@ -80,7 +90,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $result = $request->all();
-        $users = User::find($id)->update($result);
+        $users = $this->users->update($id, $result);;
         if($users){
             return redirect()->route('users.index');
         }
@@ -95,7 +105,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::find($id)->delete();
+        $this->users->delete($id);
         return response()->json("ok");
     }
 }

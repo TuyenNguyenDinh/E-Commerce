@@ -8,10 +8,23 @@
             <div class="col-lg-4 col-sm-6">
                 <div class="shop">
                     <div class="shop-img">
-                        <img src="{{asset('image/shop01.webp')}}">
+                        <img src="{{asset('image/lg-43nano79tnd-2-org.jpg')}}">
                     </div>
                     <div class="shop-body">
-                        <h3>Laptop<br>Collection</h3>
+                        <h3>Tivi<br>Collection</h3>
+                        <a href="#" class="cta-btn text-uppercase">shop now
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="shop">
+                    <div class="shop-img">
+                        <img src="{{asset('image/panasonic-nr-ba229pkvn-1-1-org.jpg')}}">
+                    </div>
+                    <div class="shop-body">
+                        <h3>Perfect<br>Quality</h3>
                         <a href="#" class="cta-btn text-uppercase">shop now
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -24,20 +37,7 @@
                         <img src="{{asset('image/shop01.webp')}}">
                     </div>
                     <div class="shop-body">
-                        <h3>Laptop<br>Collection</h3>
-                        <a href="#" class="cta-btn text-uppercase">shop now
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <div class="shop">
-                    <div class="shop-img">
-                        <img src="{{asset('image/shop01.webp')}}">
-                    </div>
-                    <div class="shop-body">
-                        <h3>Laptop<br>Collection</h3>
+                        <h3>More<br>Brands</h3>
                         <a href="#" class="cta-btn text-uppercase">shop now
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -53,22 +53,6 @@
             <div class="col-md-12">
                 <div class="section-title">
                     <h3 class="title">New Products</h3>
-
-                    <div class="section-nav">
-                        <div class="section-tab-nav tab-nav">
-                            <ul class="nav" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class=" active" id="home-tab" data-toggle="tab" href="#product" role="tab" aria-controls="home" aria-selected="true">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="col-md-12">
@@ -131,20 +115,13 @@
                                                     add to cart
                                                 </button>
                                             </a>
-
                                         </div>
                                     </div>
                                     @endforeach
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                ...</div>
-                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                ...</div>
                         </div>
-
                     </div>
-
                 </div>
             </div>
         </div>
@@ -165,24 +142,24 @@
                         <li>
                             <div>
                                 <h3>02</h3>
-                                <span>Days</span>
+                                <span>Hours</span>
                             </div>
                         </li>
                         <li>
                             <div>
                                 <h3>02</h3>
-                                <span>Days</span>
+                                <span>Minute</span>
                             </div>
                         </li>
                         <li>
                             <div>
                                 <h3>02</h3>
-                                <span>Days</span>
+                                <span>seconds</span>
                             </div>
                         </li>
                     </ul>
                     <h2 class="text-uppercase">hot deal this week</h2>
-                    <p>New collection up to 50% OFF</p>
+                    <p style="color: #FFF;">New collection up to 50% OFF</p>
                     <a href="#" class="btn btn-primary cta-btn text-uppercase">Shop now</a>
                 </div>
             </div>
@@ -194,20 +171,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="section-title">
-                    <h3 class="title">Top Selling</h3>
+                    <h3 class="title">Product Selling</h3>
                     <div class="section-nav">
                         <div class="section-tab-nav tab-nav">
-                            <ul class="nav" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -219,272 +185,60 @@
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane face show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="products-slick ">
+                                    @foreach($products_selling as $product)
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="{{asset('image/samsung.jpg')}}" alt="">
+                                            <img src="{{asset('upload/'.$product->image1)}}" alt="">
                                             <div class="product-label">
-                                                <span class="sale">-20%</span>
-                                                <span class="new">new</span>
+                                                <span class="sale">-{{$product->discount}}%</span>
                                             </div>
                                         </div>
                                         <div class="product-body">
-                                            <p class="product-category">Category</p>
+                                            <p class="product-category">{{$product->categories->name}}</p>
                                             <h3 class="product-name">
-                                                <a href="#">Product name</a>
+                                                <a href="#">{{$product->name_product}}</a>
                                             </h3>
                                             <h4 class="product-price">
-                                                $998
-                                                <del class="product-old-price">$999</del>
+                                                {{number_format($product->price,0,',','.')}} đ
+                                                @if($product->price == $product->old_price)
+                                                @else
+                                                <del class="product-old-price">{{number_format($product->old_price,0,',','.')}} đ</del>
+                                                @endif
                                             </h4>
                                             <div class="product-rating">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
+                                                @for($i = 1; $i <= $product->like; $i++)
+                                                    <i class="fas fa-star"></i>
+                                                    @endfor
                                             </div>
                                             <div class="product-btns">
                                                 <button class="add-to-compare">
-                                                    <i class="fas fa-exchange-alt"></i>
-                                                    <span class="tooltipp"> add to compare</span>
+                                                    <a href="{{asset('wishlist/add/'.$product->id.'.html')}}">
+                                                        <i class="fas fa-exchange-alt"></i>
+                                                        <span class="tooltipp"> add to wishlist</span>
+                                                    </a>
                                                 </button>
                                                 <button class="details">
-                                                    <i class="fas fa-eye"></i>
-                                                    <span class="tooltipp">details</span>
+                                                    <a href="{{asset('details/'.$product->id.'.html')}}" style="color: black;">
+                                                        <i class="fas fa-eye"></i>
+                                                        <span class="tooltipp">details</span>
+                                                    </a>
                                                 </button>
                                             </div>
                                         </div>
                                         <div class="add-to-cart">
-                                            <button class="add-to-cart-btn">
-                                                <i class="far fa-shopping-cart">
-                                                </i>
-                                                add to cart
-                                            </button>
+                                            <a href="{{asset('cart/add/'.$product->id)}}">
+                                                <button class="add-to-cart-btn">
+                                                    <i class="far fa-shopping-cart">
+                                                    </i>
+                                                    add to cart
+                                                </button>
+                                            </a>
                                         </div>
                                     </div>
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="{{asset('image/product05.png')}}" alt="">
-                                            <div class="product-label">
-                                                <span class="sale">-20%</span>
-                                                <span class="new">new</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-body">
-                                            <p class="product-category">Category</p>
-                                            <h3 class="product-name">
-                                                <a href="#">Product name</a>
-                                            </h3>
-                                            <h4 class="product-price">
-                                                $998
-                                                <del class="product-old-price">$999</del>
-                                            </h4>
-                                            <div class="product-rating">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                            </div>
-                                            <div class="product-btns">
-                                                <button class="add-to-compare">
-                                                    <i class="fas fa-exchange-alt"></i>
-                                                    <span class="tooltipp"> add to compare</span>
-                                                </button>
-                                                <button class="details">
-                                                    <i class="fas fa-eye"></i>
-                                                    <span class="tooltipp">details</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn">
-                                                <i class="far fa-shopping-cart">
-                                                </i>
-                                                add to cart
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="{{asset('image/product05.png')}}" alt="">
-                                            <div class="product-label">
-                                                <span class="sale">-20%</span>
-                                                <span class="new">new</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-body">
-                                            <p class="product-category">Category</p>
-                                            <h3 class="product-name">
-                                                <a href="#">Product name</a>
-                                            </h3>
-                                            <h4 class="product-price">
-                                                $998
-                                                <del class="product-old-price">$999</del>
-                                            </h4>
-                                            <div class="product-rating">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                            </div>
-                                            <div class="product-btns">
-                                                <button class="add-to-compare">
-                                                    <i class="fas fa-exchange-alt"></i>
-                                                    <span class="tooltipp"> add to compare</span>
-                                                </button>
-                                                <button class="details">
-                                                    <i class="fas fa-eye"></i>
-                                                    <span class="tooltipp">details</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn">
-                                                <i class="far fa-shopping-cart">
-                                                </i>
-                                                add to cart
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="{{asset('image/product05.png')}}" alt="">
-                                            <div class="product-label">
-                                                <span class="sale">-20%</span>
-                                                <span class="new">new</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-body">
-                                            <p class="product-category">Category</p>
-                                            <h3 class="product-name">
-                                                <a href="#">Product name</a>
-                                            </h3>
-                                            <h4 class="product-price">
-                                                $998
-                                                <del class="product-old-price">$999</del>
-                                            </h4>
-                                            <div class="product-rating">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                            </div>
-                                            <div class="product-btns">
-                                                <button class="add-to-compare">
-                                                    <i class="fas fa-exchange-alt"></i>
-                                                    <span class="tooltipp"> add to compare</span>
-                                                </button>
-                                                <button class="details">
-                                                    <i class="fas fa-eye"></i>
-                                                    <span class="tooltipp">details</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn">
-                                                <i class="far fa-shopping-cart">
-                                                </i>
-                                                add to cart
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="{{asset('image/product05.png')}}" alt="">
-                                            <div class="product-label">
-                                                <span class="sale">-20%</span>
-                                                <span class="new">new</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-body">
-                                            <p class="product-category">Category</p>
-                                            <h3 class="product-name">
-                                                <a href="#">Product name</a>
-                                            </h3>
-                                            <h4 class="product-price">
-                                                $998
-                                                <del class="product-old-price">$999</del>
-                                            </h4>
-                                            <div class="product-rating">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                            </div>
-                                            <div class="product-btns">
-                                                <button class="add-to-compare">
-                                                    <i class="fas fa-exchange-alt"></i>
-                                                    <span class="tooltipp"> add to compare</span>
-                                                </button>
-                                                <button class="details">
-                                                    <i class="fas fa-eye"></i>
-                                                    <span class="tooltipp">details</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn">
-                                                <i class="far fa-shopping-cart">
-                                                </i>
-                                                add to cart
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="{{asset('image/product05.png')}}" alt="">
-                                            <div class="product-label">
-                                                <span class="sale">-20%</span>
-                                                <span class="new">new</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-body">
-                                            <p class="product-category">Category</p>
-                                            <h3 class="product-name">
-                                                <a href="#">Product name</a>
-                                            </h3>
-                                            <h4 class="product-price">
-                                                $998
-                                                <del class="product-old-price">$999</del>
-                                            </h4>
-                                            <div class="product-rating">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                            </div>
-                                            <div class="product-btns">
-                                                <button class="add-to-compare">
-                                                    <i class="fas fa-exchange-alt"></i>
-                                                    <span class="tooltipp"> add to compare</span>
-                                                </button>
-                                                <button class="details">
-                                                    <i class="fas fa-eye"></i>
-                                                    <span class="tooltipp">details</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn">
-                                                <i class="far fa-shopping-cart">
-                                                </i>
-                                                add to cart
-                                            </button>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                ...</div>
-                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                ...</div>
                         </div>
-
                     </div>
                 </div>
             </div>

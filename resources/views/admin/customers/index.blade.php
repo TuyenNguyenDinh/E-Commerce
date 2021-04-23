@@ -56,7 +56,7 @@
                                     <td>{{ $customer->address}}</td>
                                     <td class="text-center py-0 align-middle">
                                         <div class="btn-group btn-group-sm">
-                                            <a href="{{ asset('admin/customers/' .$customer->id. '/orders') }}" class="btn btn-info"><i class="fas fa-info"></i></a>
+                                            <a href="{{ route('orders.edit', $customer->id) }}" class="btn btn-info"><i class="fas fa-info"></i></a>
                                         </div>
                                     </td>
                                 </tr>

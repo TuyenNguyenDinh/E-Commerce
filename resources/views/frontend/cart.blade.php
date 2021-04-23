@@ -58,7 +58,7 @@
                 </div>
                 <div id="subtotal" class="float-right text-right">
 
-                    <h4>Subtotal:</h4>
+                    <h4>Total:</h4>
                     <h1>{{$total}} đ</h1>
                 </div>
             </div>
@@ -94,7 +94,7 @@
     };
 
     $('#bt').click(function() {
-        alert('jyfjyuklb');
+        alert('upload success');
         $('#listCart').load("{{route('cartdata')}}");
         $('#qty_cart').load("{{route('cartdata')}} #cart_count")
     })

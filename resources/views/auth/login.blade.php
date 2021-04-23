@@ -23,7 +23,7 @@
                 <input type="password" id="password" name="password" class="form-control input100 @error('password') is-invalid @enderror" placeholder="Password" required autocomplete="current-password">
                 <div class="input-group-append" style="cursor: pointer;" onclick="showhide()">
                     <div class="input-group-text">
-                        <span class="fas fa-lock"></span>
+                        <span class="fas fa-eye"></span>
                     </div>
                 </div>
                 @error('password')

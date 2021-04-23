@@ -630,6 +630,10 @@ nav>li>a:focus,
 
 /* hot-deal */
 
+#hot-deal {
+    background-image: url('/image/bgi.jpg');
+}
+
 .hot-deal {
     text-align: center;
 }
@@ -672,6 +676,10 @@ nav>li>a:focus,
 .hot-deal p {
     text-transform: uppercase;
     font-size: 24px;
+}
+
+.hot-deal h2 {
+    color: #FFF;
 }
 
 .hot-deal .cta-btn {
@@ -842,9 +850,11 @@ nav>li>a:focus,
     background: #15161D;
     transform: translateX(-250px);
     transition: transform 0.3s;
+    overflow-x: auto;
 }
 
-.nav--open .nav__links {
+.nav--open .nav__links,
+.nav--open-filter .nav__links {
     transform: translateX(0);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
@@ -864,7 +874,8 @@ nav>li>a:focus,
     margin-right: 15px;
 }
 
-.nav__overlay {
+.nav__overlay,
+.nav__overlay-filter {
     position: fixed;
     top: 0;
     left: 0;
@@ -878,7 +889,8 @@ nav>li>a:focus,
     transition: opacity 0.3s;
 }
 
-.nav--open .nav__overlay {
+.nav--open .nav__overlay,
+.nav--open-filter .nav__overlay-filter {
     visibility: visible;
     opacity: 1;
 }

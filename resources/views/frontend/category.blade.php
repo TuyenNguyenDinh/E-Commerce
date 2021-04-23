@@ -8,26 +8,12 @@
             <div class="col-md-12">
                 <div class="section-title">
                     <h3 class="title">{{$cate_name->name}}</h3>
-                    <div class="section-nav">
-                        <div class="section-tab-nav tab-nav">
-                            <ul class="nav" id="myTab" role="tablist">
-                                <li class="nav-product">
-                                    <a class=" active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
-                                </li>
-                                <li class="nav-product">
-                                    <a id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
-                                </li>
-                                <li class="nav-product">
-                                    <a id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
 
             </div>
             <div class="col-md-12">
                 <div class="container">
+                    @if(count($products) != 0 )
                     <div class="products-tabs">
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane face show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -83,14 +69,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                ...</div>
-                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                ...</div>
                         </div>
-
                     </div>
-
+                    @else
+                    <div class="error-page">
+                        <div class="error-content">
+                            <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! Not found.</h3>
+                        </div>
+                        <!-- /.error-content -->
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>

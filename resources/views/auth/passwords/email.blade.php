@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="card">
     <div class="card-body login-card-body">
@@ -25,7 +24,6 @@
                 </div>
                 <!-- /.col -->
             </div>
-
             @if (session('status'))
             <div class="text-center p-t-12" style="color: red; font-size:18px; ">
                 <span class="txt1">

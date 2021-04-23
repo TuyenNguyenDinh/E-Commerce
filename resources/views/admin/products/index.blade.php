@@ -52,7 +52,7 @@
                                     <td>{{ $product->categories->name}}</td>
                                     <td>{{ $product->brands->name}}</td>
                                     <td>{{ $product->name_product}}</td>
-                                    <td><img src="../upload/{{ $product->image1 }}" width="120" height="120" /></td>
+                                    <td><img src="{{ asset('upload/'.$product->image1) }}" width="120" height="120" /></td>
                                     <td>{{number_format($product->price,0,',','.')}} đ</td>
 
                                     <td>{{number_format($product->old_price,0,',','.')}} đ</td>

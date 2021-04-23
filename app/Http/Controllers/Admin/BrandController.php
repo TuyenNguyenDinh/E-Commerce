@@ -7,10 +7,15 @@ use App\Models\Brands;
 use Illuminate\Http\Request;
 use Alert;
 use App\Http\Requests\BrandRequest;
-use RealRashid\SweetAlert\Facades\Alert as FacadesAlert;
-
+use App\Repositories\BrandEloquentRepository;
 class BrandController extends Controller
 {
+
+    protected $brands;
+     public function __construct(BrandEloquentRepository $brands)
+     {
+        $this->brands = $brands;
+     }
 
     /**
      * Display a listing of the resource.
@@ -19,7 +24,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = Brands::all();
+        $brands = $this->brands->getAll();
         return view('admin.brands.index', array('brands' => $brands));
     }
     /**
@@ -40,52 +45,10 @@ class BrandController extends Controller
      */
     public function store(BrandRequest $request)
     {
-        $fileName = $this->doUpload($request);
-        $data = array_merge($request->all(), ['image' => $fileName]);
-        $result =  Brands::create($data);
-        // if ($result) {
-        //     Alert::success('Thành công', 'tạo thành công');
-        //     return redirect()->route('brands.index');
-        //     // return response()->json($result);
-        // }
-        // return redirect()->route('brands.create');
-        return response()->json($result);
-        // return dd($data);
-        
+        $fileName = $this->brands->doUpload($request->file('image'));
+        $data = $this->brands->create(array_merge($request->all(),['image' => $fileName]));
+        return response()->json($data);        
 
-    }
-
-
-    private function doUpload(Request $request)
-    {
-        $fileName = "";
-        //Kiểm tra file
-        if ($request->file('image')->isValid()) {
-            // File này có thực, bắt đầu đổi tên và move
-            $fileExtension = $request->file('image')->getClientOriginalExtension(); // Lấy . của file
-
-            // Filename cực shock để khỏi bị trùng
-            $fileName = time() . "_" . rand(0, 9999999) . "_" . md5(rand(0, 9999999)) . "." . $fileExtension;
-
-            // Thư mục upload
-            $uploadPath = public_path('/upload'); // Thư mục upload
-
-            // Bắt đầu chuyển file vào thư mục
-            $request->file('image')->move($uploadPath, $fileName);
-        } else {
-        }
-        return $fileName;
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -96,7 +59,7 @@ class BrandController extends Controller
      */
     public function edit($id)
     {
-        $brands = Brands::find($id);
+        $brands = $this->brands->find($id);
         return view('admin.brands.edit', array('brands' => $brands));
     }
 
@@ -110,16 +73,12 @@ class BrandController extends Controller
     public function update(BrandRequest $request, $id)
     {
         
-        $fileName = $this->doUpload($request);
-        $data = array_merge($request->all(), ['image' => $fileName]);
-        $result =  Brands::find($id)->update($data);
-        // if ($result) {
-        //     Alert::success('Thành công', 'tạo thành công');
-        //     return redirect()->route('brands.index');
-        //     // return response()->json($result);
-        // }
-        // return redirect()->route('brands.create');
-        return response()->json($result);
+        $fileName = $this->brands->doUpload($request->file('image'));
+        $result = $this->brands->update($id, array_merge($request->all(), ['image' => $fileName]));
+        if($result){
+            return redirect()->route('brands.index');
+        }
+        return redirect()->route('brands.edit');
         
     }
 
@@ -131,9 +90,7 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        $brands = Brands::find($id);
-        $brands->delete();
-        // return redirect()->route('brands.index');
+        $this->brands->delete($id);
         return response()->json("ok");
     }
 }

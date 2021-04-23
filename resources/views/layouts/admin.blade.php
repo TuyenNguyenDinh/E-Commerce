@@ -35,6 +35,8 @@
     <script src="{{ asset('plugins/dropzone/dropzone.js') }}"></script>
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('css/backend/adminlte.min.css')}}">
+    <!-- Sytle -->
+    <link rel="stylesheet" href="{{asset('css/backend/style.css')}}">
     <script src="http://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 
@@ -466,8 +468,7 @@
     <!-- Ion Slider -->
     <script src="{{asset('plugins/ion-rangeslider/js/ion.rangeSlider.min.js')}}"></script>
     <script>
-
-        function readURL(input, idimage) {
+        function readURL(input, idimage, uploadwrp, content) {
             var filePath = input.value;
             var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.svg)$/i;
             if (!allowedExtensions.exec(filePath)) {
@@ -476,16 +477,37 @@
                 return false;
             } else {
                 if (input.files && input.files[0]) {
+
                     var reader = new FileReader();
 
                     reader.onload = function(e) {
-                        $(idimage).attr('src', e.target.result);
-                    }
+                        $(uploadwrp).hide();
 
-                    reader.readAsDataURL(input.files[0]); // convert to base64 string
+                        $(idimage).attr('src', e.target.result);
+                        $(content).show();
+                    };
+
+                    reader.readAsDataURL(input.files[0]);
+                } else {
+                    removeUpload();
                 }
             }
         }
+
+        function removeUpload(input, content, imagewrp) {
+            $(input).replaceWith($(input).clone());
+            $(content).hide();
+            $(imagewrp).show();
+
+            $(imagewrp).bind('dragover', function() {
+                $(imagewrp).addClass('image-dropping');
+            });
+            $(imagewrp).bind('dragleave', function() {
+                $(imagewrp).removeClass('image-dropping');
+            });
+        }
+
+
 
         $.ajaxSetup({
             headers: {
@@ -498,13 +520,9 @@
             $('#summernote').summernote({
                 height: 120
             })
-            
-
         })
 
         // 
-        
-
         $(function() {
             // select2
             $('#id_category').select2({
@@ -527,7 +545,7 @@
         $("#image1").change(function() {
             readURL(this, $('#blah1'));
         });
-        
+
 
         $("#image2").change(function() {
             readURL(this, $('#blah2'));

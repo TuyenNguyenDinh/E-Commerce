@@ -140,7 +140,9 @@
                                                     <p>Phí vận chuyển</p>
                                                     <div class="d-flex">
                                                         <div class="currency d-flex item-center">
-                                                            <span>₫19.000 - ₫29.000</span>
+                                                            @foreach($transport_fee as $fee)
+                                                            <span>{{ number_format($fee->transport_fee,0,'.','.') }} đ</span>
+                                                            @endforeach
                                                         </div>
                                                     </div>
                                                 </div>
@@ -174,7 +176,9 @@
                                     Thêm vào giỏ hàng
                                 </button>
                             </a>
-                            <button type="button" class="btn btn-primary">Mua ngay</button>
+                            <a href="#">
+                                <button type="button" class="btn btn-primary">Mua ngay</button>
+                            </a>
                         </div>
                     </div>
                 </div>

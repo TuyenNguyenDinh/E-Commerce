@@ -16,9 +16,13 @@ class Orders extends Model
         return $this->belongsTo('App\Models\Customers', 'id_customer');
     }
 
-    function orderdetails()
+    function Orderdetails()
     {
         return $this->hasMany('App\Models\Orderdetails','id_order');
+    }
+
+    function Comments(){
+        return $this->hasMany('App\Models\Comments','id_order');
     }
 
 
@@ -30,6 +34,7 @@ class Orders extends Model
         'delivery_address',
         'total_price',
         'notes',
-        'status'
+        'status',
+        'reasons_cancel_order'
     ];
 }

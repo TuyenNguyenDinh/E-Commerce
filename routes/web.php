@@ -24,7 +24,7 @@ Route::get('details/{id}.html', 'FrontendController@getDetail');
 Route::get('product','FrontendController@getSearch');
 Route::get('forget-password','CustomerController@getEmail');
 Route::post('forget-password','CustomerController@postEmail');
-Route::get('/reset-password/{token}', 'ResetPasswordController@getPassword');
+Route::get('/reset-password/{token}/{email}', 'ResetPasswordController@getPassword');
 Route::post('/reset-password', 'ResetPasswordController@updatePassword');
 
 
@@ -37,7 +37,7 @@ Route::group(['middleware' => 'checklogin'], function(){
 });
 
 
-
+// Backend
 Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admin'], function(){
     Route::resource('categories', 'CategoryController');
         Route::resource('brands','BrandController');
@@ -45,52 +45,50 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admi
         Route::resource('users', 'UserController');
         Route::resource('customers', 'CustomerController');
         Route::resource('discount', 'DiscountController');  
-        Route::get('customers/{id}/orders','OrderController@getOrders');
-        Route::get('orders','OrderController@index');
-        // Route::get('orders/{$id}/details', 'OrderDetailController@show');
+        Route::resource('orders','OrderController');
         Route::resource('orderdetails','OrderDetailController');
 
 });
 
 
-//Backend
-Route::group(['middleware' => ['web', 'admin'],'namespace' => 'Admin'], function () {
+// Authenticate
+
     Route::prefix('admin')->group(function () {
         Route::get('/', function () {
             return view('admin.index');
         })->name('index');
-        Route::resource('categories', 'CategoryController');
-        Route::resource('brands','BrandController');
-        Route::resource('products', 'ProductController');
-        Route::resource('users', 'UserController');
         Route::resource('customers', 'CustomerController');
         Route::resource('discount', 'DiscountController');
         Route::get('customers/{id}/orders','OrderController@getOrders');
+        Route::resource('orders','OrderController');
         // Route::get('orders/{$id}/details', 'OrderDetailController@show');
         Route::resource('orderdetails','OrderDetailController');
 
     });
-});
+
+
 
 //Authentication customer
 Route::post('/', 'FrontendController@postLogin');
 // Route::get('/','FrontendController@getLogin');
-Route::get('registercustomer','CustomerController@getRegister');
-Route::post('registercustomer', 'CustomerController@register');
-Route::get('GetSubCatAgainstMainCatEdit/{id}','CustomerController@GetSubCatAgainstMainCatEdit');
+Route::get('registercustomer','CustomerFrontendController@getRegister');
+Route::post('registercustomer', 'CustomerFrontendController@register');
+Route::get('GetSubCatAgainstMainCatEdit/{id}','CustomerFrontendController@GetSubCatAgainstMainCatEdit');
 
 Route::group(['middleware' => 'checklogin', 'prefix' => 'user/account'], function(){
-    Route::get('profile','CustomerController@getInfo');
-    Route::get('orders','CustomerController@getOrders');
-    Route::post('change_profile','CustomerController@changeProfile')->name('changeProfile');
-    Route::post('verify_email', 'CustomerController@verifyEmail')->name('verifyemail');
-    Route::get('change_email', 'CustomerController@getChangeEmail')->name('changeEmail');
-    Route::post('change_email','CustomerController@changeEmail');
-    Route::post('verify_phone','CustomerController@verifyPhone')->name('verifyphone');
-    Route::get('change_phone', 'CustomerController@getChangePhone')->name('changePhone');
-    Route::post('change_phone','CustomerController@changePhone');
-    Route::get('GetDistrict/{id}','CustomerController@GetSubCatAgainstMainCatEdit');
-    Route::post('changeProvinceDistrict','CustomerController@changeProvinceDistrict')->name('changeProvinceDistrict');
+    Route::get('profile','CustomerFrontendController@getInfo');
+    Route::get('orders','CustomerFrontendController@getOrders');
+    Route::put('orders/{id}','CustomerFrontendController@postCancelOrders')->name('cancel_orders');
+    Route::get('orders/tracking/{id}','CustomerFrontendController@trackingOrders')->name('tracking_orders');
+    Route::post('change_profile','CustomerFrontendController@changeProfile')->name('changeProfile');
+    Route::post('verify_email', 'CustomerFrontendController@verifyEmail')->name('verifyemail');
+    Route::get('change_email', 'CustomerFrontendController@getChangeEmail')->name('changeEmail');
+    Route::post('change_email','CustomerFrontendController@changeEmail');
+    Route::post('verify_phone','CustomerFrontendController@verifyPhone')->name('verifyphone');
+    Route::get('change_phone', 'CustomerFrontendController@getChangePhone')->name('changePhone');
+    Route::post('change_phone','CustomerFrontendController@changePhone');
+    Route::get('GetDistrict/{id}','CustomerFrontendController@GetSubCatAgainstMainCatEdit');
+    Route::post('changeProvinceDistrict','CustomerFrontendController@changeProvinceDistrict')->name('changeProvinceDistrict');
 });
 
 Route::group(['middleware' => 'checklogin', 'prefix' => 'cart'], function(){
@@ -102,6 +100,8 @@ Route::group(['middleware' => 'checklogin', 'prefix' => 'cart'], function(){
     Route::get('checkout','CartController@getCheckout')->name('checkout');
     Route::post('checkout', 'PurchaseController@postPurchase')->name('purchase');
     Route::post('add-address','CartController@addAddress')->name('addAddress');
+    Route::get('getFeeFromProvince/{id}','CartController@getFeeFromProvince');
+
 });
 
 Route::get('complete','PurchaseController@getComplete')->name('complete');

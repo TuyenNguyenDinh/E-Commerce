@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
     <script src="http://code.jquery.com/jquery-3.4.1.js"></script>
-    
+    <script src="{{asset('js/frontend/jquery.number.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
 </head>
@@ -51,7 +51,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownAccount">
                             <a class="dropdown-item" href="{{asset('user/account/profile')}}"> <i class="far fa-user"></i>My Account</a>
-                            <a class="dropdown-item" href="#"><i class="fas fa-file-invoice"></i>My order</a>
+                            <a class="dropdown-item" href="{{asset('user/account/orders')}}"><i class="fas fa-file-invoice"></i>My order</a>
                         </div>
                     </li>
                     <li>
@@ -200,7 +200,6 @@
                                     <div class="nav__overlay"></div>
                                 </nav>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -374,6 +373,7 @@
     <!-- Select2 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="{{ asset('js/frontend/select2.full.min.js') }}"></script>
+    <script src="{{asset('js/frontend/jquery.number.min.js')}}"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -470,6 +470,15 @@
         });
     </script>
     <script>
+        function showhide(id) {
+            var x = document.getElementById(id);
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+
         window.addEventListener("load", () => {
             document.body.classList.remove("preload");
         });

@@ -39,13 +39,6 @@
                         <div class="my-account-page__submit">
                             <button type="submit" class="btn btn-primary" aria-disabled="false">Send Password Reset Link</button>
                         </div>
-                        @if (session('status'))
-                        <div class="text-center p-t-12" style="color: red; font-size:18px; ">
-                            <span class="txt1">
-                                Send mail success
-                            </span>
-                        </div>
-                        @endif
                     </form>
                 </div>
 

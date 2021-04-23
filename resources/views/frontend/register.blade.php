@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
   <link rel="stylesheet" href="{{asset('css/frontend/select2.min.css')}}">
   <link rel="stylesheet" href="{{asset('css/frontend/select2-bootstrap4.min.css')}}">
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -41,7 +42,7 @@
                     @enderror
                   </div>
                   <div class="form-group mb-3">
-                    <input id="phone" name="phone" type="text" placeholder="Số điện thoại" required="" class="form-control @error('phone') is-invalid @enderror rounded-pill border-0 shadow-sm px-4">
+                    <input id="phone" name="phone" type="number" placeholder="Số điện thoại" required="" class="form-control @error('phone') is-invalid @enderror rounded-pill border-0 shadow-sm px-4">
                     @error('phone')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -56,16 +57,26 @@
                     </span>
                     @enderror
                   </div>
-                  <div class="form-group mb-3">
-                    <input id="password" name="password" type="password" placeholder="Password" required="" class="form-control @error('password') is-invalid @enderror rounded-pill border-0 shadow-sm px-4 text-primary">
+                  <div class="input-group mb-3">
+                    <input id="password" name="password" type="password" placeholder="Password" required="" class="form-control @error('password') is-invalid @enderror border-0 shadow-sm px-4 text-primary" style="border-radius: 40px 0px 0px 40px;">
+                    <div class="input-group-append" style="cursor: pointer;" onclick="showhide('password')">
+                      <div class="input-group-text" style="border-radius: 0px 40px 40px 0px; border:0 ">
+                        <span class="fas fa-eye"></span>
+                      </div>
+                    </div>
                     @error('password')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
                     </span>
                     @enderror
                   </div>
-                  <div class="form-group mb-3">
-                    <input id="rePassword" name="rePassword" type="password" placeholder="Password" required="" class="form-control @error('rePassword') is-invalid @enderror rounded-pill border-0 shadow-sm px-4 text-primary">
+                  <div class="input-group mb-3">
+                    <input id="rePassword" name="rePassword" type="password" placeholder="Password" required="" class="form-control @error('rePassword') is-invalid @enderror border-0 shadow-sm px-4 text-primary" style="border-radius: 40px 0px 0px 40px;">
+                    <div class="input-group-append" style="cursor: pointer;" onclick="showhide('rePassword')">
+                      <div class="input-group-text" style="border-radius: 0px 40px 40px 0px; border:0 ">
+                        <span class="fas fa-eye"></span>
+                      </div>
+                    </div>
                     @error('rePassword')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -130,12 +141,20 @@
     }
   </style>
   <script>
+    function showhide(key) {
+      var x = document.getElementById(key);
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
 
-    $(function(){
+    $(function() {
 
       $('#district').select2({
         theme: 'bootstrap4',
-        
+
       })
 
       $('#province').select2({

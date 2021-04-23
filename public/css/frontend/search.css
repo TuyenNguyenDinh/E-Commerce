@@ -18,20 +18,6 @@
     font-weight: 500;
 }
 
-.nav_filter__links {
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 999999;
-    height: 100vh;
-    width: 250px;
-    background: #15161D;
-    transform: translateX(250px);
-    transition: transform 0.3s;
-    padding: 18px;
-    color: #FFF;
-}
-
 .nav--open .nav_filter__links {
     transform: translateX(0);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
@@ -87,5 +73,9 @@
     .filter_respon {
         display: flex;
         justify-content: flex-end;
+    }
+    .filter-group_respon {
+        display: block!important;
+        color: #FFF;
     }
 }

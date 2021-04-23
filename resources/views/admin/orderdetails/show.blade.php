@@ -31,7 +31,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <div class="table-order">
+                        <div class="table-order d-flex flex-row">
                             <div class="col-md-6">
                                 <table class="table table-bordered tabler-hover">
                                     <thead>
@@ -41,11 +41,11 @@
                                         </tr>
                                         <tr>
                                             <th>Address</th>
-                                            <th></th>
+                                            <th>{{$orders->customers->address}}</th>
                                         </tr>
                                         <tr>
                                             <th>Address ship</th>
-                                            <th></th>
+                                            <th>{{$orders->delivery_address}}</th>
                                         </tr>
                                         <tr>
                                             <th>Total price</th>
@@ -63,19 +63,30 @@
                                 </table>
                             </div>
                             <div class="col-md-6">
-                                <table class="table table-light col-lg-6">
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
+                                <form action="{{ route('orders.update', $orders->id)}}" method="post">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="row" style="margin-bottom:40px">
+                                        <div class="col-xs-8">
+                                            <div class="form-group">
+                                                <label>Tình trạng</label>
+                                                <select type="text" name="status" class="form-control">
+                                                    <option value="Checking order">Waiting checking</option>
+                                                    <option value="Confirmed by the seller">Confirmed by the seller</option>
+                                                    <option value="Waiting for the goods">Waiting for the goods</option>
+                                                    <option value="Shipping">Shipping</option>
+                                                    <option value="Shipped">Shipped</option>
+                                                    <option value="Cancel">Cancel orders</option>
+                                                    <option value="Refund">Refund</option>
+                                                </select>
+                                            </div>
+                                            <input type="submit" name="submit" value="Update" class="btn btn-primary">
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
 
                         </div>
-
-
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr class="bg-primary text-center">

@@ -85,7 +85,7 @@
     };
 
     $('#bt').click(function() {
-        alert('jyfjyuklb');
+        alert('upload success');
         $('#listCart').load("{{route('cartdata')}}");
         $('#qty_cart').load("{{route('cartdata')}} #cart_count")
 

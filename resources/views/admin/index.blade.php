@@ -30,8 +30,8 @@
 				<!-- small box -->
 				<div class="small-box bg-info">
 					<div class="inner">
-						<h3>150</h3>
-						<p>New Orders</p>
+						<h3>{{DB::table('orders')->count()}}</h3>
+						<p>Orders</p>
 					</div>
 					<div class="icon">
 						<i class="ion ion-bag"></i>
@@ -46,7 +46,7 @@
 					<div class="inner">
 						<h3>53<sup style="font-size: 20px">%</sup></h3>
 
-						<p>Bounce Rate</p>
+						<p>Rate</p>
 					</div>
 					<div class="icon">
 						<i class="ion ion-stats-bars"></i>
@@ -59,7 +59,7 @@
 				<!-- small box -->
 				<div class="small-box bg-warning">
 					<div class="inner">
-						<h3>44</h3>
+						<h3>{{DB::table('customers')->count()}}</h3>
 
 						<p>User Registrations</p>
 					</div>
@@ -74,9 +74,8 @@
 				<!-- small box -->
 				<div class="small-box bg-danger">
 					<div class="inner">
-						<h3>65</h3>
-
-						<p>Unique Visitors</p>
+						<h3>{{number_format(DB::table('orders')->where('status','shipped')->sum('total_price'),0,'.','.')}} <sup style="font-size: 20px">đ</sup></h3>
+						<p>Total revenue</p>
 					</div>
 					<div class="icon">
 						<i class="ion ion-pie-graph"></i>
@@ -132,25 +131,6 @@
 
 				<!-- Map card -->
 				<div class="card bg-gradient-primary">
-					<div class="card-header border-0">
-						<h3 class="card-title">
-							<i class="fas fa-map-marker-alt mr-1"></i>
-							Visitors
-						</h3>
-						<!-- card tools -->
-						<div class="card-tools">
-							<button type="button" class="btn btn-primary btn-sm daterange" title="Date range">
-								<i class="far fa-calendar-alt"></i>
-							</button>
-							<button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse" title="Collapse">
-								<i class="fas fa-minus"></i>
-							</button>
-						</div>
-						<!-- /.card-tools -->
-					</div>
-					<div class="card-body">
-						<div id="world-map" style="height: 250px; width: 100%;"></div>
-					</div>
 					<!-- /.card-body-->
 					<div class="card-footer bg-transparent">
 						<div class="row">
@@ -226,7 +206,6 @@
 				<!-- Calendar -->
 				<div class="card bg-gradient-success">
 					<div class="card-header border-0">
-
 						<h3 class="card-title">
 							<i class="far fa-calendar-alt"></i>
 							Calendar

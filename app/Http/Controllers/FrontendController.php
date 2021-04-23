@@ -7,8 +7,10 @@ use App\Models\Categories;
 use App\Models\Comments;
 use App\Models\Products;
 use App\Models\Province;
+use App\Models\Transport_fee;
 use Illuminate\Http\Request;
 use App\Models\Wishlist;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -19,6 +21,7 @@ class FrontendController extends Controller
     {
         $data['brands_image'] = Brands::all();
         $data['products'] = Products::all();
+        $data['products_selling'] = Products::where('discount','>',0)->get();
         return view('frontend.index', $data);
     }
 
@@ -41,6 +44,7 @@ class FrontendController extends Controller
         $data['items'] = Products::find($id);
         $data['comments'] = Comments::where('id_product', $id)->get();
         $data['provinces'] = Province::all();
+        $data['transport_fee'] = Transport_fee::where('id_province',Auth::guard('customer')->user()->province->id)->get();
         return view('frontend.details', $data);
     }
 
@@ -80,9 +84,17 @@ class FrontendController extends Controller
                     $query->where('price', '<', 5000000);
                     break;
                 case 2:
-                    $query->where('price', '>=', 5000000);
+                    $query->where('price', '>=', 5000000)->where('price','<=',10000000);
                     break;
-               
+               case 3:
+                    $query->where('price', '>=', 10000000)->where('price','<=',15000000);
+                    break;
+                case 4 :
+                    $query->where('price', '>=', 15000000)->where('price','<=',20000000);
+                    break;
+                case 5 :
+                    $query->where('price','>=',20000000);
+                    break;
             }
         }
 

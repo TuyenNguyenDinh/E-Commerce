@@ -9,13 +9,14 @@ use Illuminate\Support\Facades\Hash;
 
 class ResetPasswordController extends Controller
 {
-    public function getPassword($token){
-        return view('frontend.reset', ['token' => $token]);
+    public function getPassword(Request $request, $token){
+        return view('frontend.reset', ['token' => $token, 'email' => $request->email]);
+        // return dd(['token' => $token, 'email' => $request->email]   );
     }
 
     public function updatePassword(Request $request){
         $request->validate([
-            'email' => 'required|email|exists:users',
+            'email' => 'required|email|exists:customers',
             'password' => 'required|string|min:6|confirmed',
             'password_confirmation' => 'required',
       
@@ -28,7 +29,7 @@ class ResetPasswordController extends Controller
         if(!$updatePassword)
             return back()->withInput()->with('error', 'Invalid token!');
       
-          $customers = Customers::where('email', $request->email)
+          Customers::where('email', $request->email)
                       ->update(['password' => Hash::make($request->password)]);
       
           DB::table('password_resets')->where(['email'=> $request->email])->delete();

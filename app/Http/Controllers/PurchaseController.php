@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Orderdetails;
 use App\Models\Orders;
+use App\Models\Products;
 use Carbon\Carbon;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
@@ -21,8 +22,8 @@ class PurchaseController extends Controller
         $dateToAdd = 14;
         $orders->ship_date = date("Y-m-d", strtotime('+ '.$dateToAdd , strtotime($orders->order_date)));
         $orders->payment_method = $request->payment_methods;
-        $orders->delivery_address = "asdfsadf";
-        $orders->total_price = Cart::total(0,'','');
+        $orders->delivery_address = $request->delivery_address;
+        $orders->total_price = $request->total_fetch;
         $orders->notes = $request->notes;       
         $orders->status = "Checking order";
         $orders->save();
@@ -35,12 +36,17 @@ class PurchaseController extends Controller
             $orderdetails->quantity = $product->qty;
             $orderdetails->price = $product->price;
             $orderdetails->save();
+
+            $products = Products::find($product->id);
+            $new_quant = ($products->quantity) - ($product->qty);
+            $products->update(['quantity' => $new_quant]);
         }
-        return dd($orders);
+
+        return redirect("complete");
     }
 
     public function getComplete(){
-
+        Cart::destroy();
         return view('frontend.complete');
     }
 }

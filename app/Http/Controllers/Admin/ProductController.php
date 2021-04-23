@@ -10,8 +10,26 @@ use App\Models\Discount;
 use App\Models\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Repositories\ProductEloquentRepository;
+use App\Repositories\BrandEloquentRepository;
+use App\Repositories\CategoryEloquentRepository;
+
 class ProductController extends Controller
 {
+
+    protected $products;
+    protected $brands;
+    protected $categories;
+
+    public function __construct(ProductEloquentRepository $products,
+                                BrandEloquentRepository $brands,
+                                CategoryEloquentRepository $categories)
+    {
+        $this->products = $products;
+        $this->brands = $brands;
+        $this->categories = $categories;
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -19,9 +37,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Products::all();
-        $categories = Categories::all();
-        $brands = Brands::all();
+        $products = $this->products->getAll();
+        $categories = $this->categories->getAll();
+        $brands = $this->brands->getAll();
 
         return view('admin.products.index', array(
             'products' => $products,
@@ -36,8 +54,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Categories::all();
-        $brands = Brands::all();
+        $categories = $this->categories->getAll();
+        $brands = $this->brands->getAll();
         return view('admin.products.create', array('categories' => $categories, 'brands' => $brands));
     }
 
@@ -49,127 +67,23 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-
-        $fileName1 = $this->doUploadImage1($request);
-        $fileName2 = $this->doUploadImage2($request);
-        $fileName3 = $this->doUploadImage3($request);
-        $fileName4 = $this->doUploadImage4($request);
+        $fileName1 = $this->products->doUpload($request->file('image1'));
+        $fileName2 = $this->products->doUpload($request->file('image2'));;
+        $fileName3 = $this->products->doUpload($request->file('image3'));;
+        $fileName4 = $this->products->doUpload($request->file('image4'));;
         $old_price = $request->price;
         $price = $old_price;
-        $products = Products::create(array_merge($request->all(), ["old_price" => $old_price],
+        $products = $this->products->create(array_merge($request->all(),["old_price" => $old_price],
          ["price" => $price],
          ["discount" => 0],
          ["image1" =>$fileName1], ["image2" => $fileName2], 
          ["image3" => $fileName3], ["image4" => $fileName4]));
-
 
         return response()->json($products);
         // return redirect()->route('products.create');
         
     }
 
-
-
-    private function doUploadImage1(Request $request)
-    {
-        $fileName = "";
-        //Kiểm tra file
-        if ($request->file('image1')->isValid()) {
-            // File này có thực, bắt đầu đổi tên và move
-            $fileExtension = $request->file('image1')->getClientOriginalExtension(); // Lấy . của file
-
-            // Filename cực shock để khỏi bị trùng
-            $fileName = time() . "_" . rand(0, 9999999) . "_" . md5(rand(0, 9999999)) . "." . $fileExtension;
-
-            // Thư mục upload
-            $uploadPath = public_path('/upload'); // Thư mục upload
-
-            // Bắt đầu chuyển file vào thư mục
-            $request->file('image1')->move($uploadPath, $fileName);
-        } else {
-        }
-
-        return $fileName;
-    }
-
-    private function doUploadImage2(Request $request)
-    {
-        $fileName = "";
-        //Kiểm tra file
-        if ($request->file('image2')->isValid()) {
-            // File này có thực, bắt đầu đổi tên và move
-            $fileExtension = $request->file('image2')->getClientOriginalExtension(); // Lấy . của file
-
-            // Filename cực shock để khỏi bị trùng
-            $fileName = time() . "_" . rand(0, 9999999) . "_" . md5(rand(0, 9999999)) . "." . $fileExtension;
-
-            // Thư mục upload
-            $uploadPath = public_path('/upload'); // Thư mục upload
-
-            // Bắt đầu chuyển file vào thư mục
-            $request->file('image2')->move($uploadPath, $fileName);
-        } else {
-        }
-
-        return $fileName;
-    }
-
-    private function doUploadImage3(Request $request)
-    {
-        $fileName = "";
-        //Kiểm tra file
-        if ($request->file('image3')->isValid()) {
-            // File này có thực, bắt đầu đổi tên và move
-            $fileExtension = $request->file('image3')->getClientOriginalExtension(); // Lấy . của file
-
-            // Filename cực shock để khỏi bị trùng
-            $fileName = time() . "_" . rand(0, 9999999) . "_" . md5(rand(0, 9999999)) . "." . $fileExtension;
-
-            // Thư mục upload
-            $uploadPath = public_path('/upload'); // Thư mục upload
-
-            // Bắt đầu chuyển file vào thư mục
-            $request->file('image3')->move($uploadPath, $fileName);
-        } else {
-        }
-
-        return $fileName;
-    }
-
-
-    private function doUploadImage4(Request $request)
-    {
-        $fileName = "";
-        //Kiểm tra file
-        if ($request->file('image4')->isValid()) {
-            // File này có thực, bắt đầu đổi tên và move
-            $fileExtension = $request->file('image4')->getClientOriginalExtension(); // Lấy . của file
-
-            // Filename cực shock để khỏi bị trùng
-            $fileName = time() . "_" . rand(0, 9999999) . "_" . md5(rand(0, 9999999)) . "." . $fileExtension;
-
-            // Thư mục upload
-            $uploadPath = public_path('/upload'); // Thư mục upload
-
-            // Bắt đầu chuyển file vào thư mục
-            $request->file('image4')->move($uploadPath, $fileName);
-        } else {
-        }
-
-        return $fileName;
-    }
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -179,9 +93,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $categories = Categories::all();
-        $products = Products::find($id);
-        $brands = Brands::all();
+        $categories = $this->categories->getAll();
+        $products = $this->products->find($id);
+        $brands = $this->brands->getAll();
         return view('admin.products.edit', array('products' => $products, 'categories' => $categories, 'brands' => $brands));
     }
 
@@ -194,12 +108,11 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $fileName1 = $this->doUploadImage1($request);
-        $fileName2 = $this->doUploadImage2($request);
-        $fileName3 = $this->doUploadImage3($request);
-        $fileName4 = $this->doUploadImage4($request);
-        $products = Products::find($id);
-        $products->update(array_merge($request->all(), ["image1" =>$fileName1], ["image2" => $fileName2], ["image3" => $fileName3], ["image4" => $fileName4]));
+        $fileName1 = $this->products->doUpload($request->file('image1'));
+        $fileName2 = $this->products->doUpload($request->file('image2'));;
+        $fileName3 = $this->products->doUpload($request->file('image3'));;
+        $fileName4 = $this->products->doUpload($request->file('image4'));;
+        $products = $this->products->update($id,array_merge($request->all(),["discount" => 0],["image1" =>$fileName1], ["image2" => $fileName2], ["image3" => $fileName3], ["image4" => $fileName4]));
         if($products){
             return redirect()->route('products.index');
         }
@@ -214,8 +127,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $products = Products::find($id);
-        $products->delete();
+        $this->products->delete($id);
         // return redirect()->route('products.index');
         return response()->json("ok");
     }

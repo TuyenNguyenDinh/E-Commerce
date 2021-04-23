@@ -6,9 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Categories;
 use Illuminate\Http\Request;
+use App\Repositories\CategoryEloquentRepository;
 
 class CategoryController extends Controller
 {
+
+    protected $categories;
+
+    public function __construct(CategoryEloquentRepository $categories)
+    {   
+        $this->categories = $categories;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +24,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Categories::all();
+        $categories = $this->categories->getAll();
         return view('admin.categories.index', array('categories' => $categories));
     }
     /**
@@ -37,25 +45,14 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        $data = array_merge($request->all());
-        $result = Categories::create($data);
+        $data = $request->all();
+        $result = $this->categories->create($data);
         if ($result) {
             return redirect()->route('categories.index');
         }
         return redirect()->route('categories.create');
     }
 
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -65,7 +62,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $categories = Categories::find($id);
+        $categories = $this->categories->find($id);
         return view('admin.categories.edit', array('categories'=>$categories));
     }
 
@@ -78,9 +75,8 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, $id)
     {
-        $categories = Categories::find($id);
         $data = $request->all();
-        $categories->update($data);
+        $categories = $this->categories->update($id, $data);
         if($categories){
             return redirect()->route('categories.index');
         }
@@ -95,8 +91,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $categories = Categories::find($id);
-        $categories->delete();
+        $categories = $this->categories->delete($id);
         return redirect()->route('categories.index');
     }
 }

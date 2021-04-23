@@ -2,206 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RegisterRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\CustomerRequest;
 use App\Models\Customers;
-use App\Models\District;
-use App\Models\Orderdetails;
-use App\Models\Orders;
-use App\Models\Province;
-use Carbon\Carbon;
-use CKSource\CKFinder\Image;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Support\Str;
-
+use Illuminate\Http\Request;
+use App\Repositories\CustomerEloquentRepository;
 
 class CustomerController extends Controller
 {
 
-    public function getLogin()
+    protected $customers;
+
+    public function __construct(CustomerEloquentRepository $customers)
     {
-        return view('frontend.login');
+        $this->customers = $customers;
     }
-
-    public function getRegister()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        $pr = Province::all();
-        return view('frontend.register', ['pr' => $pr]);
-    }
-
-    public function GetSubCatAgainstMainCatEdit($id)
-    {
-        echo json_encode(DB::table('district')->where('id_province', $id)->get());
-    }
-
-    public function register(RegisterRequest $request)
-    {
-        $customer = new Customers;
-        $customer->name = $request->name;
-        $customer->phone = $request->phone;
-        $customer->email = $request->email;
-        $customer->password = Hash::make($request->password);
-        $customer->address = $request->address;
-        $customer->id_district = $request->district;
-        $customer->id_province = $request->province;
-        $customer->image_acc = 'img_user.jpg';
-        $customer->save();
-
-        alert('Register success', 'Tạo tài khoản thành công, vui lòng đăng nhập!', 'success');
-
-        return redirect('/');
-    }
-
-    public function getInfo()
-    {
-        $data['id'] = Auth::guard('customer')->user()->id;
-        $data['cus'] = Customers::find($data['id']);
-        $data['pr'] = Province::all();
-        return view('frontend.infoacc', $data);
-        // return dd($data);
-
-    }
-
-    public function changeProfile(Request $request)
-    {
-        $id = Auth::guard('customer')->user()->id;
-        $fileName = $this->doUpload($request);
-        $customers = Customers::find($id);
-        $data = array_merge($request->all(), ["image_acc" => $fileName]);
-        $customers->update($data);
-        if ($customers) {
-            Alert::success('Thành công', 'Cập nhật hồ sơ thành công');
-            return redirect('/');
-        } else {
-            Alert::warring('Lỗi', 'Có lỗi');
-            return redirect('/');
-        }
+        $customers = $this->customers->getAll();
+        return view('admin.customers.index', ['customers' => $customers]);
     }
 
 
-    public function getOrders(){
-        $data['id'] = Auth::guard('customer')->user()->id;
-        $data['cus'] = Customers::find($data['id']);
-        $data['orders'] = Orders::where('id_customer', $data['id'])->get();
-        $data['orders_details'] = Orderdetails::all();
-        return view('frontend.orders',$data);
-        // return dd($data);
-    }
-
-    private function doUpload(Request $request)
-    {
-        $fileName = "";
-        //Kiểm tra file
-        if ($request->file('image_acc')->isValid()) {
-            // File này có thực, bắt đầu đổi tên và move
-            $fileExtension = $request->file('image_acc')->getClientOriginalExtension(); // Lấy . của file
-
-            // Filename cực shock để khỏi bị trùng
-            $fileName = time() . "_" . rand(0, 9999999) . "_" . md5(rand(0, 9999999)) . "." . $fileExtension;
-
-            // Thư mục upload
-            $uploadPath = public_path('/upload'); // Thư mục upload
-
-            // Bắt đầu chuyển file vào thư mục
-            $request->file('image_acc')->move($uploadPath, $fileName);
-        } else {
-        }
-        return $fileName;
-    }
-    public function verifyEmail(Request $request)
-    {
-        $password = $request->verifyemail;
-        $user = Customers::where('email', '=', Auth::guard('customer')->user()->email)->first();
-
-        if (Hash::check($password, $user->password)) {
-            return response()->json(['success' => 'Form is successfully submitted!']);
-        } else {
-            return response()->json(['error' => 'not!']);
-        }
-    }
-
-    public function getChangeEmail()
-    {
-        $data['id'] = Auth::guard('customer')->user()->id;
-        $data['cus'] = Customers::find($data['id']);
-        return view('frontend.change_email', $data);
-    }
-
-    public function changeEmail(Request $request)
-    {
-        $newEmail = $request->changeEmail;
-        $email = Customers::where('email', '=', Auth::guard('customer')->user()->email)
-            ->update(array('email' => $newEmail));
-        Alert::success('Thành công', 'Đổi Email thành công');
-        return redirect("/");
-    }
-
-    public function verifyPhone(Request $request)
-    {
-        $password = $request->verifyphone;
-        $user = Customers::where('phone', '=', Auth::guard('customer')->user()->phone)->first();
-
-        if (Hash::check($password, $user->password)) {
-            return response()->json(['success' => 'Form is successfully submitted!']);
-        } else {
-            return response()->json(['error' => 'not!']);
-        }
-    }
-
-
-    public function getChangePhone()
-    {
-        $data['id'] = Auth::guard('customer')->user()->id;
-        $data['cus'] = Customers::find($data['id']);
-        return view('frontend.change_phone', $data);
-    }
-
-    public function changePhone(Request $request)
-    {
-        $newPhone = $request->changePhone;
-        Customers::where('phone', '=', Auth::guard('customer')->user()->phone)
-            ->update(array('phone' => $newPhone));
-        Alert::success('Thành công', 'Đổi số điện thoại thành công');
-        return redirect("/");
-    }
-
-    public function changeProvinceDistrict(Request $request)
-    {
-        $newProvince = $request->province;
-        $newDistrict = $request->district;
-        Customers::where('id_province', '=', Auth::guard('customer')->user()->id_province)
-            ->update(array('id_province' => $newProvince, 'id_district' => $newDistrict));
-        Alert::success('Thành công', 'Đổi số điện thoại thành công');
-        return redirect("/");
-    }
-
-
-    public function getEmail()
-    {
-        return view('frontend.email');
-    }
-
-    public function postEmail(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email|exists:customers',
-        ]);
-
-        $token = Str::random(64);
-
-        DB::table('password_resets')->insert(
-            ['email' => $request->email, 'token' => $token, 'created_at' => Carbon::now()]
-        );
-
-        Mail::send('frontend.verify', ['token' => $token], function ($message) use ($request) {
-            $message->to($request->email);
-            $message->subject('Reset Password Notification');
-        });
-
-        return back()->with('message', 'We have e-mailed your password reset link!');
-    }
 }

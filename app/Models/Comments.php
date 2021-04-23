@@ -19,6 +19,10 @@ class Comments extends Model
         return $this->belongsTo('App\Models\Customers', 'id_customer');
     }
 
+    function Orders(){
+        return $this->belongsTo('App\Models\Orders','id_order');
+    }
+
 
 
     protected $fillable = [

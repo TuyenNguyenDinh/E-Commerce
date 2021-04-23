@@ -2,7 +2,7 @@
 @section('title','Search')
 @section('main')
 <?php
-$key= request()->get('key');	
+$key = request()->get('key');
 ?>
 
 <link rel="stylesheet" href="{{asset('css/frontend/search.css')}}">
@@ -15,16 +15,16 @@ $key= request()->get('key');
                 </div>
             </div>
             <div class="col-lg-2 filter_respon">
-            @include('frontend.advanced_search')
+                @include('frontend.advanced_search')
             </div>
             <div class="col-lg-10">
                 <div class="container">
                     <div class="products-tabs">
+                        @if(count($listProduct) != 0)
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane face show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="products ">
                                     <div class="row">
-                                    
                                         @foreach ($listProduct as $item)
                                         <div class="product col-lg-3 col-md-6 col-sm-6">
                                             <div class="product-img">
@@ -75,6 +75,14 @@ $key= request()->get('key');
                                 </div>
                             </div>
                         </div>
+                        @else
+                        <div class="error-page">
+                            <div class="error-content">
+                                <h3><i class="fas fa-exclamation-triangle text-warning"></i> Not found.</h3>
+                            </div>
+                            <!-- /.error-content -->
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

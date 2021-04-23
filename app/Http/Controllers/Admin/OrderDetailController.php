@@ -6,39 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Models\Orderdetails;
 use App\Models\Orders;
 use Illuminate\Http\Request;
+use App\Repositories\OrderDetailEloquentRepository;
+use App\Repositories\OrderEloquentRepository;
 
 class OrderDetailController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    protected $orderdetails;
+    protected $orders;
+
+    public function __construct(OrderDetailEloquentRepository $orderdetails, OrderEloquentRepository $orders)
     {
-        // 
+        $this->orderdetails = $orderdetails;
+        $this->orders = $orders;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -48,7 +30,7 @@ class OrderDetailController extends Controller
      */
     public function show($id)
     {
-        $data['orders'] = Orders::find($id);
+        $data['orders'] = $this->orders->find($id);
         $data['order_details'] = Orderdetails::where('id_order',$id)->get();
         return view('admin.orderdetails.show', $data);
     }
