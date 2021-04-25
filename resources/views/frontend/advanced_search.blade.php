@@ -6,7 +6,7 @@ $rangePrice = request()->get('rangePrice');
 <div class="filter-status">
     <div class="filter-title">
         <a id="btnFilter" style="cursor: pointer;">
-            <i class="far fa-filter"></i> Bộ lọc tìm kiếm
+            <i class="far fa-filter"></i> {{ __('Filter search')}}
         </a>
     </div>
     <form id="form" method="get">
@@ -16,21 +16,21 @@ $rangePrice = request()->get('rangePrice');
         @endif
         <div class="filter-group">
             <div class="filter-group_head">
-                <p>Theo giá</p>
+                <p>{{ __('Sort')}}</p>
             </div>
             <div class="filter-checkbox">
                 <select data-filter="make" id="sort" name="sort" class="filter-make filter form-control">
-                    <option value="0" selected disabled>---Chọn sắp xếp---</option>
-                    <option value="1" {{($sort==1)?'selected':""}}>Theo tên từ A - Z</option>
-                    <option value="2" {{($sort==2)?'selected':""}}>Theo tên từ Z - A</option>
-                    <option value="3" {{($sort==3)?'selected':""}}>Giá từ thấp đến cao</option>
-                    <option value="4" {{($sort==4)?'selected':""}}>Giá từ cao đến thấp</option>
+                    <option value="0" selected disabled>---{{ __('Choose sort')}}---</option>
+                    <option value="1" {{($sort==1)?'selected':""}}>{{ __('Name to A - Z')}}</option>
+                    <option value="2" {{($sort==2)?'selected':""}}>{{ __('Name to Z - A')}}</option>
+                    <option value="3" {{($sort==3)?'selected':""}}>{{ __('Price from low to hight')}}</option>
+                    <option value="4" {{($sort==4)?'selected':""}}>{{ __('Price from hight to low')}}</option>
                 </select>
             </div>
         </div>
         <div class="filter-group">
             <div class="filter-group_head">
-                <p>Theo hãng</p>
+                <p>{{ __('Brands')}}</p>
             </div>
             <div class="filter-checkbox">
                 @foreach($brands as $brand)
@@ -42,38 +42,38 @@ $rangePrice = request()->get('rangePrice');
         </div>
         <div class="filter-group">
             <div class="filter-group_head">
-                <p>Theo giá</p>
+                <p>{{ __('Price') }}</p>
             </div>
             <div class="filter-checkbox">
                 <label class="border rounded">
                     <input type="radio" name="rangePrice" value="0" id="tatca" checked onchange="$('#form').submit();">
-                    <span>Tất cả</span>
+                    <span>{{ __('All')}}</span>
                 </label>
                 <label class="border rounded">
                     <input type="radio" name="rangePrice" value="1" id="duoi5tr" {{($rangePrice==1)?'checked':""}} onchange="$('#form').submit();">
-                    <span>Dưới 5 triệu</span>
+                    <span>{{ __('Less 5.000.000 đ')}}</span>
                 </label>
                 <label class="border rounded">
                     <input type="radio" name="rangePrice" value="2" id="5den10tr" {{($rangePrice==2)?'checked':""}} onchange="$('#form').submit();">
-                    <span>5 - 10 triệu</span>
+                    <span>{{ __('5 - 10.000.000 đ')}}</span>
                 </label>
                 <label class="border rounded">
                     <input type="radio" name="rangePrice" value="3" id="10den15tr" {{($rangePrice==3)?'checked':""}} onchange="$('#form').submit();">
-                    <span for="10den15tr">10 - 15 triệu</span>
+                    <span for="10den15tr">{{ __('10 - 15.000.000 đ')}}</span>
                 </label>
                 <label class="border rounded">
                     <input type="radio" name="rangePrice" value="4" id="15den20tr" {{($rangePrice==4)?'checked':""}} onchange="$('#form').submit();">
-                    <span for="15den20tr">15 - 20 triệu</span>
+                    <span for="15den20tr">{{ __('15 -20.000.000 đ')}}</span>
                 </label>
                 <label class="border rounded">
                     <input type="radio" name="rangePrice" value="5" id="tu20tr" {{($rangePrice==5)?'checked':""}} onchange="$('#form').submit();">
-                    <span for="tu20tr">20 triệu trở lên</span>
+                    <span for="tu20tr">{{ __('20.000.000 đ more')}}</span>
                 </label>
             </div>
         </div>
         <div class="filter-group">
             <div class="filter-group_head">
-                <p>Đánh giá</p>
+                <p>{{ __('Rates')}}</p>
             </div>
             <div class="filter-checkbox">
                 <div class="rating_stars_collection">
@@ -92,7 +92,7 @@ $rangePrice = request()->get('rangePrice');
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="far fa-star"></i>
-                        trở lên
+                        {{ __('above')}}
                     </div>
                 </div>
                 <div class="rating_stars_collection">
@@ -102,7 +102,7 @@ $rangePrice = request()->get('rangePrice');
                         <i class="fas fa-star"></i>
                         <i class="far fa-star"></i>
                         <i class="far fa-star"></i>
-                        trở lên
+                        {{ __('above')}}
                     </div>
                 </div>
                 <div class="rating_stars_collection">
@@ -112,7 +112,7 @@ $rangePrice = request()->get('rangePrice');
                         <i class="far fa-star"></i>
                         <i class="far fa-star"></i>
                         <i class="far fa-star"></i>
-                        trở lên
+                        {{ __('above')}}
                     </div>
                 </div>
                 <div class="rating_stars_collection">
@@ -122,13 +122,13 @@ $rangePrice = request()->get('rangePrice');
                         <i class="far fa-star"></i>
                         <i class="far fa-star"></i>
                         <i class="far fa-star"></i>
-                        trở lên
+                        {{ __('above')}}
                     </div>
                 </div>
             </div>
         </div>
         <div class="filter-button_submit">
-            <input type="submit" name="" value="Lọc" style="height: 100%;" class="btn btn-secondary">
+            <input type="submit" name="" value="Submit" style="height: 100%;" class="btn btn-secondary">
         </div>
     </form>
     <div id="responsive_filter">
@@ -142,21 +142,21 @@ $rangePrice = request()->get('rangePrice');
                         @endif
                         <div class="filter-group filter-group_respon">
                             <div class="filter-group_head">
-                                <p>Theo giá</p>
+                                <p>{{ __('Sort')}}</p>
                             </div>
                             <div class="filter-checkbox">
-                                <select data-filter="make" id="sort" name="sort" class="filter-make filter form-control">
-                                    <option value="0" selected disabled>---Chọn sắp xếp---</option>
-                                    <option value="1" {{($sort==1)?'selected':""}}>Theo tên từ A - Z</option>
-                                    <option value="2" {{($sort==2)?'selected':""}}>Theo tên từ Z - A</option>
-                                    <option value="3" {{($sort==3)?'selected':""}}>Giá từ thấp đến cao</option>
-                                    <option value="4" {{($sort==4)?'selected':""}}>Giá từ cao đến thấp</option>
+                                <select data-filter="make" id="sort-respone" name="sort" class="filter-make filter form-control">
+                                    <option value="0" selected disabled>---{{ __('Choose sort')}}---</option>
+                                    <option value="1" {{($sort==1)?'selected':""}}>{{ __('Name to A - Z')}}</option>
+                                    <option value="2" {{($sort==2)?'selected':""}}>{{ __('Name to Z - A')}}</option>
+                                    <option value="3" {{($sort==3)?'selected':""}}>{{ __('Price form low to hight')}}</option>
+                                    <option value="4" {{($sort==4)?'selected':""}}>{{ __('Price form hight to low')}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="filter-group filter-group_respon">
                             <div class="filter-group_head">
-                                <p>Theo hãng</p>
+                                <p>{{ __('Brands')}}</p>
                             </div>
                             <div class="filter-checkbox">
                                 @foreach($brands as $brand)
@@ -167,38 +167,38 @@ $rangePrice = request()->get('rangePrice');
                         </div>
                         <div class="filter-group filter-group_respon">
                             <div class="filter-group_head">
-                                <p>Theo giá</p>
+                                <p>{{ __('Price')}}</p>
                             </div>
                             <div class="filter-checkbox">
                                 <label class="border rounded">
                                     <input type="radio" name="rangePrice" value="0" id="tatca_respon" checked onchange="$('#form_respone').submit();">
-                                    <span>Tất cả</span>
+                                    <span>{{ __('All')}}</span>
                                 </label>
                                 <label class="border rounded">
                                     <input type="radio" name="rangePrice" value="1" id="duoi5tr_respon" {{($rangePrice==1)?'checked':""}} onchange="$('#form_respone').submit();">
-                                    <span>Dưới 5 triệu</span>
+                                    <span>{{ __('Less 5.000.000 đ')}}</span>
                                 </label>
                                 <label class="border rounded">
                                     <input type="radio" name="rangePrice" value="2" id="5den10tr_respon" {{($rangePrice==2)?'checked':""}} onchange="$('#form_respone').submit();">
-                                    <span>5 - 10 triệu</span>
+                                    <span>{{ __('5 - 10.000.000 đ')}}</span>
                                 </label>
                                 <label class="border rounded">
                                     <input type="radio" name="rangePrice" value="3" id="10den15tr_respon" {{($rangePrice==3)?'checked':""}} onchange="$('#form_respone').submit();">
-                                    <span for="10den15tr">10 - 15 triệu</span>
+                                    <span for="10den15tr">{{ __('10 - 15.000.000 đ')}}</span>
                                 </label>
                                 <label class="border rounded">
                                     <input type="radio" name="rangePrice" value="4" id="15den20tr_respon" {{($rangePrice==4)?'checked':""}} onchange="$('#form_respone').submit();">
-                                    <span for="15den20tr">15 - 20 triệu</span>
+                                    <span for="15den20tr">{{ __('15 -20.000.000 đ')}}</span>
                                 </label>
                                 <label class="border rounded">
                                     <input type="radio" name="rangePrice" value="5" id="tu20tr_respon" {{($rangePrice==5)?'checked':""}} onchange="$('#form_respone').submit();">
-                                    <span for="tu20tr">20 triệu trở lên</span>
+                                    <span for="tu20tr">{{ __('20.000.000 đ more')}}</span>
                                 </label>
                             </div>
                         </div>
                         <div class="filter-group filter-group_respon">
                             <div class="filter-group_head">
-                                <p>Đánh giá</p>
+                                <p>{{ __('Rates')}}</p>
                             </div>
                             <div class="filter-checkbox">
                                 <div class="rating_stars_collection">
@@ -217,7 +217,7 @@ $rangePrice = request()->get('rangePrice');
                                         <i class="fas fa-star"></i>
                                         <i class="fas fa-star"></i>
                                         <i class="far fa-star"></i>
-                                        trở lên
+                                        {{ __('above')}}
                                     </div>
                                 </div>
                                 <div class="rating_stars_collection">
@@ -227,7 +227,7 @@ $rangePrice = request()->get('rangePrice');
                                         <i class="fas fa-star"></i>
                                         <i class="far fa-star"></i>
                                         <i class="far fa-star"></i>
-                                        trở lên
+                                        {{ __('above')}}
                                     </div>
                                 </div>
                                 <div class="rating_stars_collection">
@@ -237,7 +237,7 @@ $rangePrice = request()->get('rangePrice');
                                         <i class="far fa-star"></i>
                                         <i class="far fa-star"></i>
                                         <i class="far fa-star"></i>
-                                        trở lên
+                                        {{ __('above')}}
                                     </div>
                                 </div>
                                 <div class="rating_stars_collection">
@@ -247,13 +247,13 @@ $rangePrice = request()->get('rangePrice');
                                         <i class="far fa-star"></i>
                                         <i class="far fa-star"></i>
                                         <i class="far fa-star"></i>
-                                        trở lên
+                                        {{ __('above')}}
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="filter-button_submit filter-group_respon">
-                            <input type="submit" name="" value="Lọc" style="height: 100%;" class="btn btn-secondary">
+                            <input type="submit" name="" value="Submit" style="height: 100%;" class="btn btn-secondary">
                         </div>
                     </form>
                 </div>

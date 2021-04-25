@@ -45,13 +45,13 @@
                                                     <button class="add-to-compare">
                                                         <a href="{{asset('wishlist/add/'.$product->id.'.html')}}">
                                                             <i class="fas fa-exchange-alt"></i>
-                                                            <span class="tooltipp"> add to wishlist</span>
+                                                            <span class="tooltipp"> {{ __('content.add to wishlist')}}</span>
                                                         </a>
                                                     </button>
                                                     <button class="details">
                                                         <a href="{{asset('details/'.$product->id.'.html')}}" style="color: black;">
                                                             <i class="fas fa-eye"></i>
-                                                            <span class="tooltipp">details</span>
+                                                            <span class="tooltipp">{{ __('content.details')}}</span>
                                                         </a>
                                                 </div>
                                             </div>
@@ -60,7 +60,7 @@
                                                     <button class="add-to-cart-btn">
                                                         <i class="far fa-shopping-cart">
                                                         </i>
-                                                        add to cart
+                                                        {{ __('content.add to cart')}}
                                                     </button>
                                                 </a>
                                             </div>
@@ -74,7 +74,9 @@
                     @else
                     <div class="error-page">
                         <div class="error-content">
-                            <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! Not found.</h3>
+                            <div class="wrapper">
+                                <h3><i class="fas fa-exclamation-triangle text-warning"></i>Oops! {{ __('content.Not found.')}}</h3>
+                            </div>
                         </div>
                         <!-- /.error-content -->
                     </div>

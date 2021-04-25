@@ -119,6 +119,10 @@
 							</div>
 
 							<div class="form-group">
+								<label>Attributes</label>
+								<input type="number" name="quantity" class="form-control input100 @error('quantity') is-invalid @enderror">
+							</div>
+							<div class="form-group">
 								<label>Quantity</label>
 								<input type="number" name="quantity" class="form-control input100 @error('quantity') is-invalid @enderror">
 							</div>

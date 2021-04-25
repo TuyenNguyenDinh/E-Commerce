@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Countdown;
 use App\Models\Brands;
 use App\Models\Categories;
 use App\Models\Comments;
@@ -13,16 +14,25 @@ use App\Models\Wishlist;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class FrontendController extends Controller
 {
+
+    public function changeLanguage($language)
+    {
+        \Session::put('website_language', $language);
+    
+        return redirect()->back();
+    }
+
     public function getHome()
     {
         $data['brands_image'] = Brands::all();
         $data['products'] = Products::all();
         $data['products_selling'] = Products::where('discount','>',0)->get();
-        return view('frontend.index', $data);
+        return view('frontend.index', $data );
     }
 
     public function getCategory($id)
@@ -44,9 +54,18 @@ class FrontendController extends Controller
         $data['items'] = Products::find($id);
         $data['comments'] = Comments::where('id_product', $id)->get();
         $data['provinces'] = Province::all();
-        $data['transport_fee'] = Transport_fee::where('id_province',Auth::guard('customer')->user()->province->id)->get();
+        if(Auth::guard('customer')->check()){
+            $data['transport_fee'] = Transport_fee::where('id_province',Auth::guard('customer')->user()->id_province)->get();
+        }
         return view('frontend.details', $data);
     }
+
+    public function getFeeProvince($id)
+    {
+        echo json_encode(DB::table('transport_fee')->where('id_province', $id)->get());
+
+    }
+
 
     public function getSearch(Request $request)
     {
@@ -139,6 +158,7 @@ class FrontendController extends Controller
         $id = Auth::guard('customer')->user()->id;
         $data['wishlist'] = Wishlist::where('id_customer', $id)->get();
         return view('frontend.wishlist', $data);
+        // return dd($data);
     }
 
     public function addWishlist($id)

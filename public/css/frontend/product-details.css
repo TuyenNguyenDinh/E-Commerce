@@ -301,7 +301,8 @@
             /*  */
             
             .sl_district,
-            .sl_province {
+            .sl_province,
+            .fee_province {
                 /* A reset of styles, */
                 /* including removing the default dropdown arrow appearance: none; */
                 /* // Additional resets for further consistency */

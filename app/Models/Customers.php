@@ -41,6 +41,17 @@ class Customers extends Authenticatable
         return $this->belongsTo('App\Models\Province', 'id_province');
     }
 
+    public function addNew($input)
+{
+    $check = static::where('facebook_id',$input['facebook_id'])->first();
+
+    if(is_null($check)){
+        return static::create($input);
+    }
+
+    return $check;
+    
+
     protected $fillable = [
         'name',
         'phone',

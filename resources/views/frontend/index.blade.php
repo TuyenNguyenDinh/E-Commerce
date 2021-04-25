@@ -11,7 +11,7 @@
                         <img src="{{asset('image/lg-43nano79tnd-2-org.jpg')}}">
                     </div>
                     <div class="shop-body">
-                        <h3>Tivi<br>Collection</h3>
+                        <h3>Tivi<br>{{ __('content.Collection')}}</h3>
                         <a href="#" class="cta-btn text-uppercase">shop now
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -24,7 +24,7 @@
                         <img src="{{asset('image/panasonic-nr-ba229pkvn-1-1-org.jpg')}}">
                     </div>
                     <div class="shop-body">
-                        <h3>Perfect<br>Quality</h3>
+                        <h3>{{ __('content.Perfect')}}<br>{{ __('content.Quality')}}</h3>
                         <a href="#" class="cta-btn text-uppercase">shop now
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -37,7 +37,7 @@
                         <img src="{{asset('image/shop01.webp')}}">
                     </div>
                     <div class="shop-body">
-                        <h3>More<br>Brands</h3>
+                        <h3>{{ __('content.More')}}<br>{{ __('content.Brands')}}</h3>
                         <a href="#" class="cta-btn text-uppercase">shop now
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -52,7 +52,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="section-title">
-                    <h3 class="title">New Products</h3>
+                    <h3 class="title">{{ __('content.Products')}}</h3>
                 </div>
             </div>
             <div class="col-md-12">
@@ -96,13 +96,13 @@
                                                 <button class="add-to-compare">
                                                     <a href="{{asset('wishlist/add/'.$product->id.'.html')}}">
                                                         <i class="fas fa-exchange-alt"></i>
-                                                        <span class="tooltipp"> add to wishlist</span>
+                                                        <span class="tooltipp"> {{ __('content.add to wishlist')}}</span>
                                                     </a>
                                                 </button>
                                                 <button class="details">
                                                     <a href="{{asset('details/'.$product->id.'.html')}}" style="color: black;">
                                                         <i class="fas fa-eye"></i>
-                                                        <span class="tooltipp">details</span>
+                                                        <span class="tooltipp">{{ __('content.details')}}</span>
                                                     </a>
                                                 </button>
                                             </div>
@@ -112,7 +112,7 @@
                                                 <button class="add-to-cart-btn">
                                                     <i class="far fa-shopping-cart">
                                                     </i>
-                                                    add to cart
+                                                    {{ __('content.add to cart')}}
                                                 </button>
                                             </a>
                                         </div>
@@ -132,34 +132,34 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="hot-deal">
-                    <ul class="hot-deal-countdown">
+                    <ul class="hot-deal-countdown" id="time">
                         <li>
                             <div>
-                                <h3>02</h3>
+                                <h3 id="days">02</h3>
                                 <span>Days</span>
                             </div>
                         </li>
                         <li>
                             <div>
-                                <h3>02</h3>
+                                <h3 id="hours">02</h3>
                                 <span>Hours</span>
                             </div>
                         </li>
                         <li>
                             <div>
-                                <h3>02</h3>
+                                <h3 id="minutes">02</h3>
                                 <span>Minute</span>
                             </div>
                         </li>
                         <li>
                             <div>
-                                <h3>02</h3>
+                                <h3 id="seconds">02</h3>
                                 <span>seconds</span>
                             </div>
                         </li>
                     </ul>
                     <h2 class="text-uppercase">hot deal this week</h2>
-                    <p style="color: #FFF;">New collection up to 50% OFF</p>
+                    <p >New collection up to 50% OFF</p>
                     <a href="#" class="btn btn-primary cta-btn text-uppercase">Shop now</a>
                 </div>
             </div>
@@ -171,7 +171,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="section-title">
-                    <h3 class="title">Product Selling</h3>
+                    <h3 class="title">{{ __('content.Product Selling')}}</h3>
                     <div class="section-nav">
                         <div class="section-tab-nav tab-nav">
                         </div>
@@ -214,13 +214,13 @@
                                                 <button class="add-to-compare">
                                                     <a href="{{asset('wishlist/add/'.$product->id.'.html')}}">
                                                         <i class="fas fa-exchange-alt"></i>
-                                                        <span class="tooltipp"> add to wishlist</span>
+                                                        <span class="tooltipp"> {{ __('content.add to wishlist')}}</span>
                                                     </a>
                                                 </button>
                                                 <button class="details">
                                                     <a href="{{asset('details/'.$product->id.'.html')}}" style="color: black;">
                                                         <i class="fas fa-eye"></i>
-                                                        <span class="tooltipp">details</span>
+                                                        <span class="tooltipp">{{ __('content.details')}}</span>
                                                     </a>
                                                 </button>
                                             </div>
@@ -230,7 +230,7 @@
                                                 <button class="add-to-cart-btn">
                                                     <i class="far fa-shopping-cart">
                                                     </i>
-                                                    add to cart
+                                                    {{ __('content.add to cart')}}
                                                 </button>
                                             </a>
                                         </div>
@@ -246,7 +246,6 @@
     </div>
 </div>
 <div id="benefit-items" class="container">
-
     <div class="row">
         <div class="col-lg-4">
             <div class="single-benefit">
@@ -254,8 +253,8 @@
                     <img src="{{asset('image/icon-1.png')}}" alt="">
                 </div>
                 <div class="sb-text">
-                    <h6>Free Shipping</h6>
-                    <p>For all order over 99$</p>
+                    <h6>{{ __('content.Free Shipping')}}</h6>
+                    <p>{{ __('content.For all order over 30.000.000 đ')}}</p>
                 </div>
             </div>
         </div>
@@ -265,8 +264,8 @@
                     <img src="{{asset('image/icon-2.png')}}" alt="">
                 </div>
                 <div class="sb-text">
-                    <h6>Delivery on time</h6>
-                    <p>If good have problems</p>
+                    <h6>{{ __('content.Delivery on time')}}</h6>
+                    <p>{{ __('content.If good have problems')}}</p>
                 </div>
             </div>
         </div>
@@ -276,8 +275,8 @@
                     <img src="{{asset('image/us-dollar-48.png')}}" alt="">
                 </div>
                 <div class="sb-text">
-                    <h6>Secure payment</h6>
-                    <p>100% secure payment</p>
+                    <h6>{{ __('content.Secure payment')}}</h6>
+                    <p>{{ __('content.100% secure payment')}}</p>
                 </div>
             </div>
         </div>
@@ -296,4 +295,40 @@
         </div>
     </div>
 </div>
+<script>
+    // Set the date we're counting down to
+
+    var countDownDate = new Date("2045-04-23 23:37:06").getTime();
+
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+
+        // Get today's date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Output the result in an element with id="demo"
+        // document.getElementById("time").innerHTML = days + "d " + hours + "h " +
+        //     minutes + "m " + seconds + "s ";
+
+        document.getElementById("days").innerHTML =  days ;
+        document.getElementById("hours").innerHTML =  hours ;
+        document.getElementById("minutes").innerHTML =  minutes ;
+        document.getElementById("seconds").innerHTML =  seconds ;
+
+        // If the count down is over, write some text 
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("time").innerHTML = "EXPIRED";
+        }
+    }, 1000);
+</script>
 @stop

@@ -7,7 +7,6 @@
         <div class="breadcrumb-bar">
             <ul class="breadcrumb">
                 <li><a href="#">Home</a></li>
-
                 <li><a href="#">Cart</a></li>
                 <li>Checkout</li>
             </ul>
@@ -16,15 +15,16 @@
     <div class=" container-fluid my-4 ">
         <div class="row justify-content-center ">
             <div class="col-xl-10">
-                <form method="post">
+                <form id="push_order" method="post" data-route="{{ route('purchase') }}">
                     {{csrf_field()}}
                     <div class="card shadow-lg ">
                         <div class="row justify-content-around">
                             <div class="col-md-5">
                                 <div class="card border-0">
                                     <div class="card-header pb-0">
-                                        <h2 class="card-title space ">Checkout</h2>
-                                        <p class="card-text text-muted mt-4 space">SHIPPING DETAILS</p>
+                                        <h2 class="card-title space ">{{ __('content.Checkout')}}</h2>
+                                        <p class="card-text text-muted mt-4 space">{{ __('content.SHIPPING DETAILS')}}</p>
+                                        <small class="text-muted">{{ __('content.Please select the address you want below') }}</small>
                                         <hr class="my-0">
                                     </div>
                                     <div class="card-body">
@@ -33,23 +33,23 @@
                                                 <p><b>{{ $cus->name}}</b></p>
                                                 <p>{{ $cus->phone }}</p>
                                                 <select class="delivery_address" name="delivery_address" id="delivery_address">
-                                                    <option value="{{$cus->province->id}}" >{{$cus->address}}</option>
+                                                    <option value="{{$cus->province->id}}||{{$cus->address}}">{{$cus->address}}</option>
                                                     @foreach($ship_addrs as $addrs)
-                                                    <option  value="{{$addrs->province->id}}">{{$addrs->address_detail}}</option>
+                                                    <option value="{{$addrs->province->id}}||{{$addrs->address_detail}}">{{$addrs->address_detail}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-auto mt-0" style="padding-top: 23px;">
                                                 <a data-toggle="modal" data-target="#addAddress" style="cursor:pointer">
-                                                    Add another address
+                                                    {{ __('content.Add another address')}}
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="row mt-4">
                                             <div class="col">
-                                                <p class="text-muted mb-2">PAYMENT METHODS</p>
+                                                <p class="text-muted mb-2">{{ __('content.PAYMENT METHODS')}}</p>
                                                 <hr class="mt-0">
-                                                <p><b>Choose one of the payment methods</b></p>
+                                                <p><b>{{ __('content.Choose one of the payment methods')}}</b></p>
                                                 <select name="payment_methods" id="payment_methods" class="form-control">
                                                     <option value="COD">COD</option>
                                                     <option value="debit_cart">Debit card</option>
@@ -58,9 +58,9 @@
                                         </div>
                                         <div class="row mt-4">
                                             <div class="col">
-                                                <p class="text-muted mb-2">NOTES</p>
+                                                <p class="text-muted mb-2">{{ __('content.NOTES')}}</p>
                                                 <hr class="mt-0">
-                                                <textarea name="notes" id="notes" cols="50" rows="2" style="height: 50px; resize: none;"></textarea>
+                                                <textarea name="notes" id="notes" cols="50" rows="2" style="height: 50px; resize: none;  width: calc(100% - 50px);"></textarea>
                                             </div>
                                         </div>
                                         <!-- <div class="row mt-4">
@@ -95,7 +95,7 @@
                             <div class="col-md-5">
                                 <div class="card border-0 ">
                                     <div class="card-header card-2">
-                                        <p class="card-text text-muted mt-md-4 mb-2 space">YOUR ORDER <span class=" small text-muted ml-2 cursor-pointer">EDIT SHOPPING BAG</span> </p>
+                                        <p class="card-text text-muted mt-md-4 mb-2 space">{{ __('content.YOUR ORDER')}}</p>
                                         <hr class="my-2">
                                     </div>
                                     <div class="card-body pt-0">
@@ -123,7 +123,7 @@
                                         @endforeach
                                         <div class="row mt-4 ">
                                             <div class="flex-column flex-sm-row" style="flex:1">
-                                                <p><b>Total</b></p>
+                                                <p><b>{{ __('content.Total')}}</b></p>
                                             </div>
                                             <div class="flex-sm-col col-auto my-auto">
                                                 <p><b>{{number_format($total,0,'.','.')}} đ</b></p>
@@ -131,7 +131,7 @@
                                         </div>
                                         <div class="row ">
                                             <div class="flex-column flex-sm-row" style="flex:1">
-                                                <p><b>Transport fee for province</b></p>
+                                                <p><b>{{ __('content.Transport fee for province')}}</b></p>
                                             </div>
                                             <div class="flex-sm-col col-auto my-auto">
                                                 @foreach(DB::table('transport_fee')->where('id_province', $cus->id_province)->get() as $fee)
@@ -144,10 +144,10 @@
                                         <hr class="my-2">
                                         <div class="row ">
                                             <div class="flex-column flex-sm-row" style="flex:1">
-                                                <p><b>Sub total</b></p>
+                                                <p><b>{{ __('content.Sub total')}}</b></p>
                                             </div>
                                             <div class="flex-sm-col col-auto my-auto subtotal">
-                                            @foreach(DB::table('transport_fee')->where('id_province', $cus->id_province)->get() as $fee)
+                                                @foreach(DB::table('transport_fee')->where('id_province', $cus->id_province)->get() as $fee)
                                                 <select name="total_fetch" class="total_fetch" id="total_fetch" style='font-weight:bolder; font-size:13px'>
                                                     <option value="{{$total+$fee->transport_fee}}"> {{number_format($total+$fee->transport_fee,0,'.','.')}} đ</option>
                                                 </select>
@@ -156,7 +156,7 @@
                                         </div>
                                         <div class="row mb-md-5">
                                             <div class="col">
-                                                <button type="submit" name="purchase" id="purchase" class="btn btn-lg btn-block ">PURCHASE</button>
+                                                <button type="submit" name="purchase" id="purchase" class="btn btn-lg btn-block ">{{ __('content.PURCHASE')}}</button>
                                             </div>
                                         </div>
                                     </div>
@@ -179,14 +179,14 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-title text-left my-account-section__header">
-                        <h4>Add shipping address</h4>
+                        <h4>{{ __('content.Add shipping address')}}</h4>
                     </div>
                     <div class="d-flex flex-row align-items-baseline">
                         <form id="addaddress" data-route="{{ route('addAddress') }}" method="post" style="width: 100%">
                             {{csrf_field()}}
                             <div class="form-group mb-3">
                                 <select name="province" id="provinceAdd" class="form-control rounded-pill border-0 shadow-sm px-4">
-                                    <option value="0" selected disabled>---Chọn tỉnh---</option>
+                                    <option value="0" selected disabled>---{{ __('content.Choose province')}}---</option>
                                     @foreach($pr as $province)
                                     <option value="{{$province->id}}">{{ucfirst($province->province)}}</option>
                                     @endforeach
@@ -194,13 +194,13 @@
                             </div>
                             <div class="form-group mb-3">
                                 <select name="district" id="districtAdd" class="form-control rounded-pill border-0 shadow-sm px-4" placeholder="Select Sub Category">
-                                    <option value="0" selected disabled>---Chọn Quận(Huyện)---</option>
+                                    <option value="0" selected disabled>---{{ __('content.Choose district')}}---</option>
                                 </select>
                             </div>
                             <div class="form-group mb-3">
                                 <input type="text" name="address_detail" id="address_detail" max=100 class="form-control" placeholder="Input you address">
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Add new address</button>
+                            <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">{{ __('content.Add new address')}}</button>
                         </form>
                     </div>
 
@@ -250,38 +250,38 @@
                     var response = JSON.parse(response);
                     console.log(response);
                     response.forEach(element => {
-                        $('#fee_fetch').number(true,2).append(`<option value="${element['transport_fee']}"> ${number_format(element['transport_fee'],0,',','.')}  đ</option>`);
-                        var sub = <?php echo Cart::total(0,"","")?>;
+                        $('#fee_fetch').number(true, 2).append(`<option value="${element['transport_fee']}"> ${number_format(element['transport_fee'],0,',','.')}  đ</option>`);
+                        var sub = <?php echo Cart::subtotal(0, "", "") ?>;
                         var total = (element['transport_fee']) + sub;
-                        $('.total_fetch').number(true,2).append(`<option value="${total}"> ${number_format(total,0,',','.')} đ</option>`);
-                        
+                        $('.total_fetch').number(true, 2).append(`<option value="${total}"> ${number_format(total,0,',','.')} đ</option>`);
+
                     });
                 }
             });
-      });
+        });
     });
 
-    function number_format(number, decimals, decPoint, thousandsSep){
-    decimals = decimals || 0;
-    number = parseFloat(number);
+    function number_format(number, decimals, decPoint, thousandsSep) {
+        decimals = decimals || 0;
+        number = parseFloat(number);
 
-    if(!decPoint || !thousandsSep){
-        decPoint = '.';
-        thousandsSep = ',';
+        if (!decPoint || !thousandsSep) {
+            decPoint = '.';
+            thousandsSep = ',';
+        }
+
+        var roundedNumber = Math.round(Math.abs(number) * ('1e' + decimals)) + '';
+        var numbersString = decimals ? roundedNumber.slice(0, decimals * -1) : roundedNumber;
+        var decimalsString = decimals ? roundedNumber.slice(decimals * -1) : '';
+        var formattedNumber = "";
+
+        while (numbersString.length > 3) {
+            formattedNumber += thousandsSep + numbersString.slice(-3)
+            numbersString = numbersString.slice(0, -3);
+        }
+
+        return (number < 0 ? '-' : '') + numbersString + formattedNumber + (decimalsString ? (decPoint + decimalsString) : '');
     }
-
-    var roundedNumber = Math.round( Math.abs( number ) * ('1e' + decimals) ) + '';
-    var numbersString = decimals ? roundedNumber.slice(0, decimals * -1) : roundedNumber;
-    var decimalsString = decimals ? roundedNumber.slice(decimals * -1) : '';
-    var formattedNumber = "";
-
-    while(numbersString.length > 3){
-        formattedNumber += thousandsSep + numbersString.slice(-3)
-        numbersString = numbersString.slice(0,-3);
-    }
-
-    return (number < 0 ? '-' : '') + numbersString + formattedNumber + (decimalsString ? (decPoint + decimalsString) : '');
-}
 
     $('#addaddress').on('submit', function(event) {
         var route = $('#addaddress').data('route');
@@ -314,5 +314,30 @@
         event.preventDefault();
     });
 
+    $('#push_order').submit(function(event) {
+		var route = $('#push_order').data('route');
+		var form_data = $(this);
+		$.ajax({
+			method: 'POST',
+			url: route,
+			processData: false, // Important!
+			contentType: false,
+			cache: false,
+			data: new FormData(this),
+			success: function(response) {
+				swal({
+					closeOnClickOutside: false,
+					icon: "success",
+					title: 'Success, create sussecfully!',
+					showSpinner: true
+				});
+			},
+			error: function(response) {
+				alert(response)
+
+			}
+		})
+		event.preventDefault();
+	});
 </script>
 @stop

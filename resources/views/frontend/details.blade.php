@@ -53,7 +53,7 @@
                             <div class="star_rating">
                                 @if( round($comments->avg('rate')) == 0)
                                 <div class="star_rating_number">
-                                    Chưa có đánh giá
+                                    {{ __('content.No rated')}}
                                 </div>
                                 @else
                                 <div class="star_rating_number">
@@ -84,25 +84,19 @@
                         <div class="product-details_sku text-uppercase">
 
                         </div>
-                        <div class="product_track_side d-flex">
-                            <h5>Kích thước:</h5>
-                            <span> Dài {{$items->lenght}} cm</span>
-                            <span> Dài {{$items->weight}} cm</span>
-                            <span> Dài {{$items->height}} cm</span>
-                        </div>
                         <div class="transport d-flex flex-column">
                             <div class="flex_nowrapper d-flex ">
                                 <div class="transport_title">
-                                    <p>Vận chuyển</p>
+                                    <p>{{ __('content.Transport')}}</p>
                                 </div>
                                 <div class="transport_method">
                                     <div class="transport_free_shipping">
                                         <div class="free_shipping_content">
                                             <div class="img_free_shipping d-flex align-items-center">
-                                                <img src="{{asset('image/icon-free-shipping.png')}}" alt="" width="25px" height="18px"> Miễn phí vận chuyển
+                                                <img src="{{asset('image/icon-free-shipping.png')}}" alt="" width="25px" height="18px"> {{ __('content.Free shipping')}}
                                             </div>
                                             <div class="gRuynh">
-                                                Miễn Phí Vận Chuyển khi đơn đạt giá trị tối thiểu
+                                                {{ __('content.Free shipping when the order reaches minimum value')}}
                                             </div>
                                         </div>
                                     </div>
@@ -113,7 +107,7 @@
                                         </div>
                                         <div class="flex item-center">
                                             <div class="transport_method_title d-flex">
-                                                <p>Vận chuyển tới</p>
+                                                <p>{{ __('content.Transport to')}}</p>
                                                 <div class="d-flex">
                                                     <div class="address d-flex item-center">
                                                         @if(Auth::guard('customer')->check())
@@ -122,14 +116,14 @@
                                                         <span> <span>{{Auth::guard('customer')->user()->province->province}}</span></span>
                                                         @else
                                                         <select class="sl_province" name="province" id="province">
-                                                            <option value="0" selected disabled>Chọn tỉnh</option>
+                                                            <option value="0" selected disabled>{{ __('content.Choose province')}}</option>
                                                             @foreach($provinces as $province)
                                                             <option value="{{$province->id}}">{{ucfirst($province->province)}}</option>
                                                             @endforeach
                                                         </select>
                                                         <span>, </span>
                                                         <select class="sl_district" name="district" id="district">
-                                                            <option value="0" selected disabled>Chọn Quận(Huyện)</option>
+                                                            <option value="0" selected disabled>{{ __('content.Choose district')}}</option>
                                                         </select>
                                                         @endif
                                                     </div>
@@ -137,13 +131,21 @@
                                             </div>
                                             <div class="trasnsport_fee d-flex">
                                                 <div class="transport_method_title d-flex">
-                                                    <p>Phí vận chuyển</p>
+                                                    <p>{{ __('content.Transport fee') }}</p>
                                                     <div class="d-flex">
+                                                        @if(Auth::guard('customer')->check())
                                                         <div class="currency d-flex item-center">
                                                             @foreach($transport_fee as $fee)
                                                             <span>{{ number_format($fee->transport_fee,0,'.','.') }} đ</span>
                                                             @endforeach
                                                         </div>
+                                                        @else
+                                                        <div class="currency d-flex item-center">
+                                                            <select class="fee_province" name="fee_province" id="fee_province">
+                                                                <option value="0" selected disabled>{{ __('content.Choose fee')}}</option>
+                                                            </select>
+                                                        </div>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -156,7 +158,7 @@
                         </div>
                         <div class="product_quant">
                             <div class="product-quant_title">
-                                <p>Số lượng</p>
+                                <p>{{ __('content.Quantity')}}</p>
                             </div>
                             <div class="product_quant_input">
                                 <div style="margin-right: 15px">
@@ -166,18 +168,18 @@
                                         <button class="_quant_plus" onclick="increment()">+</button>
                                     </div>
                                 </div>
-                                <p>{{$items->quantity}}Sản phẩm có sẵn</p>
+                                <p>{{$items->quantity}} {{ __('content.Products available')}}</p>
                             </div>
                         </div>
                         <div class="button-add_cart">
                             <a href="{{asset('cart/add/'.$items->id)}}">
                                 <button type="button" class="btn btn-primary add_wishlist">
                                     <i class="fal fa-cart-plus"></i>
-                                    Thêm vào giỏ hàng
+                                    {{ __('content.Add to cart')}}
                                 </button>
                             </a>
                             <a href="#">
-                                <button type="button" class="btn btn-primary">Mua ngay</button>
+                                <button type="button" class="btn btn-primary">{{ __('content.Buy now')}}</button>
                             </a>
                         </div>
                     </div>
@@ -191,11 +193,11 @@
         <div class="row">
             <div class="product_details">
                 <div class="product_details_title text-uppercase">
-                    <h4>chi tiết sản phẩm</h4>
+                    <h4>{{ __('content.product details')}}</h4>
                 </div>
                 <div class="product_details_content">
                     <div class="details_content_category d-flex">
-                        <label class="label_title">Danh mục</label>
+                        <label class="label_title">{{ __('content.Category')}}</label>
                         <div>
                             <ol>
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -205,22 +207,24 @@
                         </div>
                     </div>
                     <div class="details_content_brand d-flex">
-                        <label class="label_title">Thương hiệu</label>
+                        <label class="label_title">{{ __('content.Brand')}}</label>
                         <div>
                             <a href="">{{$items->brands->name}}</a>
                         </div>
                     </div>
                     <div class="details_content_store d-flex">
-                        <label class="label_title">Kho hàng</label>
-                        <div>
-                            <a href="">22</a>
+                        <label class="label_title">{{ __('content.Size')}}</label>
+                        <div class="product_track_side d-flex">
+                            <span> Dài {{$items->lenght}} cm</span>
+                            <span> Dài {{$items->weight}} cm</span>
+                            <span> Dài {{$items->height}} cm</span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="product_description">
                 <div class="product_description_title text-uppercase">
-                    <h4>mô tả sản phẩm</h4>
+                    <h4>{{ __('content.Product Description')}}</h4>
                 </div>
                 <div id="product_description_content" class="product_description_content">
                     <?php echo $items->description ?>
@@ -228,27 +232,27 @@
             </div>
             <div class="product_benefits">
                 <div class="product_benefits_title text-uppercase">
-                    <h4>benefits</h4>
+                    <h4>{{ __('content.benefits')}}</h4>
                 </div>
                 <div class="product_benefits_content">
                     <div class="container bg-white">
                         <ul>
                             <li><i class="fal fa-cogs"></i>
-                                <b>Lắp đặt miễn phí</b>
-                                lúc giao hàng
+                                <b>{{ __('content.Free installation')}}</b>
+                                {{ __('content.at delivery')}}
                             </li>
                             <li><i class="far fa-undo-alt"></i>
-                                Hư gì đổi nấy
-                                <b>12 tháng</b>
-                                tận nhà (miễn phí tháng đầu)
+                                {{ __('content.Change product when broken')}}
+                                <b>{{ __('content.12 month')}}</b>
+                                {{ __('content.at home (free first month)')}}
                             </li>
                             <li><i class="fad fa-mobile-android-alt"></i>
-                                Đổi trả và bảo hành cực dễ
-                                <b>chỉ cần số điện thoại</b>
+                                {{ __('content.Easy return and warranty')}}
+                                <b>{{ __('content.with just a phone number')}}</b>
                             </li>
                             <li>
                                 <i class="fad fa-shield-check"></i>
-                                Bảo hành <b>chính hãng 2 năm</b>, có người đến tận nhà
+                                {{ __('content.Genuine')}} <b>{{ __('content.2-year warranty')}}</b>
                             </li>
                         </ul>
                     </div>
@@ -263,11 +267,12 @@
             <div class="product_reviews">
                 <div class="product_reviews_head">
                     <div class="product_reviews_title text-uppercase">
-                        <h4>đánh giá sản phẩm</h4>
+                        <h4>{{ __('content.Product rates')}}</h4>
                     </div>
                     @if(round($comments->avg('rate')) == 0)
-
-                    <h1>Chưa có đánh giá</h1>
+                    <div class="wrapper">
+                        <h3>{{ __('content.No rated')}}</h3>
+                    </div>
                     @else
                     <div class="product_reviews_content">
                         @foreach ($comments as $comment)
@@ -382,9 +387,6 @@
         buttontxtless: "read less",
 
     })
-
-
-
     $(function() {
         $(document).ready(function() {
             $('#province').on('change', function() {
@@ -406,6 +408,50 @@
             });
         });
     })
+    $(function() {
+        $(document).ready(function() {
+            $('#province').on('change', function() {
+                let id = $(this).val();
+                $('#fee_province').empty();
+                $('#fee_province').append(`<option value="0" disabled selected>Processing...</option>`);
+                $.ajax({
+                    type: 'GET',
+                    url: "{{asset('getFeeProvince')}}/" + id,
+                    success: function(response) {
+                        var response = JSON.parse(response);
+                        console.log(response);
+                        $('#fee_province').empty();
+                        response.forEach(element => {
+                            var fee = (element['transport_fee']);
+                            $('#fee_province').append(`<option value="${element['id']}">${number_format(fee,0,',','.')} đ</option>`);
+                        });
+                    }
+                });
+            });
+        });
+    })
+
+    function number_format(number, decimals, decPoint, thousandsSep) {
+        decimals = decimals || 0;
+        number = parseFloat(number);
+
+        if (!decPoint || !thousandsSep) {
+            decPoint = '.';
+            thousandsSep = ',';
+        }
+
+        var roundedNumber = Math.round(Math.abs(number) * ('1e' + decimals)) + '';
+        var numbersString = decimals ? roundedNumber.slice(0, decimals * -1) : roundedNumber;
+        var decimalsString = decimals ? roundedNumber.slice(decimals * -1) : '';
+        var formattedNumber = "";
+
+        while (numbersString.length > 3) {
+            formattedNumber += thousandsSep + numbersString.slice(-3)
+            numbersString = numbersString.slice(0, -3);
+        }
+
+        return (number < 0 ? '-' : '') + numbersString + formattedNumber + (decimalsString ? (decPoint + decimalsString) : '');
+    }
 </script>
 
 @stop

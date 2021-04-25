@@ -12,7 +12,7 @@
             <div class="col-md-12">
                 @if(\DB::table('wishlist')->count() == 0)
                 <div class="wrapper">
-                    <h3>Chưa có sản phẩm nào</h3>
+                    <h3>{{ __('content.Not found')}}</h3>
                 </div>
                 @else
                 <div class="container">
@@ -45,29 +45,31 @@
                                             <button class="add-to-compare">
                                                 <a href="{{asset('wishlist/add/'.$product_list->products->id.'.html')}}">
                                                     <i class="fas fa-exchange-alt"></i>
-                                                    <span class="tooltipp"> add to wishlist</span>
+                                                    <span class="tooltipp"> {{ __('content.add to wishlist')}}</span>
                                                 </a>
                                             </button>
                                             <button class="details">
                                                 <a href="{{asset('details/'.$product_list->products->id.'.html')}}" style="color: black;">
                                                     <i class="fas fa-eye"></i>
-                                                    <span class="tooltipp">details</span>
+                                                    <span class="tooltipp">{{ __('content.details')}}</span>
                                                 </a>
                                             </button>
                                             <button class="delete">
                                                 <a href="{{asset('wishlist/delete/'.$product_list->id.'.html')}}" style="color: black;">
                                                     <i class="fas fa-trash-alt"></i>
-                                                    <span class="tooltipp">delete</span>
+                                                    <span class="tooltipp">{{ __('content.delete')}}</span>
                                                 </a>
                                             </button>
                                         </div>
                                     </div>
                                     <div class="add-to-cart">
-                                        <button class="add-to-cart-btn">
-                                            <i class="far fa-shopping-cart">
-                                            </i>
-                                            add to cart
-                                        </button>
+                                        <a href="{{asset('cart/add/'.$product_list->products->id)}}">
+                                            <button class="add-to-cart-btn">
+                                                <i class="far fa-shopping-cart">
+                                                </i>
+                                                {{ __('content.add to cart')}}
+                                            </button>
+                                        </a>
                                     </div>
                                 </div>
                                 @endforeach
@@ -82,4 +84,3 @@
 </div>
 </div>
 @stop
-

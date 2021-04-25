@@ -19,16 +19,16 @@ class PurchaseController extends Controller
         $orders = new Orders();
         $orders->id_customer = Auth::guard('customer')->user()->id;
         $orders->order_date = date('Y-m-d');
-        $dateToAdd = 14;
-        $orders->ship_date = date("Y-m-d", strtotime('+ '.$dateToAdd , strtotime($orders->order_date)));
+        // $dateToAdd = 14;
+        // $orders->ship_date = date("Y-m-d", strtotime('+ '.$dateToAdd , strtotime($orders->order_date)));
         $orders->payment_method = $request->payment_methods;
-        $orders->delivery_address = $request->delivery_address;
+        $result_explode = explode('||', $request->delivery_address);
+        $orders->delivery_address = $result_explode[1];
         $orders->total_price = $request->total_fetch;
         $orders->notes = $request->notes;       
         $orders->status = "Checking order";
         $orders->save();
         
-
         foreach($data['cart'] as $product){
             $orderdetails = new Orderdetails();
             $orderdetails->id_order = $orders->id;

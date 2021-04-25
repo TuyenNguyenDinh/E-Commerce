@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="{{asset('plugins/select2/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+    <!-- Flag -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.1.0/css/flag-icon.min.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="{{asset('js/frontend/jquery.number.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
@@ -43,24 +45,22 @@
                 </ul>
                 <ul class="header-links float-right">
                     @if (Auth::guard('customer')->check())
-
                     <li>
                         <a href="#" id="dropdownAccount" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="{{ asset('upload/'.Auth::guard('customer')->user()->image_acc) }}" alt="" style="width: 22px;height: 22px;border-radius: 50%;">
                             {{Auth::guard('customer')->user()->name}}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownAccount">
-                            <a class="dropdown-item" href="{{asset('user/account/profile')}}"> <i class="far fa-user"></i>My Account</a>
-                            <a class="dropdown-item" href="{{asset('user/account/orders')}}"><i class="fas fa-file-invoice"></i>My order</a>
+                            <a class="dropdown-item" href="{{asset('user/account/profile')}}"> <i class="far fa-user"></i> {{ __('content.My Account')}}</a>
+                            <a class="dropdown-item" href="{{asset('user/account/orders')}}"><i class="fas fa-file-invoice"></i>{{ __('content.My order')}}</a>
                         </div>
                     </li>
                     <li>
                         <a href="{{route('logout')}}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" style="color: white;">
                             <i class="far fa-user"></i>
-                            {{ __('Logout') }}
+                            {{ __('content.Logout') }}
                         </a>
                     </li>
-
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
@@ -68,16 +68,29 @@
                     <li>
                         <a href="#" data-toggle="modal" data-target="#loginModal">
                             <i class="far fa-user"></i>
-                            Login
+                            {{ __('content.Login')}}
                         </a>
                     </li>
                     <li>
                         <a href="{{asset('/registercustomer')}}">
                             <i class="far fa-user"></i>
-                            Register
+                            {{ __('content.Register')}}
                         </a>
                     </li>
                     @endif
+                    <li class="nav-item dropdown">
+                        @if(session('website_language') == 'en')
+                        <a class="nav-link dropdown-toggle" href="" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="flag-icon flag-icon-us"> </span> ENG</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown09">
+                            <a class="dropdown-item" href="{!! route('user.change-language', ['vn']) !!}"><span class="flag-icon flag-icon-vn"> </span> Vietnam</a>
+                        </div>
+                        @else
+                        <a class="nav-link dropdown-toggle" href="" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="flag-icon flag-icon-vn"> </span> VN</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown09">
+                            <a class="dropdown-item" href="{!! route('user.change-language', ['en']) !!}"><span class="flag-icon flag-icon-us"> </span> English</a>
+                        </div>
+                        @endif
+                    </li>
 
                     <!-- login with modal -->
                     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -90,7 +103,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-title text-center">
-                                        <h4>Login</h4>
+                                        <h4>{{ __('content.Login')}}</h4>
                                     </div>
                                     <div class="d-flex flex-column text-center">
                                         <form method="post" action={{asset('/')}}>
@@ -100,28 +113,30 @@
                                             <div class="form-group">
                                                 <input type="password" name="password" class="form-control" id="password" placeholder="Your password...">
                                             </div>
-                                            <button type="submit" class="btn btn-info btn-block btn-round">Login</button>
+                                            <button type="submit" class="btn btn-info btn-block btn-round">{{ __('content.Login')}}</button>
                                             {{ csrf_field() }}
                                         </form>
                                     </div>
-                                    <div class="text-center text-muted delimiter">or use a social network</div>
+                                    <div class="text-center text-muted delimiter">{{ __('content.or use a social network')}}</div>
                                     <div class="d-flex justify-content-center social-buttons">
                                         <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip" data-placement="top" title="Twitter">
                                             <i class="fab fa-twitter"></i>
                                         </button>
-                                        <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip" data-placement="top" title="Facebook">
-                                            <i class="fab fa-facebook"></i>
-                                        </button>
+                                        <a href="{{ route('auth.facebook') }}">
+                                            <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip" data-placement="top" title="Facebook">
+                                                <i class="fab fa-facebook"></i>
+                                            </button>
+                                        </a>
                                         <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip" data-placement="top" title="Linkedin">
                                             <i class="fab fa-linkedin"></i>
                                         </button>
                                         </di>
                                     </div>
                                     <div class="modal-footer d-flex justify-content-center">
-                                        <div class="signup-section">Not a member yet? <a href="{{asset('/registercustomer')}}" class="text-info"> Sign Up</a>.</div>
+                                        <div class="signup-section">{{ __('content.Not register yet?')}} <a href="{{asset('/registercustomer')}}" class="text-info"> {{ __('content.Register')}}</a>.</div>
                                     </div>
                                     <div class="modal-footer d-flex justify-content-center">
-                                        <div class="signup-section"><a href="{{asset('/forget-password')}}" class="text-info">Forgot password</a>.</div>
+                                        <div class="signup-section"><a href="{{asset('/forget-password')}}" class="text-info">{{ __('content.Forgot password')}}</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -156,7 +171,7 @@
                             <div>
                                 <a href="{{asset('wishlist.html')}}">
                                     <i class="fal fa-heart"></i>
-                                    <span>Your Wishlist</span>
+                                    <span>{{ __('content.Your Wishlist')}}</span>
                                     @if(Auth::guard('customer')->check())
                                     <div class="qty">{{Auth::guard('customer')->user()->wishlist->count()}}</div>
                                     @else
@@ -167,7 +182,7 @@
                             <div>
                                 <a href="{{ asset('cart/show') }}">
                                     <i class="far fa-shopping-cart"></i>
-                                    <span>Your Cart</span>
+                                    <span>{{ __('content.Your Cart')}}</span>
                                     <div id="qty_cart" class="qty">{{Cart::count()}}</div>
                                 </a>
                             </div>
@@ -188,10 +203,10 @@
                                             @endforeach
                                             @if(Request::is('user/account/profile') || Request::is('user/account/orders'))
                                             <li>
-                                                <a href="{{ asset('user/account/orders') }}">Hồ sơ</a>
+                                                <a href="{{ asset('user/account/orders') }}">{{ __('content.Profile')}}</a>
                                             </li>
                                             <li>
-                                                <a href="{{ asset('user/account/orders') }}">Đơn hàng</a>
+                                                <a href="{{ asset('user/account/orders') }}">{{ __('content.Orders')}}</a>
                                             </li>
                                             @endif
                                         </ul>
@@ -237,7 +252,7 @@
                     <div class="col-lg-4 col-sm-6">
                         <div class="footer">
                             <h3 class="footer-title">
-                                About us
+                                {{ __('content.About us')}}
                             </h3>
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
                             <ul class="footer-links">
@@ -262,7 +277,7 @@
                     <div class="col-md-3 col-sm-6">
                         <div class="footer">
                             <h3 class="footer-title">
-                                Categories
+                                {{ __('content.Categories')}}
                             </h3>
                             <div class="footer-links">
                                 <ul>
@@ -279,26 +294,26 @@
                     <div class="col-md-3 col-sm-6">
                         <div class="footer">
                             <h3 class="footer-title">
-                                Information
+                                {{ __('content.Information')}}
                             </h3>
                             <div class="footer-links">
                                 <ul>
                                     <li>
                                         <a href="#">
-                                            About us
+                                            {{ __('content.About us')}}
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">Contact us</a>
+                                        <a href="#"> {{ __('content.Contact us')}}</a>
                                     </li>
                                     <li>
-                                        <a href="#">Privacy Policy</a>
+                                        <a href="#"> {{ __('content.Privacy Policy')}}</a>
                                     </li>
                                     <li>
-                                        <a href="#">Orders and Returns</a>
+                                        <a href="#">{{ __('content.Orders and Returns')}}</a>
                                     </li>
                                     <li>
-                                        <a href="#">Terms & Corditions</a>
+                                        <a href="#">{{ __('content.Terms & Corditions')}}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -307,21 +322,21 @@
                     <div class="col-md-2 col-sm-6">
                         <div class="footer">
                             <h3 class="footer-title">
-                                Service
+                                {{ __('content.Service')}}
                             </h3>
                             <div class="footer-links">
                                 <ul>
                                     <li>
-                                        <a href="#">My Account</a>
+                                        <a href="#">{{ __('content.My Account')}}</a>
                                     </li>
                                     <li>
-                                        <a href="#">View Cart</a>
+                                        <a href="#">{{ __('content.View Cart')}}</a>
                                     </li>
                                     <li>
-                                        <a href="#">Tracking my order</a>
+                                        <a href="#">{{ __('content.Tracking my order')}}</a>
                                     </li>
                                     <li>
-                                        <a href="#">Help</a>
+                                        <a href="#">{{ __('content.Help')}}</a>
                                     </li>
                                 </ul>
                             </div>
