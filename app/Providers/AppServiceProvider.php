@@ -25,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-       
+        $data['categories'] = Categories::all();
+        view()->share($data);
     }
 }
