@@ -11,7 +11,7 @@ $key = request()->get('key');
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title">
-                    <h3 class="title">{{ __('Search result for keywords:')}} </h3>
+                    <h3 class="title">{{ __('Search')}} </h3>
                 </div>
             </div>
             <div class="col-lg-2 filter_respon">
@@ -84,6 +84,7 @@ $key = request()->get('key');
                                         @endforeach
                                     </div>
                                 </div>
+                                
                             </div>
                         </div>
                         @else

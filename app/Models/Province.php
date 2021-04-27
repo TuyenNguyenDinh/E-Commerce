@@ -27,6 +27,12 @@ class Province extends Model
         return $this->hasMany('App\Models\Transport_fee','id_province');
     }
 
+    function orders(){
+        return $this->hasMany('App\Models\Province', 'id_province');
+    }
+
+    
+
     protected $fillable = [
        'province',
     ];

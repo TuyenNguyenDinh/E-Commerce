@@ -15,8 +15,11 @@ class Categories extends Model
         return $this->hasMany('App\Models\Products', 'id_category');
     }
 
+    function attributes(){
+        return $this->hasMany('App\Models\Attributes', 'id_category');
+    }
+
     protected $fillable = [
         'name',
-        'description'
     ];
 }

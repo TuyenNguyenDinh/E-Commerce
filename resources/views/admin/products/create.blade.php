@@ -60,6 +60,8 @@
 							</div>
 							<div class="form-group">
 								<label>Image (max: 4 image)</label>
+							</div>
+							<div class="form-group d-flex">
 								<div class="image-upload-wrap image1">
 									<input class="file-upload-input upload1" name="image1" id="img1" type='file' accept="image/*" onchange="readURL(this, $('.image-upload1'), $('.image1'), $('.content1'))" />
 									<div class="drag-text">
@@ -69,7 +71,7 @@
 								<div class="file-upload-content content1">
 									<img class="file-upload-image image-upload1" src="#" alt="your image" />
 									<div class="image-title-wrap">
-										<button type="button" onclick="removeUpload($('.upload1'), $('.content1'), $('.image1'))" class="remove-image" class="remove-image">Remove </button>
+										<button type="button" onclick="removeUpload($('.upload1'), $('.content1'), $('.image1'),$('.image-upload1'))" class="remove-image" class="remove-image">Remove </button>
 									</div>
 								</div>
 								<!--  -->
@@ -82,7 +84,7 @@
 								<div class="file-upload-content content2">
 									<img class="file-upload-image image-upload2" src="#" alt="your image" />
 									<div class="image-title-wrap">
-										<button type="button" onclick="removeUpload($('.upload2'), $('.content2'), $('.image2'))" class="remove-image">Remove </button>
+										<button type="button" onclick="removeUpload($('.upload2'), $('.content2'), $('.image2'),$('.image-upload2'))" class="remove-image">Remove </button>
 									</div>
 								</div>
 								<!--  -->
@@ -95,21 +97,21 @@
 								<div class="file-upload-content content3">
 									<img class="file-upload-image image-upload3" src="#" alt="your image" />
 									<div class="image-title-wrap">
-										<button type="button" onclick="removeUpload($('.upload3'), $('.content3'), $('.image3'))" class="remove-image">Remove </button>
+										<button type="button" onclick="removeUpload($('.upload3'), $('.content3'), $('.image3'),$('.image-upload3'))" class="remove-image">Remove </button>
 									</div>
 								</div>
-							</div>
-							<!--  -->
-							<div class="image-upload-wrap image4">
-								<input class="file-upload-input upload4" name="image4" id="img4" type='file' accept="image/*" onchange="readURL(this, $('.image-upload4'), $('.image4'), $('.content4'))" />
-								<div class="drag-text">
-									<h3>Drag and drop a file or select add Image</h3>
+								<!--  -->
+								<div class="image-upload-wrap image4">
+									<input class="file-upload-input upload4" name="image4" id="img4" type='file' accept="image/*" onchange="readURL(this, $('.image-upload4'), $('.image4'), $('.content4'))" />
+									<div class="drag-text">
+										<h3>Drag and drop a file or select add Image</h3>
+									</div>
 								</div>
-							</div>
-							<div class="file-upload-content content4">
-								<img class="file-upload-image image-upload4" src="#" alt="your image" />
-								<div class="image-title-wrap">
-									<button type="button" onclick="removeUpload($('.upload4'), $('.content4'), $('.image4'))" class="remove-image">Remove </button>
+								<div class="file-upload-content content4">
+									<img class="file-upload-image image-upload4" src="#" alt="your image" />
+									<div class="image-title-wrap">
+										<button type="button" onclick="removeUpload($('.upload4'), $('.content4'), $('.image4'),$('.image-upload4'))" class="remove-image">Remove </button>
+									</div>
 								</div>
 							</div>
 							<!--  -->
@@ -119,28 +121,25 @@
 							</div>
 
 							<div class="form-group">
-								<label>Attributes</label>
-								<input type="number" name="quantity" class="form-control input100 @error('quantity') is-invalid @enderror">
+								<label>Attributes <small>(Choose one of items)</small></label>
+								<select type="text" id="category_name" name="" class="form-control">
+									<option value="0" selected disabled>---Choose category---</option>
+									@foreach ($categories as $category)
+									<option value="{{ $category->id}}">{{ $category->name}}</option>
+									@endforeach
+								</select>
 							</div>
 							<div class="form-group">
 								<label>Quantity</label>
 								<input type="number" name="quantity" class="form-control input100 @error('quantity') is-invalid @enderror">
 							</div>
-							<div class="form-group">
-								<label>Weight</label>
-								<input type="number" name="weight" class="form-control input100 @error('weight') is-invalid @enderror">
+							<div class="form1">
 							</div>
-							<div class="form-group">
-								<label>Lenght</label>
-								<input type="text" name="lenght" class="form-control input100 @error('lenght') is-invalid @enderror">
+							<div class="form2">
 							</div>
-							<div class="form-group">
-								<label>Height</label>
-								<input type="text" name="height" class="form-control input100 @error('height') is-invalid @enderror">
+							<div class="form3">
 							</div>
-							<div class="form-group">
-								<label>Width</label>
-								<input type="text" name="width" class="form-control input100 @error('width') is-invalid @enderror">
+							<div class="form4">
 							</div>
 							<div class="form-group">
 								<label>Description</label><br>
@@ -161,7 +160,7 @@
 		<div class="row">
 			<div class="col-12">
 				<a href="{{ route('products.index')}}" class="btn btn-secondary">Cancel</a>
-				<input id="sub" type="submit" value="Create new brands" class="btn btn-success float-right">
+				<input id="sub" type="submit" value="Create new products" class="btn btn-success float-right">
 			</div>
 		</div>
 	</form>
@@ -184,6 +183,7 @@
 					title: 'Success, create sussecfully!',
 					showSpinner: true
 				});
+				$(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/admin/products");
 			},
 			error: function(response) {
 				$(".print-error-msg").find("ul").html('');
@@ -196,6 +196,29 @@
 			}
 		})
 		event.preventDefault();
+	});
+	$(document).ready(function() {
+		$('#category_name').on('change', function() {
+			let id = $(this).val();
+			$.ajax({
+				type: 'GET',
+				url: "{{asset('admin/getAttrCategory')}}" + '/' + id,
+				success: function(response) {
+					var response = JSON.parse(response);
+					console.log(response);
+					response.forEach(element => {
+						$('.form1').html(`<div class="form-group"><label>${element['attributes_1']}</label><input type="hidden" name="attr1" value="${element['attributes_1']}"><input type="text" name="attr_name1" class="form-control"></div>`);
+						$('.form2').html(`<div class="form-group"><label>${element['attributes_2']}</label><input type="hidden" name="attr2" value="${element['attributes_2']}"><input type="text" name="attr_name2" class="form-control"></div>`);
+						$('.form3').html(`<div class="form-group"><label>${element['attributes_3']}</label><input type="hidden" name="attr3" value="${element['attributes_3']}"><input type="text" name="attr_name3" class="form-control"></div>`);
+						if (element['attributes_4'] == null) {
+							$('.form4').html(`<div class="form-group"></div>`);
+						} else {
+							$('.form4').html(`<div class="form-group"><label>${element['attributes_4']}</label><input type="hidden" name="attr4" value="${element['attributes_4']}"><input type="text" name="attr_name4" class="form-control"></div>`);
+						}
+					});
+				}
+			});
+		});
 	});
 </script>
 @endsection

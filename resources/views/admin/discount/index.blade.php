@@ -52,7 +52,7 @@
                                     <td>{{number_format($product->old_price,0,',','.')}} đ</td>
                                     <td>{{ $product->discount }}%</td>
                                     <td>{{number_format($product->price,0,',','.')}} đ</td>
-                                    <td class="text-right py-0 align-middle">
+                                    <td class="text-center py-0 align-middle">
                                         <div class="btn-group btn-group-sm">
                                             <a href="{{ route('discount.edit', $product->id) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
                                         </div>

@@ -7,6 +7,7 @@
 
 .file-upload-content {
     display: none;
+    width: 256px;
     text-align: center;
 }
 
@@ -23,6 +24,7 @@
 
 .image-upload-wrap {
     margin-top: 20px;
+    width: 256px;
     border: 4px dashed #1FB264;
     position: relative;
 }
@@ -81,4 +83,9 @@
 .remove-image:active {
     border: 0;
     transition: all .2s ease;
+}
+
+.filters th {
+    border-top: none;
+    border-bottom: none!important;
 }

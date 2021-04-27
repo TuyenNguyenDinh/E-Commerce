@@ -10,6 +10,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Mail;
 
 class PurchaseController extends Controller
 {
@@ -27,6 +28,7 @@ class PurchaseController extends Controller
         $orders->total_price = $request->total_fetch;
         $orders->notes = $request->notes;       
         $orders->status = "Checking order";
+        $orders->id_province = $result_explode[0];
         $orders->save();
         
         foreach($data['cart'] as $product){
@@ -40,6 +42,15 @@ class PurchaseController extends Controller
             $products = Products::find($product->id);
             $new_quant = ($products->quantity) - ($product->qty);
             $products->update(['quantity' => $new_quant]);
+
+            $data['fee_fetch'] = $request->fee_fetch;
+            $data['total'] = $request->total_fetch;
+            $email = Auth::guard('customer')->user()->email;
+            Mail::send('frontend.emailpurchase', $data, function ($message) use ($email) {
+                $message->from(env('MAIL_FROM_ADDRESS'), 'Electro');
+                $message->to($email, $email);
+                $message->subject('Purchase confirmation');
+            });
         }
 
         return redirect("complete");

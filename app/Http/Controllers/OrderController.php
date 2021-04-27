@@ -59,9 +59,13 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $id_orders = Orders::find($id);
-        // $id_orders->update(array_merge(['status' => $request->status]));
-        $id_orders = $this->orders->update($id, array_merge(['status' => $request->status]));
+        
+        if ($request->status == 'Shipping') {
+            $this->orders->update($id, array_merge(['status' => $request->status, 'ship_date' => date('Y-m-d')]));
+           
+        } else {
+            $this->orders->update($id, array_merge(['status' => $request->status, 'ship_date' => date('Y-m-d')]));
+        }
         return redirect()->route('orders.index')->with('success', 'Update successs');
 
     }

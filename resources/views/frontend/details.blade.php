@@ -215,9 +215,8 @@
                     <div class="details_content_store d-flex">
                         <label class="label_title">{{ __('content.Size')}}</label>
                         <div class="product_track_side d-flex">
-                            <span> Dài {{$items->lenght}} cm</span>
-                            <span> Dài {{$items->weight}} cm</span>
-                            <span> Dài {{$items->height}} cm</span>
+                            <span>{{$items->attributes}}</span>
+                            
                         </div>
                     </div>
                 </div>
@@ -276,9 +275,6 @@
                     @else
                     <div class="product_reviews_content">
                         @foreach ($comments as $comment)
-                        @for($i = 1; $i <= round($comment->avg('rate')); $i++)
-                            <i class="fas fa-star"></i>
-                            @endfor
                             <div class="reviews_wrapper">
                                 <div class="row">
                                     <div class="col-lg-1 col-md-2">
@@ -295,7 +291,7 @@
                                                     <span>{{$comment->customers->name}}</span>
                                                 </div>
                                                 <div class="datetime_post d-flex align-items-center">
-                                                    <span>March 19 20201, 09:40PM</span>
+                                                    <span>{{$comment->created_at}}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -305,7 +301,7 @@
                                             <div class="star-icon">
                                                 @for($i = 1; $i <= $comment->rate; $i++)
                                                     <i class="fas fa-star"></i>
-                                                    @endfor
+                                                @endfor
                                             </div>
                                         </div>
                                     </div>

@@ -27,7 +27,37 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">DataTable with minimal features & hover style</h3>
+                        <h3 class="card-title">Filter</h3>
+
+                        <table class="table">
+                            <thead>
+                                <tr class="filters">
+                                    <th>Categories
+                                        <form method="get">
+                                            <select id="assigned-user-filter" name="id_category" class="form-control" onchange='if(this.value != 0) { this.form.submit(); }'>
+                                                <option value="0">Choose category</option>
+                                                @foreach($categories as $category)
+                                                <option value="{{$category->id}}">{{$category->name}}</option>
+                                                @endforeach
+                                            </select>
+                                            <button type="submit" style="display: none;">sub</button>
+                                        </form>
+                                    </th>
+                                    <th>Brands
+                                        <form id="form_find" method="get">
+                                            <select id="assigned-user-filter" name="id_brand" class="form-control" onchange='if(this.value != 0) { this.form.submit(); }'>
+                                                <option value="0" selected>Choose brand</option>
+                                                @foreach($brands as $brand)
+                                                <option value="{{$brand->id}}">{{$brand->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            <button type="submit" style="display: none;">sub</button>
+                                        </form>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -77,7 +107,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                <th>ID</th>
+                                    <th>ID</th>
                                     <th>Categories</th>
                                     <th>Brands</th>
                                     <th>Name Products</th>
@@ -104,7 +134,6 @@
     function deletePr(id) {
         var deletepr = document.getElementById('delete_product_' + id);
         var route = $('#delete_product_' + id).data('route');
-
         swal({
                 title: "Xóa?",
                 text: "Bạn có muốn xóa sản phẩm này?",
@@ -145,5 +174,6 @@
                 }
             });
     }
+
 </script>
 @endsection

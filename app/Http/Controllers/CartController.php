@@ -20,11 +20,13 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class CartController extends Controller
 {
-    public function getAddCart(Request $request, $id)
+    public function getAddCart($id)
     {
         $product = Products::find($id);
-        Cart::add(['id' => $id, 'name' => $product->name_product, 'weight' => $product->weight ,'qty' => 1, 'price' => $product->price,
-          'options' => ['img' => $product->image1, 'brands' => $product->brands->name, 'categories' => $product->categories->name]]);
+        Cart::add([
+            'id' => $id, 'name' => $product->name_product, 'weight' => 0, 'qty' => 1, 'price' => $product->price,
+            'options' => ['img' => $product->image1, 'brands' => $product->brands->name, 'categories' => $product->categories->name]
+        ]);
         return redirect('cart/show');
         // return dd($qty);
     }
@@ -33,44 +35,43 @@ class CartController extends Controller
     {
         $data['items'] = Cart::content();
         $data['total'] = Cart::subtotal(0);
-        $data['tax'] = Cart::tax(0);
-        $data['sub'] = Cart::total(0);
-        return view('frontend.cart',$data);
+
+        return view('frontend.cart', $data);
         // return dd($data['items']);
     }
 
     public function getDeleteCart($id)
     {
-        
-            Cart::remove($id);
-            return redirect()->back();
-            
+
+        Cart::remove($id);
+        return redirect()->back();
     }
 
     public function getUpdateCart(Request $request)
     {
         $cart = Cart::update($request->rowId, $request->qty);
         return response()->json($cart);
-     
     }
 
-    public function cartdata(){
+    public function cartdata()
+    {
         $data['items'] = Cart::content();
-        $data['total'] = Cart::total(0);
-        return view('frontend.cartdata',$data);
+        $data['total'] = Cart::subtotal(0);
+        return view('frontend.cartdata', $data);
     }
 
 
-    public function getCheckout(){
-        
-        if(Cart::count() == 0){
+    public function getCheckout()
+    {
+
+        if (Cart::count() == 0) {
             Alert::warning("warning", "Not found items in cart");
             return redirect("/");
-        }else{
+        } else {
             $id = Auth::guard('customer')->user()->id;
             $data['items'] = Cart::content();
-            $data['total'] = Cart::subtotal(0,"","");
-            $data['ship_addrs'] = Customer_shipping_address::where('id_customer',$id)->get();
+            $data['total'] = Cart::subtotal(0, "", "");
+            $data['ship_addrs'] = Customer_shipping_address::where('id_customer', $id)->get();
             $data['cus'] = Customers::find($id);
             $pr = Province::all();
             $data['transport_fee'] = Transport_fee::all();
@@ -81,10 +82,10 @@ class CartController extends Controller
     public function getFeeFromProvince($id)
     {
         echo json_encode(DB::table('transport_fee')->where('id_province', $id)->get());
-
     }
 
-    public function addAddress(Request $request){
+    public function addAddress(Request $request)
+    {
         $address = new Customer_shipping_address();
         $address->id_customer = Auth::guard('customer')->user()->id;
         $address->id_province = $request->province;
@@ -93,6 +94,4 @@ class CartController extends Controller
         $address->save();
         return response()->json($address);
     }
-
-
 }

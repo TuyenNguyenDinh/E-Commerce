@@ -19,14 +19,14 @@ use RealRashid\SweetAlert\Facades\Alert;
 //Frontend
 Route::group(['middleware' => 'locale'], function () {
     Route::get('change-language/{language}', 'FrontendController@changeLanguage')->name('user.change-language');
-    Route::get('/', 'FrontendController@getHome');
+    Route::get('/', 'FrontendController@getHome')->name('home');
     Route::get('category/{id}.html', 'FrontendController@getCategory');
     Route::get('brands/{id}.html', 'FrontendController@getBrand');
     Route::get('details/{id}.html', 'FrontendController@getDetail');
     Route::get('getFeeProvince/{id}', 'FrontendController@getFeeProvince');
     Route::get('product', 'FrontendController@getSearch');
-    Route::get('forget-password', 'CustomerController@getEmail');
-    Route::post('forget-password', 'CustomerController@postEmail');
+    Route::get('forget-password', 'CustomerFrontendController@getEmail');
+    Route::post('forget-password', 'CustomerFrontendController@postEmail');
     Route::get('/reset-password/{token}/{email}', 'ResetPasswordController@getPassword');
     Route::post('/reset-password', 'ResetPasswordController@updatePassword');
 
@@ -41,6 +41,7 @@ Route::group(['middleware' => 'locale'], function () {
     //Authentication customer
     Route::post('/', 'FrontendController@postLogin');
     // Route::get('/','FrontendController@getLogin');
+    Route::post('logoutCus', 'CustomerFrontendController@Logout')->name('logoutCus');
     Route::get('registercustomer', 'CustomerFrontendController@getRegister');
     Route::post('registercustomer', 'CustomerFrontendController@register');
     Route::get('GetSubCatAgainstMainCatEdit/{id}', 'CustomerFrontendController@GetSubCatAgainstMainCatEdit');
@@ -59,10 +60,12 @@ Route::group(['middleware' => 'locale'], function () {
         Route::post('change_phone', 'CustomerFrontendController@changePhone');
         Route::get('GetDistrict/{id}', 'CustomerFrontendController@GetSubCatAgainstMainCatEdit');
         Route::post('changeProvinceDistrict', 'CustomerFrontendController@changeProvinceDistrict')->name('changeProvinceDistrict');
+        Route::post('orders/{id}','CustomerFrontendController@postComments')->name('postComments');
     });
 
     Route::group(['middleware' => 'checklogin', 'prefix' => 'cart'], function () {
         Route::get('add/{id}', 'CartController@getAddCart');
+        Route::get('add_again/{id}','CustomerFrontendController@buyAgain')->name('buyAgain');
         Route::get('show', 'CartController@getShowCart')->name('cartshow');
         Route::get('delete/{id}', 'CartController@getDeleteCart');
         Route::get('update', 'CartController@getUpdateCart');
@@ -90,6 +93,8 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admi
     Route::resource('discount', 'DiscountController');
     Route::resource('orders', 'OrderController');
     Route::resource('orderdetails', 'OrderDetailController');
+    Route::resource('attributes', 'AttributeController');
+    Route::get('getAttrCategory/{id}', 'ProductController@getAttrCategory')->name('attrCate');
 });
 
 
@@ -109,7 +114,10 @@ Route::prefix('admin')->group(function () {
 
 
 Auth::routes();
-Route::get('auth/facebook', 'Auth\AuthController@redirectToFacebook')->name('auth.facebook');
-Route::get('auth/facebook/callback', 'Auth\AuthController@handleFacebookCallback');
+
+Route::get('login/facebook', 'CustomerFrontendController@redirectToFacebook')->name('login.facebook');
+Route::get('login/facebook/callback', 'CustomerFrontendController@handleFacebookCallback');
+Route::get('login/google', 'CustomerFrontendController@redirectToGoogle')->name('login.google');
+Route::get('login/google/callback', 'CustomerFrontendController@handleGoogleCallback');
 
 Route::get('/admin', 'HomeController@index')->name('admin');

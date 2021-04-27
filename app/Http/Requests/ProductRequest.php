@@ -30,7 +30,8 @@ class ProductRequest extends FormRequest
             'image3'=>'required|image|max:5000',
             'image4'=>'required|image|max:5000',
             'price' =>'required|numeric|between:1000,100000000|min:1',
-            'description' => 'required|'
+            
+            'description' => 'required'
 
         ];
     }
@@ -57,6 +58,7 @@ class ProductRequest extends FormRequest
             'price.between' => 'Giá tiền phải trong khoảng từ 1000đ - 100.000.000đ',
             'price.min' => 'Giá tiền không được nhỏ hơn 1',
             'description.required' => 'Mô tả không được để trống',
+       
 
         ];
     }

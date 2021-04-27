@@ -240,7 +240,7 @@
                                 <p>
                                     Products
                                     <i class="fas fa-angle-left right"></i>
-                                    <span class="right badge badge-danger">New</span>
+                                    <span class="badge badge-info right">{{DB::table('products')->count()}}</span>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
@@ -264,13 +264,38 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="nav-item {{Request::is('admin/attributes') ? 'menu-open' : '' }} {{Request::is('admin/attributes/create') ? 'menu-open' : ''}}">
+                            <a href="#" class="nav-link {{ Request::is('admin/attributes') ? 'active' : '' }} {{Request::is('admin/attributes/create') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Attributes
+                                    <i class="fas fa-angle-left right"></i>
+                                    <span class="right badge badge-danger">New</span>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('attributes.index') }}" class="nav-link {{ Request::is('admin/attributes') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>List</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('attributes.create') }}" class="nav-link {{ Request::is('admin/attributes/create') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Create attributes</p>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </li>
                         <li class="nav-item {{Request::is('admin/categories') ? 'menu-open' : '' }} {{Request::is('admin/categories/create') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link {{ Request::is('admin/categories') ? 'active' : '' }} {{Request::is('admin/categories/create') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-copy"></i>
                                 <p>
                                     Categories
                                     <i class="fas fa-angle-left right"></i>
-                                    <span class="badge badge-info right">6</span>
+                                    <span class="badge badge-info right">{{DB::table('categories')->count()}}</span>
                                 </p>
                             </a>
 
@@ -494,8 +519,10 @@
             }
         }
 
-        function removeUpload(input, content, imagewrp) {
-            $(input).replaceWith($(input).clone());
+        function removeUpload(input, content, imagewrp, idimage) {
+            // $(input).replaceWith($(input).clone());
+            $(input).val('').clone(true);
+
             $(content).hide();
             $(imagewrp).show();
 
@@ -505,6 +532,7 @@
             $(imagewrp).bind('dragleave', function() {
                 $(imagewrp).removeClass('image-dropping');
             });
+            $(idimage).removeAttr('src');
         }
 
 

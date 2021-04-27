@@ -328,9 +328,10 @@
 				swal({
 					closeOnClickOutside: false,
 					icon: "success",
-					title: 'Success, create sussecfully!',
+					title: 'Success, thankyou for shopping!',
 					showSpinner: true
 				});
+                $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/");
 			},
 			error: function(response) {
 				alert(response)

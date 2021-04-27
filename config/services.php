@@ -29,10 +29,16 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-    'facebook' => [
-        'client_id' => '465662941410534',
-        'client_secret' => 'eb85ac1dc4fdce2d83616802f2610900',
-        'redirect' => 'http://localhost/ecommerce/E-Commerce/public/auth/facebook/callback',
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => 'http://localhost/ecommerce/E-Commerce/public/login/google/callback',
     ],
+    'facebook' => [
+        'client_id' => env('FACEBOOK_CLIENT_ID'),
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
+        'redirect' => 'http://localhost/ecommerce/E-Commerce/public/login/facebook/callback',
+    ],
+    
 
 ];

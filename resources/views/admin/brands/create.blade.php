@@ -56,7 +56,7 @@
                                 <div class="file-upload-content">
                                     <img class="file-upload-image" src="#" alt="your image" />
                                     <div class="image-title-wrap">
-                                        <button type="button" onclick="removeUpload($('.file-upload-input'), $('.file-upload-content'), $('.image-upload-wrap'))" class="remove-image">Remove </button>
+                                        <button type="button" onclick="removeUpload($('.file-upload-input'), $('.file-upload-content'), $('.image-upload-wrap'), $('.file-upload-image'))" class="remove-image">Remove </button>
                                     </div>
                                 </div>
                             </div>
@@ -107,9 +107,10 @@
                 swal({
                     closeOnClickOutside: false,
                     icon: "success",
-                    title: 'Thành công, tạo thành công!',
+                    title: 'Success, create successfully!',
                     showSpinner: true
                 });
+                $(location).attr("href","http://localhost/ecommerce/E-Commerce/public/admin/brands")
             },
             error: function(response) {
                 console.log(response);

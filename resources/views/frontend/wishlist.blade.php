@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="col-md-12">
-                @if(\DB::table('wishlist')->count() == 0)
+                @if(DB::table('wishlist')->where('id_customer',Auth::guard('customer')->user()->id)->count() == 0)
                 <div class="wrapper">
                     <h3>{{ __('content.Not found')}}</h3>
                 </div>
@@ -34,7 +34,10 @@
                                         </h3>
                                         <h4 class="product-price">
                                             {{number_format($product_list->products->price,0,',','.')}} đ
+                                            @if($product_list->products->price == $product_list->products->old_price)
+                                            @else
                                             <del class="product-old-price">{{number_format($product_list->products->old_price,0,',','.')}} đ</del>
+                                            @endif
                                         </h4>
                                         <div class="product-rating">
                                             @for($i = 1; $i <= $product_list->products->like; $i++)
@@ -44,7 +47,7 @@
                                         <div class="product-btns">
                                             <button class="add-to-compare">
                                                 <a href="{{asset('wishlist/add/'.$product_list->products->id.'.html')}}">
-                                                    <i class="fas fa-exchange-alt"></i>
+                                                    <i class="fas fa-heart"></i>
                                                     <span class="tooltipp"> {{ __('content.add to wishlist')}}</span>
                                                 </a>
                                             </button>

@@ -80,7 +80,10 @@
                             <div class="input-with-label__content">
                                 <div class="my-account__inline-container">
                                     <div class="my-account__input-text">
+                                    @if(is_null($cus))
+                                    @else
                                         {{$cus->province->province}}
+                                    @endif
                                     </div>
                                     <button type="button" class="my-account__no-background-button my-account-profile__change-button" data-toggle="modal" data-target="#changeProvinceDistrict">Thay đổi</button>
                                 </div>
@@ -95,7 +98,10 @@
                             <div class="input-with-label__content">
                                 <div class="my-account__inline-container">
                                     <div class="my-account__input-text">
+                                    @if(is_null($cus))
+                                    @else
                                         {{$cus->district->district_name}}
+                                    @endif
                                     </div>
                                     <button type="button" class="my-account__no-background-button my-account-profile__change-button" data-toggle="modal" data-target="#changeProvinceDistrict">Thay đổi</button>
                                 </div>
@@ -219,24 +225,8 @@
     </div>
 </div>
 <script>
-    $(document).ready(function() {
-        $('#province').on('change', function() {
-            let id = $(this).val();
-            $('#district').empty();
-            $('#district').append(`<option value="0" disabled selected>Processing...</option>`);
-            $.ajax({
-                type: 'GET',
-                url: 'GetDistrict/' + id,
-                success: function(response) {
-                    var response = JSON.parse(response);
-                    console.log(response);
-                    $('#district').empty();
-                    response.forEach(element => {
-                        $('#district').append(`<option value="${element['id']}">${element['district_name']}</option>`);
-                    });
-                }
-            });
-        });
-    });
+                $products = Products::where('id_category',$request->id_category)->get();
+                $products = Products::where('id_category',$request->id_category)->get();
+
 </script>
 @stop

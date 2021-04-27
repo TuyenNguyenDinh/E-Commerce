@@ -12,7 +12,7 @@
                     </div>
                     <div class="shop-body">
                         <h3>Tivi<br>{{ __('content.Collection')}}</h3>
-                        <a href="#" class="cta-btn text-uppercase">shop now
+                        <a href="{{asset('category/1.html')}}" class="cta-btn text-uppercase">shop now
                             <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -78,7 +78,7 @@
                                             <p class="product-category">{{$product->categories->name}}</p>
 
                                             <h3 class="product-name">
-                                                <a href="#">{{$product->name_product}}</a>
+                                                <a href="{{asset('details/'.$product->id.'.html')}}">{{$product->name_product}}</a>
                                             </h3>
                                             <h4 class="product-price">
                                                 {{number_format($product->price,0,',','.')}} đ
@@ -90,12 +90,12 @@
                                             <div class="product-rating">
                                                 @for($i = 1; $i <= $product->like; $i++)
                                                     <i class="fas fa-star"></i>
-                                                    @endfor
+                                                 @endfor
                                             </div>
                                             <div class="product-btns">
                                                 <button class="add-to-compare">
                                                     <a href="{{asset('wishlist/add/'.$product->id.'.html')}}">
-                                                        <i class="fas fa-exchange-alt"></i>
+                                                        <i class="fas fa-heart"></i>
                                                         <span class="tooltipp"> {{ __('content.add to wishlist')}}</span>
                                                     </a>
                                                 </button>
@@ -127,7 +127,7 @@
         </div>
     </div>
 </div>
-<div id="hot-deal" class="section">
+<div id="hot-deal" class="section" style=" background-image: url('{{asset('image/bgr.png')}}')">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -196,7 +196,7 @@
                                         <div class="product-body">
                                             <p class="product-category">{{$product->categories->name}}</p>
                                             <h3 class="product-name">
-                                                <a href="#">{{$product->name_product}}</a>
+                                                <a href="{{asset('details/'.$product->id.'.html')}}">{{$product->name_product}}</a>
                                             </h3>
                                             <h4 class="product-price">
                                                 {{number_format($product->price,0,',','.')}} đ
@@ -213,7 +213,7 @@
                                             <div class="product-btns">
                                                 <button class="add-to-compare">
                                                     <a href="{{asset('wishlist/add/'.$product->id.'.html')}}">
-                                                        <i class="fas fa-exchange-alt"></i>
+                                                        <i class="fas fa-heart"></i>
                                                         <span class="tooltipp"> {{ __('content.add to wishlist')}}</span>
                                                     </a>
                                                 </button>

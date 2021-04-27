@@ -1,0 +1,21 @@
+#wrap-inner {
+    margin-top: 15px;
+}
+
+#customer h3 {
+    color: #ff9600;
+    margin-bottom: 15px;
+}
+
+.info {
+    font-weight: bold
+}
+
+p.info {
+    margin-top: 20px;
+}
+
+#order h3 {
+    color: #ff9600;
+    margin-bottom: 15px;
+}

@@ -43,7 +43,7 @@ return [
     'If good have problems' => 'Nếu không có vấn đề',
     'Secure payment' => 'Bảo mật thanh toán',
     '100% secure payment' => '100% bảo mật thanh toán',
-    'Search result for keywords:' => 'Tìm kiếm với từ khóa',
+    'Search' => 'Tìm kiếm',
     'Not found.' => 'Không có kết quả',
     'Filter search' => 'Bộ lọc kết quả',
     'Sort' => 'Sắp xếp',
@@ -90,8 +90,8 @@ return [
     '2-year warranty' => '2 năm bảo hành',
     'Product rates' => 'Đánh giá sản phẩm',
     'Free shipping' => 'Miễn phí vận chuyển',
-    'Add to cart' =>'Thêm vào giỏ',
-    'Genuine' =>'Chính hãng',
+    'Add to cart' => 'Thêm vào giỏ',
+    'Genuine' => 'Chính hãng',
     'Brand' => 'Thương hiệu',
 
     // 
@@ -109,12 +109,21 @@ return [
     'Add another address' => 'Thêm địa chỉ khác',
     'Add shipping address' => 'Thêm địa chỉ giao hàng',
     'Add new address' => 'Thêm địa chỉ mới',
-    'PAYMENT METHODS'=>'HÌNH THỨC THANH TOÁN',  
+    'PAYMENT METHODS' => 'HÌNH THỨC THANH TOÁN',
     'Choose one of the payment methods' => 'Chọn 1 trong các hình thức thanh toán',
     'NOTES' => 'GHI CHÚ',
     'YOUR ORDER' => 'HÓA ĐƠN',
     'Transport fee for province' => 'Phí vận chuyển theo tỉnh',
     'Sub total' => 'Tổng tất cả',
     'PURCHASE' => 'THANH TOÁN',
+
+    // 
+
+    'Forgot password' => 'Queen mật khẩu',
+    'Please enter your registered email address, a password reset email will be sent' => 'Vui lòng nhập địa chỉ email đã đăng kí, email khôi phục mật khẩu sẽ được gửi đi',
+    'Email address' => 'Địa chỉ Email',
+    'Send Password Reset Link' => 'Gửi đường dẫn khôi phục',
+    'Reset Password' => 'Khôi phục mật khẩu',
+    'Password' => 'Mật khẩu',
 
 ];

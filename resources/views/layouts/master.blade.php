@@ -51,17 +51,17 @@
                             {{Auth::guard('customer')->user()->name}}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownAccount">
-                            <a class="dropdown-item" href="{{asset('user/account/profile')}}"> <i class="far fa-user"></i> {{ __('content.My Account')}}</a>
+                            <a class="dropdown-item" href="{{asset('user/account/profile')}}"> <i class="far fa-user"></i>{{ __('content.My Account')}}</a>
                             <a class="dropdown-item" href="{{asset('user/account/orders')}}"><i class="fas fa-file-invoice"></i>{{ __('content.My order')}}</a>
                         </div>
                     </li>
                     <li>
-                        <a href="{{route('logout')}}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" style="color: white;">
+                        <a href="{{route('logoutCus')}}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" style="color: white;">
                             <i class="far fa-user"></i>
                             {{ __('content.Logout') }}
                         </a>
                     </li>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    <form id="logout-form" action="{{ route('logoutCus') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
                     @else
@@ -119,10 +119,12 @@
                                     </div>
                                     <div class="text-center text-muted delimiter">{{ __('content.or use a social network')}}</div>
                                     <div class="d-flex justify-content-center social-buttons">
-                                        <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip" data-placement="top" title="Twitter">
-                                            <i class="fab fa-twitter"></i>
-                                        </button>
-                                        <a href="{{ route('auth.facebook') }}">
+                                        <a href="{{ route('login.google') }}">
+                                            <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip" data-placement="top" title="Twitter">
+                                                <i class="fab fa-google"></i>
+                                            </button>
+                                        </a>
+                                        <a href="{{ route('login.facebook') }}">
                                             <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip" data-placement="top" title="Facebook">
                                                 <i class="fab fa-facebook"></i>
                                             </button>
@@ -153,7 +155,7 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="header-logo">
-                            <a href="#" class="logo">
+                            <a href="{{asset('/')}}" class="logo">
                                 <img src="{{asset('image/logo.webp')}}" alt="logo">
                             </a>
                         </div>
@@ -198,7 +200,7 @@
                                         <ul class="main-nav nav navbar-nav">
                                             @foreach($categories as $category)
                                             <li>
-                                                <a href="{{asset('category/'.$category->id)}}">{{$category->name}}</a>
+                                                <a href="{{asset('category/'.$category->id.'.html')}}">{{$category->name}}</a>
                                             </li>
                                             @endforeach
                                             @if(Request::is('user/account/profile') || Request::is('user/account/orders'))
@@ -231,11 +233,11 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="main-nav navbar-nav nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{('/')}}">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="{{asset('/')}}">Home <span class="sr-only">(current)</span></a>
                     </li>
                     @foreach ($categories as $category)
                     <li class="nav-item">
-                        <a class="nav-link" href="{{('/category/'.$category->id.'.html')}}">{{$category->name}}</a>
+                        <a class="nav-link" href="{{asset('category/'.$category->id.'.html')}}">{{$category->name}}</a>
                     </li>
                     @endforeach
                 </ul>
@@ -388,6 +390,7 @@
     <!-- Select2 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="{{ asset('js/frontend/select2.full.min.js') }}"></script>
+    <script src="{{asset('js/frontend/starrr.js')}}"></script>
     <script src="{{asset('js/frontend/jquery.number.min.js')}}"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
@@ -510,6 +513,7 @@
             });
         });
     </script>
+
     @include('sweetalert::alert')
 </body>
 

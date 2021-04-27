@@ -25,10 +25,7 @@ class CreateProductsTable extends Migration
             $table->double('price')->default(0);
             $table->integer('discount')->default(0);
             $table->integer('quantity')->default(0);
-            $table->double('lenght')->default(0);
-            $table->double('weight')->default(0);
-            $table->double('height')->default(0);
-            $table->double('width')->default(0);
+            $table->string('attributes',100);
             $table->text('description')->nullable(false);
             $table->integer('like')->default(0);
         });

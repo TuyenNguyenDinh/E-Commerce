@@ -2,9 +2,15 @@
 $sort = request()->get('sort');
 $brand = request()->get('brand');
 $rangePrice = request()->get('rangePrice');
+$sort_rate = request()->get('sort_rate');
 ?>
 <div class="filter-status">
-    <div class="filter-title">
+    <div class="filter-title filter_block">
+        <a style="cursor: pointer;">
+            <i class="far fa-filter"></i> {{ __('Filter search')}}
+        </a>
+    </div>
+    <div class="filter-title filter_response">
         <a id="btnFilter" style="cursor: pointer;">
             <i class="far fa-filter"></i> {{ __('Filter search')}}
         </a>
@@ -34,7 +40,6 @@ $rangePrice = request()->get('rangePrice');
             </div>
             <div class="filter-checkbox">
                 @foreach($brands as $brand)
-
                 <input type="checkbox" id="brands_{{$brand->id}}" name="brands" onchange="$('#form').submit();" value="{{$brand->id}}">
                 <label for="{{$brand->id}}"> {{$brand->name}}</label><br>
                 @endforeach
@@ -76,54 +81,71 @@ $rangePrice = request()->get('rangePrice');
                 <p>{{ __('Rates')}}</p>
             </div>
             <div class="filter-checkbox">
-                <div class="rating_stars_collection">
-                    <div class="rating_stars_container">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
+                <div class="rating_stars_collection" style="display: flex;align-items: center;">
+                    <input type="radio" name="sort_rate" value="5" id="sort_rate_5" {{$sort_rate==5?'checked':""}} onchange="$('#form').submit()">
+                    <span for=sort_rate_5>
+                        <div class="rating_stars_container">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </span>
                 </div>
-                <div class="rating_stars_collection">
-                    <div class="rating_stars_container">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="far fa-star"></i>
-                        {{ __('above')}}
-                    </div>
+                <div class="rating_stars_collection" style="display: flex;align-items: center;">
+                    <input type="radio" name="sort_rate" value="4" id="sort_rate_4" {{$sort_rate==4?'checked':""}} onchange="$('#form').submit()">
+                    <span for="sort_rate_4">
+                        <div class="rating_stars_container">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            {{ __('above')}}
+                        </div>
+                    </span>
                 </div>
-                <div class="rating_stars_collection">
-                    <div class="rating_stars_container">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="far fa-star"></i>
-                        <i class="far fa-star"></i>
-                        {{ __('above')}}
-                    </div>
+                <div class="rating_stars_collection" style="display: flex;align-items: center;">
+                    <input type="radio" name="sort_rate" value="3" id="sort_rate_3" {{$sort_rate==3?'checked':""}} onchange="$('#form').submit()">
+                    <span for="sort_rate_3">
+                        <div class="rating_stars_container">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            {{ __('above')}}
+                        </div>
+                    </span>
                 </div>
-                <div class="rating_stars_collection">
-                    <div class="rating_stars_container">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="far fa-star"></i>
-                        <i class="far fa-star"></i>
-                        <i class="far fa-star"></i>
-                        {{ __('above')}}
-                    </div>
+                <div class="rating_stars_collection" style="display: flex;align-items: center;">
+                    <input type="radio" name="sort_rate" value="2" id="sort_rate_2" {{$sort_rate==2?'checked':""}} onchange="$('#form').submit()">
+                    <span for="sort_rate_2">
+                        <div class="rating_stars_container">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            {{ __('above')}}
+                        </div>
+
+                    </span>
                 </div>
-                <div class="rating_stars_collection">
-                    <div class="rating_stars_container">
-                        <i class="fas fa-star"></i>
-                        <i class="far fa-star"></i>
-                        <i class="far fa-star"></i>
-                        <i class="far fa-star"></i>
-                        <i class="far fa-star"></i>
-                        {{ __('above')}}
-                    </div>
+                <div class="rating_stars_collection" style="display: flex;align-items: center;">
+                    <input type="radio" name="sort_rate" value="1" id="sort_rate_1" {{$sort_rate==1?'checked':""}} onchange="$('#form').submit()">
+                    <span for="sort_rate_1">
+                        <div class="rating_stars_container">
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            {{ __('above')}}
+                        </div>
+
+                    </span>
                 </div>
             </div>
         </div>
@@ -135,7 +157,7 @@ $rangePrice = request()->get('rangePrice');
         <div id="responsive-nav">
             <nav class="nav nav-filter">
                 <div class="nav__links">
-                    <form id="form_respone" method="get">
+                    <form id="form_response" method="get">
                         @csrf
                         @if($key!=null)
                         <input type="hidden" name="key" value="{{request()->get('key')}}">
@@ -160,7 +182,7 @@ $rangePrice = request()->get('rangePrice');
                             </div>
                             <div class="filter-checkbox">
                                 @foreach($brands as $brand)
-                                <input type="checkbox" id="brands_respone_{{$brand->id}}" name="brands" onchange="$('#form_respone').submit();" value="{{$brand->id}}">
+                                <input type="checkbox" id="brands_respone_{{$brand->id}}" name="brands" onchange="$('#form_response').submit();" value="{{$brand->id}}">
                                 <label for="{{$brand->id}}"> {{$brand->name}}</label><br>
                                 @endforeach
                             </div>
@@ -171,27 +193,27 @@ $rangePrice = request()->get('rangePrice');
                             </div>
                             <div class="filter-checkbox">
                                 <label class="border rounded">
-                                    <input type="radio" name="rangePrice" value="0" id="tatca_respon" checked onchange="$('#form_respone').submit();">
+                                    <input type="radio" name="rangePrice" value="0" id="tatca_respon" checked onchange="$('#form_response').submit();">
                                     <span>{{ __('All')}}</span>
                                 </label>
                                 <label class="border rounded">
-                                    <input type="radio" name="rangePrice" value="1" id="duoi5tr_respon" {{($rangePrice==1)?'checked':""}} onchange="$('#form_respone').submit();">
+                                    <input type="radio" name="rangePrice" value="1" id="duoi5tr_respon" {{($rangePrice==1)?'checked':""}} onchange="$('#form_response').submit();">
                                     <span>{{ __('Less 5.000.000 đ')}}</span>
                                 </label>
                                 <label class="border rounded">
-                                    <input type="radio" name="rangePrice" value="2" id="5den10tr_respon" {{($rangePrice==2)?'checked':""}} onchange="$('#form_respone').submit();">
+                                    <input type="radio" name="rangePrice" value="2" id="5den10tr_respon" {{($rangePrice==2)?'checked':""}} onchange="$('#form_response').submit();">
                                     <span>{{ __('5 - 10.000.000 đ')}}</span>
                                 </label>
                                 <label class="border rounded">
-                                    <input type="radio" name="rangePrice" value="3" id="10den15tr_respon" {{($rangePrice==3)?'checked':""}} onchange="$('#form_respone').submit();">
+                                    <input type="radio" name="rangePrice" value="3" id="10den15tr_respon" {{($rangePrice==3)?'checked':""}} onchange="$('#form_response').submit();">
                                     <span for="10den15tr">{{ __('10 - 15.000.000 đ')}}</span>
                                 </label>
                                 <label class="border rounded">
-                                    <input type="radio" name="rangePrice" value="4" id="15den20tr_respon" {{($rangePrice==4)?'checked':""}} onchange="$('#form_respone').submit();">
+                                    <input type="radio" name="rangePrice" value="4" id="15den20tr_respon" {{($rangePrice==4)?'checked':""}} onchange="$('#form_response').submit();">
                                     <span for="15den20tr">{{ __('15 -20.000.000 đ')}}</span>
                                 </label>
                                 <label class="border rounded">
-                                    <input type="radio" name="rangePrice" value="5" id="tu20tr_respon" {{($rangePrice==5)?'checked':""}} onchange="$('#form_respone').submit();">
+                                    <input type="radio" name="rangePrice" value="5" id="tu20tr_respon" {{($rangePrice==5)?'checked':""}} onchange="$('#form_response').submit();">
                                     <span for="tu20tr">{{ __('20.000.000 đ more')}}</span>
                                 </label>
                             </div>
@@ -201,54 +223,71 @@ $rangePrice = request()->get('rangePrice');
                                 <p>{{ __('Rates')}}</p>
                             </div>
                             <div class="filter-checkbox">
-                                <div class="rating_stars_collection">
-                                    <div class="rating_stars_container">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
+                                <div class="rating_stars_collection" style="display: flex;align-items: center;">
+                                    <input type="radio" name="sort_rate" value="5" id="sort_rate_res_5" {{$sort_rate==5?'checked':""}} onchange="$('#form_response').submit()">
+                                    <span for=sort_rate_res_5>
+                                        <div class="rating_stars_container">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </span>
                                 </div>
-                                <div class="rating_stars_collection">
-                                    <div class="rating_stars_container">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        {{ __('above')}}
-                                    </div>
+                                <div class="rating_stars_collection" style="display: flex;align-items: center;">
+                                    <input type="radio" name="sort_rate" value="4" id="sort_rate_res_4" {{$sort_rate==4?'checked':""}} onchange="$('#form_response').submit()">
+                                    <span for="sort_rate_res_4">
+                                        <div class="rating_stars_container">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            {{ __('above')}}
+                                        </div>
+                                    </span>
                                 </div>
-                                <div class="rating_stars_collection">
-                                    <div class="rating_stars_container">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        {{ __('above')}}
-                                    </div>
+                                <div class="rating_stars_collection" style="display: flex;align-items: center;">
+                                    <input type="radio" name="sort_rate" value="3" id="sort_rate_res_3" {{$sort_rate==3?'checked':""}} onchange="$('#form_response').submit()">
+                                    <span for="sort_rate_res_3">
+                                        <div class="rating_stars_container">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            {{ __('above')}}
+                                        </div>
+                                    </span>
                                 </div>
-                                <div class="rating_stars_collection">
-                                    <div class="rating_stars_container">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        {{ __('above')}}
-                                    </div>
+                                <div class="rating_stars_collection" style="display: flex;align-items: center;">
+                                    <input type="radio" name="sort_rate" value="2" id="sort_rate_res_2" {{$sort_rate==2?'checked':""}} onchange="$('#form_response').submit()">
+                                    <span for="sort_rate_res_2">
+                                        <div class="rating_stars_container">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            {{ __('above')}}
+                                        </div>
+
+                                    </span>
                                 </div>
-                                <div class="rating_stars_collection">
-                                    <div class="rating_stars_container">
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        {{ __('above')}}
-                                    </div>
+                                <div class="rating_stars_collection" style="display: flex;align-items: center;">
+                                    <input type="radio" name="sort_rate" value="1" id="sort_rate_res_1" {{$sort_rate==1?'checked':""}} onchange="$('#form_response').submit()">
+                                    <span for="sort_rate_res_1">
+                                        <div class="rating_stars_container">
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            {{ __('above')}}
+                                        </div>
+
+                                    </span>
                                 </div>
                             </div>
                         </div>

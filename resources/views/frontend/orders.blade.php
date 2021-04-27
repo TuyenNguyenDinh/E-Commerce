@@ -1,5 +1,6 @@
 @extends('layouts.profile')
 @section('profile')
+<link rel="stylesheet" href="{{asset('css/rating.css')}}">
 <div class="account-tabs col-lg-9 col-md-12">
     <div class="tab-overflow_x">
         <div class="row">
@@ -34,14 +35,11 @@
                                             </a>
                                         </div>
                                         <div class="order-content_header_status">
-                                            @foreach($rating as $rate)
-                                                @if($rate->id_order == $order->id)
-                                                    Rated
-                                                @else
-                                                    Not rated
-                                                @endif
-                                                
-                                            @endforeach
+                                            @if(count(DB::table('comments')->where('id_order',$order->id)->get()) == 0)
+                                            Not rated
+                                            @else
+                                            rated
+                                            @endif
                                         </div>
                                     </div>
                                     @foreach($order_details as $order_detail)
@@ -102,7 +100,9 @@
                                         @elseif($order->status == "Cancel")
                                         <div class="purchase-card_button_container">
                                             <div class="purchase-card_button-show">
-                                                <button class="btn btn-red text-white">Buy again</button>
+                                                <a href="{{asset('cart/add_again/'.$order->id)}}">
+                                                    <button class="btn btn-red text-white">Buy again</button>
+                                                </a>
                                             </div>
                                             <div class="purchase-card_button-show">
                                                 <a href="{{route('tracking_orders', $order->id)}}">
@@ -111,11 +111,10 @@
                                             </div>
                                         </div>
                                         @elseif($order->status == "Shipped")
-                                        @foreach($rating as $rate)
-                                            @if($rate->id_order == $order->id)
-                                            <div class="purchase-card_button_container">
+                                        @if(count(DB::table('comments')->where('id_order',$order->id)->get()) == 0)
+                                        <div class="purchase-card_button_container">
                                             <div class="purchase-card_button-show">
-                                                <button class="btn btn-red text-white">Review rated</button>
+                                                <button class="btn btn-red text-white" data-toggle="modal" data-target="#ratingOrder_{{$order->id}}">Rate order</button>
                                             </div>
                                             <div class="purchase-card_button-show">
                                                 <a href="{{route('tracking_orders', $order->id)}}">
@@ -123,25 +122,10 @@
                                                 </a>
                                             </div>
                                         </div>
-                                            @else
-                                            <div class="purchase-card_button_container">
-                                            <div class="purchase-card_button-show">
-                                                <button class="btn btn-red text-white">Rate order</button>
-                                            </div>
-                                            <div class="purchase-card_button-show">
-                                                <a href="{{route('tracking_orders', $order->id)}}">
-                                                    <button class="btn btn-light">Tracking orders</button>
-                                                </a>
-                                            </div>
-                                        </div>
-                                            @endif
-                                                
-                                        @endforeach
-
                                         @else
                                         <div class="purchase-card_button_container">
                                             <div class="purchase-card_button-show">
-                                                <button class="btn btn-red text-white" disabled>Received</button>
+                                                <button class="btn btn-red text-white" data-toggle="modal" data-target="#viewRating_{{$order->id}}">Review rated</button>
                                             </div>
                                             <div class="purchase-card_button-show">
                                                 <a href="{{route('tracking_orders', $order->id)}}">
@@ -150,7 +134,7 @@
                                             </div>
                                         </div>
                                         @endif
-
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -176,7 +160,7 @@
                                                 {{csrf_field()}}
                                                 @method('PUT')
                                                 <div class="form-group mb-3">
-                                                    <select name="reasons_{{$order->id}}" id="reasons_{{$order->id}}" class="form-control rounded-pill border-0 shadow-sm px-4">
+                                                    <select name="reasons" id="reasons reasons_{{$order->id}}" class="form-control rounded-pill border-0 shadow-sm px-4">
                                                         <option value="Change delivery address" selected>Change delivery address</option>
                                                         <option value="Change products in order">Change products in order</option>
                                                         <option value="Don't want to buy">Don't want to buy</option>
@@ -186,6 +170,122 @@
                                                 <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Send request</button>
                                             </form>
                                         </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="ratingOrder_{{$order->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header border-bottom-0">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="{{route('postComments',$order->id)}}" method="post">
+                                            {{csrf_field()}}
+                                            <div class="form-title text-left my-account-section__header">
+                                                <h4>Rating order {{$order->id}}</h4>
+                                            </div>
+                                            @foreach($order_details as $order_detail)
+                                            @if($order_detail->id_order != $order->id)
+                                            @else
+                                            <div class="d-flex flex-column  align-items-baseline">
+                                                <div class="order-content_item-list container-fluid" style="border-top: none;">
+                                                    <div class="order-content_item-list_wrapper">
+                                                        <div class="order-content_item">
+                                                            <div class="order-content_item_row">
+                                                                <div class="order-content_item_details">
+                                                                    <div class="order-content_item_product">
+                                                                        <div class="order-content_item_image">
+                                                                            <div class="order-image_wrapper">
+                                                                                <img src="{{ asset('upload/'.$order_detail->products->image1) }}" alt="">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="order-content_item_detail-content">
+                                                                            <div class="order-content_item-name">{{$order_detail->products->name_product}}</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="w-100 text-center" style="padding-top: 10px;padding-bottom: 23px">
+                                                    <!-- <input type="number" name="rate[{{$order_detail->id}}]"> -->
+                                                    <div class="ratedd">
+                                                        <input type="radio" name="rate[{{$order_detail->id}}]" class="rated" value="1" />
+                                                        <input type="radio" name="rate[{{$order_detail->id}}]" class="rated" value="2" />
+                                                        <input type="radio" name="rate[{{$order_detail->id}}]" class="rated" value="3" />
+                                                        <input type="radio" name="rate[{{$order_detail->id}}]" class="rated" value="4" />
+                                                        <input type="radio" name="rate[{{$order_detail->id}}]" class="rated" value="5" />
+                                                    </div>
+                                                </div>
+                                                <div class="comments-content w-100">
+                                                    <textarea name="comments[{{$order_detail->id}}]" id="comments_{{$order_detail->id}}" cols="30" rows="10" maxlength="300" style="resize: none; width: 100%; ; height:136px" placeholder="Hãy chia sẻ vì sao sản phẩm này không tốt nhé"></textarea>
+                                                </div>
+                                            </div>
+                                            @endif
+                                            @endforeach
+                                            <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Send request</button>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="viewRating_{{$order->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header border-bottom-0">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-title text-left my-account-section__header">
+                                            <h4>View rated order {{$order->id}}</h4>
+                                        </div>
+                                        @foreach($rating as $order_detail)
+                                        @if($order_detail->id_order == $order->id)
+                                        <div class="d-flex flex-column  align-items-baseline">
+                                            <div class="order-content_item-list container-fluid" style="border-top: none;">
+                                                <div class="order-content_item-list_wrapper">
+                                                    <div class="order-content_item">
+                                                        <div class="order-content_item_row">
+                                                            <div class="order-content_item_details">
+                                                                <div class="order-content_item_product">
+                                                                    <div class="order-content_item_image">
+                                                                        <div class="order-image_wrapper">
+                                                                            <img src="{{ asset('upload/'.$order_detail->products->image1) }}" alt="">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="order-content_item_detail-content">
+                                                                        <div class="order-content_item-name">{{$order_detail->products->name_product}}</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="container">
+                                                <div class="w-100 text-left" style="padding-top: 10px;padding-bottom: 23px; color: #d8c223">
+                                                    @for($i = 1; $i <= $order_detail->rate; $i++)
+                                                        <i class="fas fa-star"></i>
+                                                        @endfor
+                                                </div>
+                                                <div class="comments-content w-100">
+                                                    <p>{{$order_detail->comments}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @else
+                                        @endif
+                                        @endforeach
+
 
                                     </div>
                                 </div>
@@ -264,40 +364,7 @@
                                             @if($order->status == "Checking order" )
                                             <div class="purchase-card_button_container">
                                                 <div class="purchase-card_button-show">
-                                                    <button class="btn btn-red text-white" data-toggle="modal" data-target="#cancelOrder_{{$order->id}}">Cancel order</button>
-                                                </div>
-                                                <div class="purchase-card_button-show">
-                                                    <a href="{{route('tracking_orders', $order->id)}}">
-                                                        <button class="btn btn-light">Tracking orders</button>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            @elseif($order->status == "Cancel")
-                                            <div class="purchase-card_button_container">
-                                                <div class="purchase-card_button-show">
-                                                    <button class="btn btn-red text-white">Buy again</button>
-                                                </div>
-                                                <div class="purchase-card_button-show">
-                                                    <a href="{{route('tracking_orders', $order->id)}}">
-                                                        <button class="btn btn-light">Tracking orders</button>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            @elseif($order->status == "Shipped")
-                                            <div class="purchase-card_button_container">
-                                                <div class="purchase-card_button-show">
-                                                    <button class="btn btn-red text-white" disabled>Received</button>
-                                                </div>
-                                                <div class="purchase-card_button-show">
-                                                    <a href="{{route('tracking_orders', $order->id)}}">
-                                                        <button class="btn btn-light">Tracking orders</button>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            @else
-                                            <div class="purchase-card_button_container">
-                                                <div class="purchase-card_button-show">
-                                                    <button class="btn btn-red text-white" disabled>Received</button>
+                                                    <button class="btn btn-red text-white" data-toggle="modal" data-target="#cancelOrder__{{$order->id}}">Cancel order</button>
                                                 </div>
                                                 <div class="purchase-card_button-show">
                                                     <a href="{{route('tracking_orders', $order->id)}}">
@@ -306,6 +373,42 @@
                                                 </div>
                                             </div>
                                             @endif
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="cancelOrder__{{$order->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header border-bottom-0">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-title text-left my-account-section__header">
+                                                <h4>Cancel order {{$order->id}}</h4>
+                                                <div class="my-account-section__header-subtitle">
+                                                    Please choose reasons cacelled order
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex flex-row align-items-baseline">
+                                                <form action="{{ route('cancel_orders' ,$order->id)}}" method="post" style="width: 100%">
+                                                    {{csrf_field()}}
+                                                    @method('PUT')
+                                                    <div class="form-group mb-3">
+                                                        <select name="reasons" id="reasons reasons_{{$order->id}}" class="form-control rounded-pill border-0 shadow-sm px-4">
+                                                            <option value="Change delivery address" selected>Change delivery address</option>
+                                                            <option value="Change products in order">Change products in order</option>
+                                                            <option value="Don't want to buy">Don't want to buy</option>
+                                                            <option value="Wrong/duplicate order">Wrong/duplicate order</option>
+                                                        </select>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Send request</button>
+                                                </form>
+                                            </div>
 
                                         </div>
                                     </div>
@@ -382,40 +485,7 @@
                                                     <h3>{{number_format($order->total_price,0,',','.')}}đ</h3>
                                                 </div>
                                             </div>
-                                            @if($order->status == "Checking order" )
-                                            <div class="purchase-card_button_container">
-                                                <div class="purchase-card_button-show">
-                                                    <button class="btn btn-red text-white" data-toggle="modal" data-target="#cancelOrder_{{$order->id}}">Cancel order</button>
-                                                </div>
-                                                <div class="purchase-card_button-show">
-                                                    <a href="{{route('tracking_orders', $order->id)}}">
-                                                        <button class="btn btn-light">Tracking orders</button>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            @elseif($order->status == "Cancel")
-                                            <div class="purchase-card_button_container">
-                                                <div class="purchase-card_button-show">
-                                                    <button class="btn btn-red text-white">Buy again</button>
-                                                </div>
-                                                <div class="purchase-card_button-show">
-                                                    <a href="{{route('tracking_orders', $order->id)}}">
-                                                        <button class="btn btn-light">Tracking orders</button>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            @elseif($order->status == "Shipped")
-                                            <div class="purchase-card_button_container">
-                                                <div class="purchase-card_button-show">
-                                                    <button class="btn btn-red text-white">Received</button>
-                                                </div>
-                                                <div class="purchase-card_button-show">
-                                                    <a href="{{route('tracking_orders', $order->id)}}">
-                                                        <button class="btn btn-light">Tracking orders</button>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            @else
+                                            
                                             <div class="purchase-card_button_container">
                                                 <div class="purchase-card_button-show">
                                                     <button class="btn btn-red text-white" disabled>Received</button>
@@ -426,8 +496,6 @@
                                                     </a>
                                                 </div>
                                             </div>
-                                            @endif
-
                                         </div>
                                     </div>
                                 </div>
@@ -503,40 +571,6 @@
                                                     <h3>{{number_format($order->total_price,0,',','.')}}đ</h3>
                                                 </div>
                                             </div>
-                                            @if($order->status == "Checking order" )
-                                            <div class="purchase-card_button_container">
-                                                <div class="purchase-card_button-show">
-                                                    <button class="btn btn-red text-white" data-toggle="modal" data-target="#cancelOrder_{{$order->id}}">Cancel order</button>
-                                                </div>
-                                                <div class="purchase-card_button-show">
-                                                    <a href="{{route('tracking_orders', $order->id)}}">
-                                                        <button class="btn btn-light">Tracking orders</button>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            @elseif($order->status == "Cancel")
-                                            <div class="purchase-card_button_container">
-                                                <div class="purchase-card_button-show">
-                                                    <button class="btn btn-red text-white">Buy again</button>
-                                                </div>
-                                                <div class="purchase-card_button-show">
-                                                    <a href="{{route('tracking_orders', $order->id)}}">
-                                                        <button class="btn btn-light">Tracking orders</button>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            @elseif($order->status == "Shipped")
-                                            <div class="purchase-card_button_container">
-                                                <div class="purchase-card_button-show">
-                                                    <button class="btn btn-red text-white">Received</button>
-                                                </div>
-                                                <div class="purchase-card_button-show">
-                                                    <a href="{{route('tracking_orders', $order->id)}}">
-                                                        <button class="btn btn-light">Tracking orders</button>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            @else
                                             <div class="purchase-card_button_container">
                                                 <div class="purchase-card_button-show">
                                                     <button class="btn btn-red text-white" disabled>Received</button>
@@ -547,8 +581,6 @@
                                                     </a>
                                                 </div>
                                             </div>
-                                            @endif
-
                                         </div>
                                     </div>
                                 </div>
@@ -577,17 +609,11 @@
                                                 </a>
                                             </div>
                                             <div class="order-content_header_status">
-                                            
-                                           
-                                            @foreach($rating as $rate)
-                                                @if($rate->id_order == $order->id)
-                                                    Rated
+                                                @if(count(DB::table('comments')->where('id_order',$order->id)->get()) == 0)
+                                                Not rated
                                                 @else
-                                                    Not rated
+                                                rated
                                                 @endif
-                                                
-                                            @endforeach
-                                            
                                             </div>
                                         </div>
                                         @foreach($order_details as $order_detail)
@@ -634,10 +660,11 @@
                                                     <h3>{{number_format($order->total_price,0,',','.')}}đ</h3>
                                                 </div>
                                             </div>
-                                            @if($order->status == "Checking order" )
+                                            @if($order->status == "Shipped")
+                                            @if(count(DB::table('comments')->where('id_order',$order->id)->get()) == 0)
                                             <div class="purchase-card_button_container">
                                                 <div class="purchase-card_button-show">
-                                                    <button class="btn btn-red text-white" data-toggle="modal" data-target="#cancelOrder_{{$order->id}}">Cancel order</button>
+                                                    <button class="btn btn-red text-white" data-toggle="modal" data-target="#ratingOrder_shipped_{{$order->id}}">Rate order</button>
                                                 </div>
                                                 <div class="purchase-card_button-show">
                                                     <a href="{{route('tracking_orders', $order->id)}}">
@@ -645,48 +672,10 @@
                                                     </a>
                                                 </div>
                                             </div>
-                                            @elseif($order->status == "Cancel")
-                                            <div class="purchase-card_button_container">
-                                                <div class="purchase-card_button-show">
-                                                    <button class="btn btn-red text-white">Buy again</button>
-                                                </div>
-                                                <div class="purchase-card_button-show">
-                                                    <a href="{{route('tracking_orders', $order->id)}}">
-                                                        <button class="btn btn-light">Tracking orders</button>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            @elseif($order->status == "Shipped")
-                                            @foreach($rating as $rate)
-                                            @if($rate->id_order == $order->id)
-                                            <div class="purchase-card_button_container">
-                                            <div class="purchase-card_button-show">
-                                                <button class="btn btn-red text-white">Review rated</button>
-                                            </div>
-                                            <div class="purchase-card_button-show">
-                                                <a href="{{route('tracking_orders', $order->id)}}">
-                                                    <button class="btn btn-light">Tracking orders</button>
-                                                </a>
-                                            </div>
-                                        </div>
-                                            @else
-                                            <div class="purchase-card_button_container">
-                                            <div class="purchase-card_button-show">
-                                                <button class="btn btn-red text-white">Rate order</button>
-                                            </div>
-                                            <div class="purchase-card_button-show">
-                                                <a href="{{route('tracking_orders', $order->id)}}">
-                                                    <button class="btn btn-light">Tracking orders</button>
-                                                </a>
-                                            </div>
-                                        </div>
-                                            @endif
-                                                
-                                        @endforeach
                                             @else
                                             <div class="purchase-card_button_container">
                                                 <div class="purchase-card_button-show">
-                                                    <button class="btn btn-red text-white" disabled>Received</button>
+                                                    <button class="btn btn-red text-white" data-toggle="modal" data-target="#viewRating_shipped_{{$order->id}}">Review rated</button>
                                                 </div>
                                                 <div class="purchase-card_button-show">
                                                     <a href="{{route('tracking_orders', $order->id)}}">
@@ -695,6 +684,156 @@
                                                 </div>
                                             </div>
                                             @endif
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="cancelOrder_{{$order->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header border-bottom-0">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-title text-left my-account-section__header">
+                                                <h4>Cancel order {{$order->id}}</h4>
+                                                <div class="my-account-section__header-subtitle">
+                                                    Please choose reasons cacelled order
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex flex-row align-items-baseline">
+                                                <form action="{{ route('cancel_orders' ,$order->id)}}" method="post" style="width: 100%">
+                                                    {{csrf_field()}}
+                                                    @method('PUT')
+                                                    <div class="form-group mb-3">
+                                                        <select name="reasons_{{$order->id}}" id="reasons_{{$order->id}}" class="form-control rounded-pill border-0 shadow-sm px-4">
+                                                            <option value="Change delivery address" selected>Change delivery address</option>
+                                                            <option value="Change products in order">Change products in order</option>
+                                                            <option value="Don't want to buy">Don't want to buy</option>
+                                                            <option value="Wrong/duplicate order">Wrong/duplicate order</option>
+                                                        </select>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Send request</button>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="ratingOrder_shipped_{{$order->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header border-bottom-0">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{route('postComments',$order->id)}}" method="post">
+                                                {{csrf_field()}}
+                                                <div class="form-title text-left my-account-section__header">
+                                                    <h4>Rating order {{$order->id}}</h4>
+                                                </div>
+                                                @foreach($order_details as $order_detail)
+                                                @if($order_detail->id_order != $order->id)
+                                                @else
+                                                <div class="d-flex flex-column  align-items-baseline">
+                                                    <div class="order-content_item-list container-fluid" style="border-top: none;">
+                                                        <div class="order-content_item-list_wrapper">
+                                                            <div class="order-content_item">
+                                                                <div class="order-content_item_row">
+                                                                    <div class="order-content_item_details">
+                                                                        <div class="order-content_item_product">
+                                                                            <div class="order-content_item_image">
+                                                                                <div class="order-image_wrapper">
+                                                                                    <img src="{{ asset('upload/'.$order_detail->products->image1) }}" alt="">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="order-content_item_detail-content">
+                                                                                <div class="order-content_item-name">{{$order_detail->products->name_product}}</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-100 text-center" style="padding-top: 10px;padding-bottom: 23px">
+                                                        <!-- <input type="number" name="rate[{{$order_detail->id}}]"> -->
+                                                        <div class="ratedd">
+                                                            <input type="radio" name="rate[{{$order_detail->id}}]" class="rated" value="1" />
+                                                            <input type="radio" name="rate[{{$order_detail->id}}]" class="rated" value="2" />
+                                                            <input type="radio" name="rate[{{$order_detail->id}}]" class="rated" value="3" />
+                                                            <input type="radio" name="rate[{{$order_detail->id}}]" class="rated" value="4" />
+                                                            <input type="radio" name="rate[{{$order_detail->id}}]" class="rated" value="5" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="comments-content w-100">
+                                                        <textarea name="comments[{{$order_detail->id}}]" id="comments_{{$order_detail->id}}" cols="30" rows="10" maxlength="300" style="resize: none; width: 100%; ; height:136px" placeholder="Hãy chia sẻ vì sao sản phẩm này không tốt nhé"></textarea>
+                                                    </div>
+                                                </div>
+                                                @endif
+                                                @endforeach
+                                                <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Send request</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="viewRating_shipped_{{$order->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header border-bottom-0">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-title text-left my-account-section__header">
+                                                <h4>View rated order {{$order->id}}</h4>
+                                            </div>
+                                            @foreach($rating as $order_detail)
+                                            @if($order_detail->id_order == $order->id)
+                                            <div class="d-flex flex-column  align-items-baseline">
+                                                <div class="order-content_item-list container-fluid" style="border-top: none;">
+                                                    <div class="order-content_item-list_wrapper">
+                                                        <div class="order-content_item">
+                                                            <div class="order-content_item_row">
+                                                                <div class="order-content_item_details">
+                                                                    <div class="order-content_item_product">
+                                                                        <div class="order-content_item_image">
+                                                                            <div class="order-image_wrapper">
+                                                                                <img src="{{ asset('upload/'.$order_detail->products->image1) }}" alt="">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="order-content_item_detail-content">
+                                                                            <div class="order-content_item-name">{{$order_detail->products->name_product}}</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="container">
+                                                    <div class="w-100 text-left" style="padding-top: 10px;padding-bottom: 23px; color: #d8c223">
+                                                        @for($i = 1; $i <= $order_detail->rate; $i++)
+                                                            <i class="fas fa-star"></i>
+                                                            @endfor
+                                                    </div>
+                                                    <div class="comments-content w-100">
+                                                        <p>{{$order_detail->comments}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @else
+                                            @endif
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
@@ -770,32 +909,12 @@
                                                     <h3>{{number_format($order->total_price,0,',','.')}}đ</h3>
                                                 </div>
                                             </div>
-                                            @if($order->status == "Checking order" )
+                                            @if($order->status == "Cancel" )
                                             <div class="purchase-card_button_container">
                                                 <div class="purchase-card_button-show">
-                                                    <button class="btn btn-red text-white" data-toggle="modal" data-target="#cancelOrder_{{$order->id}}">Cancel order</button>
-                                                </div>
-                                                <div class="purchase-card_button-show">
-                                                    <a href="{{route('tracking_orders', $order->id)}}">
-                                                        <button class="btn btn-light">Tracking orders</button>
+                                                    <a href="{{asset('cart/add_again/'.$order->id)}}">
+                                                        <button class="btn btn-red text-white">Buy again</button>
                                                     </a>
-                                                </div>
-                                            </div>
-                                            @elseif($order->status == "Cancel")
-                                            <div class="purchase-card_button_container">
-                                                <div class="purchase-card_button-show">
-                                                    <button class="btn btn-red text-white">Buy again</button>
-                                                </div>
-                                                <div class="purchase-card_button-show">
-                                                    <a href="{{route('tracking_orders', $order->id)}}">
-                                                        <button class="btn btn-light">Tracking orders</button>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            @elseif($order->status == "Shipped")
-                                            <div class="purchase-card_button_container">
-                                                <div class="purchase-card_button-show">
-                                                    <button class="btn btn-red text-white">Received</button>
                                                 </div>
                                                 <div class="purchase-card_button-show">
                                                     <a href="{{route('tracking_orders', $order->id)}}">
@@ -825,10 +944,13 @@
                         </div>
                     </div>
                     <!-- modal -->
-
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script src="{{asset('js/rating.js')}}"></script>
+<script>
+    $('.ratedd').rating()
+</script>
 @stop

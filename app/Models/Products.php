@@ -53,10 +53,7 @@ class Products extends Model
         'price',
         'discount',
         'quantity',
-        'lenght',
-        'weight',
-        'height',
-        'width',
+        'attributes',
         'description',
         'like',
         'old_price'

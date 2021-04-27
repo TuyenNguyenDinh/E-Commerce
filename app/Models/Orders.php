@@ -25,6 +25,14 @@ class Orders extends Model
         return $this->hasMany('App\Models\Comments','id_order');
     }
 
+    function province(){
+        return $this->belongsTo('App\Models\Province', 'id_province');
+    }
+
+    function district(){
+        return $this->belongsTo('App\Models\District','id_district');
+    }
+
 
     protected $fillable = [
         'id_customers',
@@ -35,6 +43,8 @@ class Orders extends Model
         'total_price',
         'notes',
         'status',
-        'reasons_cancel_order'
+        'reasons_cancel_order',
+        'id_province',
+        'id_district'
     ];
 }

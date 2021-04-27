@@ -22,7 +22,7 @@ class FrontendController extends Controller
 
     public function changeLanguage($language)
     {
-        \Session::put('website_language', $language);
+        Session::put('website_language', $language);
     
         return redirect()->back();
     }
@@ -38,7 +38,7 @@ class FrontendController extends Controller
     public function getCategory($id)
     {
         $data['cate_name'] = Categories::find($id);
-        $data['products'] = Products::where('id_category',$id)->get();
+        $data['products'] = Products::where('id_category',$id)->paginate(2);
         return view('frontend.category', $data);
     }
 
@@ -117,8 +117,28 @@ class FrontendController extends Controller
             }
         }
 
+        if($request->has('sort_rate')){
+            switch ($request->sort_rate) {
+                case 1:
+                    $query->where('like', 1);
+                    break;
+                case 2:
+                    $query->where('like', 2);
+                    break;
+               case 3:
+                    $query->where('like', 3);
+                    break;
+                case 4 :
+                    $query->where('like', 4);
+                    break;
+                case 5 :
+                    $query->where('like', 5);
+                    break;
+            }
+        }
 
-        $listProduct = $query->paginate(2);
+
+        $listProduct = $query->get();
         return view('frontend.search', ['listProduct' => $listProduct], $data);
     }
 

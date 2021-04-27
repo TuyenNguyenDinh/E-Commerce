@@ -19,10 +19,11 @@ class OrderController extends Controller
     protected $customers;
     protected $orderdetails;
 
-    public function __construct(OrderEloquentRepository $orders,
-                                CustomerEloquentRepository $customers,
-                                OrderDetailEloquentRepository $orderdetails)
-    {
+    public function __construct(
+        OrderEloquentRepository $orders,
+        CustomerEloquentRepository $customers,
+        OrderDetailEloquentRepository $orderdetails
+    ) {
         $this->orders = $orders;
         $this->customers = $customers;
         $this->orderdetails = $orderdetails;
@@ -33,7 +34,8 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index(){
+    public function index()
+    {
         $orders = $this->orders->getAll();
         return view('admin.orders.index', ['orders' => $orders]);
     }
@@ -48,9 +50,9 @@ class OrderController extends Controller
     public function edit($id)
     {
         $data['customers'] = $this->customers->find($id);
-        $data['orders'] = Orders::where('id_customer',$id)->get();
+        $data['orders'] = Orders::where('id_customer', $id)->get();
         $data['orders_details'] = $this->orderdetails->getAll();
-        return view('admin.orders.show',$data);
+        return view('admin.orders.show', $data);
     }
 
     /**
@@ -62,11 +64,13 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $id_orders = Orders::find($id);
-        // $id_orders->update(array_merge(['status' => $request->status]));
-        $id_orders = $this->orders->update($id, array_merge(['status' => $request->status]));
-        return redirect()->route('orders.index')->with('success', 'Update successs');
-
+        if ($request->status == 'Shipping') {
+            $this->orders->update($id, array_merge(['status' => $request->status, 'ship_date' => date('Y-m-d')]));
+           
+        } else {
+            $this->orders->update($id, array_merge(['status' => $request->status, 'ship_date' => date('Y-m-d')]));
+        }
+        return redirect()->route('orders.index')->with('success', 'Update successfully');
     }
 
     /**
@@ -77,6 +81,7 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->orders->delete($id);
+        return redirect()->route('orders.index')->with('success', 'Delete successfully');
     }
 }

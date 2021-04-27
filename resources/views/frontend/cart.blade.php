@@ -36,11 +36,11 @@
                             </td>
                             <td id="price" data-th="Price">{{number_format($product->price*$product->qty,0,',','.')}} đ</td>
                             <td data-th="Quantity">
-                                <input type="number" name="qty" id="qty" class="form-control form-control-lg text-center" value="{{ $product->qty }}" onchange="btUpdate(this.value, '{{$product->rowId}}')">
+                                <input type="number" name="qty" id="qty" class="form-control form-control-lg text-center" value="{{ $product->qty }}" min=1 onchange="btUpdate(this.value, '{{$product->rowId}}')">
                             </td>
                             <td class="actions" data-th="">
                                 <div class="text-right">
-                                    <a href="{{asset('cart/delete/'.$product->rowId)}}">
+                                    <a href="#" onclick="deleteCart('{{$product->rowId}}')">
                                         <button class="btn btn-white border-secondary bg-white btn-md mb-2">
                                             <i class="fas fa-trash"></i>
                                         </button>
@@ -57,7 +57,6 @@
                     </button>
                 </div>
                 <div id="subtotal" class="float-right text-right">
-
                     <h4>{{ __('content.Total')}}:</h4>
                     <h1>{{$total}} đ</h1>
                 </div>
@@ -68,7 +67,7 @@
                 <a href="{{ route('checkout') }}" class="btn btn-primary mb-4 btn-lg pl-5 pr-5">{{ __('content.Checkout')}}</a>
             </div>
             <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
-                <a href="catalog.html">
+                <a href="{{asset('/')}}">
                     <i class="fas fa-arrow-left mr-2"></i> {{ __('content.Continue Shopping')}}</a>
             </div>
         </div>
@@ -98,5 +97,23 @@
         $('#listCart').load("{{route('cartdata')}}");
         $('#qty_cart').load("{{route('cartdata')}} #cart_count")
     })
+
+    function deleteCart(id) {
+        swal({
+                title: "Delete?",
+                text: "Are you sure delete this products?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                   
+                }
+            });
+    }
+    
+
+
 </script>
 @stop

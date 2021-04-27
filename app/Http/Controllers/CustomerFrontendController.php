@@ -9,14 +9,17 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Customers;
 use App\Models\Orderdetails;
 use App\Models\Orders;
+use App\Models\Products;
 use App\Models\Province;
+use App\Models\Transport_fee;
 use Carbon\Carbon;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Str;
-
+use Laravel\Socialite\Facades\Socialite;
 
 class CustomerFrontendController extends Controller
 {
@@ -30,6 +33,12 @@ class CustomerFrontendController extends Controller
     {
         $pr = Province::all();
         return view('frontend.register', ['pr' => $pr]);
+    }
+
+    public function Logout()
+    {
+        Auth::guard('customer')->logout();
+        return redirect('/');
     }
 
     public function GetSubCatAgainstMainCatEdit($id)
@@ -54,6 +63,72 @@ class CustomerFrontendController extends Controller
 
         return redirect('/');
     }
+
+
+
+    // Login social
+    /**
+     * Redirect the user to the Google authentication page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    /**
+     * Obtain the user information from Google.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function handleGoogleCallback()
+    {
+        $user = Socialite::driver('google')->stateless()->user();
+
+        $this->_registerOrLogin($user);
+        return redirect()->route('home');
+    }
+
+    /**
+     * Redirect the user to the Facebook authentication page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function redirectToFacebook()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    /**
+     * Obtain the user information from Facebook.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function handleFacebookCallback()
+    {
+        $user = Socialite::driver('facebook')->stateless()->user();
+
+        $this->_registerOrLogin($user);
+        return redirect()->route('home');
+    }
+
+    protected function _registerOrLogin($data)
+    {
+        $customer = Customers::where('email', '=', $data->email)->first();
+        if (!$customer) {
+            $customer = new Customers();
+            $customer->name = $data->name;
+            $customer->email = $data->email;
+            $customer->provider_id = $data->id;
+            $customer->image_acc = $data->avatar;
+            $customer->save();
+        }
+        Auth::guard('customer')->login($customer);
+    }
+
+    // end
+
 
     public function getInfo()
     {
@@ -82,7 +157,8 @@ class CustomerFrontendController extends Controller
     }
 
 
-    public function getOrders(Request $request){
+    public function getOrders()
+    {
         $data['id'] = Auth::guard('customer')->user()->id;
         $data['cus'] = Customers::find($data['id']);
         $data['orders'] = Orders::where('id_customer', $data['id'])->get();
@@ -93,7 +169,8 @@ class CustomerFrontendController extends Controller
         $data['shipped'] = Orders::where('id_customer', $data['id'])->where('status', "Shipped")->get();
         $data['cancel'] = Orders::where('id_customer', $data['id'])->where('status', "Cancel")->get();
         $data['rating'] = Comments::all();
-        return view('frontend.orders',$data);
+
+        return view('frontend.orders', $data);
     }
 
     private function doUpload(Request $request)
@@ -201,24 +278,60 @@ class CustomerFrontendController extends Controller
             ['email' => $request->email, 'token' => $token, 'created_at' => Carbon::now()]
         );
 
-        Mail::send('frontend.verify', ['token' => $token,'email' => $request->email], function ($message) use ($request) {
+        Mail::send('frontend.verify', ['token' => $token, 'email' => $request->email], function ($message) use ($request) {
             $message->to($request->email);
             $message->subject('Reset Password Notification');
         });
         return redirect('/')->with('success', 'Send mail success, please check your mail to reset password');
     }
 
-    public function postCancelOrders(Request $request, $id){
+    public function postCancelOrders(Request $request, $id)
+    {
         $reasons = $request->reasons;
         Orders::find($id)->update(array_merge(['status' => 'Request to cancel the order', 'reasons_cancel_order' => $reasons]));
-        return redirect('user/account/orders')->with('success','Send successfully, please wait seller checking your reasons');
+        return redirect('user/account/orders')->with('success', 'Send successfully, please wait seller checking your reasons');
     }
 
-    public function trackingOrders($id){
+    public function trackingOrders($id)
+    {
         $data['id'] = Auth::guard('customer')->user()->id;
         $data['cus'] = Customers::find($data['id']);
         $orders = Orders::find($id);
-        $data['order_details'] = Orderdetails::where('id_order',$id)->get();
+        $data['order_details'] = Orderdetails::where('id_order', $id)->get();
+        $data['fee_transport'] = Transport_fee::all();
         return view('frontend.tracking', $data, ['orders' => $orders]);
+    }
+
+    public function postComments(Request $request, $id)
+    {
+        $data['order_details'] = Orderdetails::where('id_order', $id)->get();
+        foreach ($data['order_details'] as $products) {
+            $comments = new Comments();
+            $comments->id_product = $products->id_product;
+            $comments->id_customer = Auth::guard('customer')->user()->id;
+            $comments->comments = $request->comments[$products->id];
+            $comments->rate = $request->rate[$products->id];
+            $comments->id_order = $products->id_order;
+            $comments->updated_at = date('Y-m-d');
+            $comments->created_at = date('Y-m-d');
+            $comments->save();
+            Products::find($products->id_product)->update(['like' => round($comments->avg('rate'))]);
+        }
+        return redirect('/')->with('success', 'Thank you for rated');
+    }
+
+    public function buyAgain($id){
+        $product = Orderdetails::where('id_order',$id)->get();
+        foreach($product as $items){
+            Cart::add([
+                'id' => $items->products->id, 'name' => $items->products->name_product
+                , 'weight' => 0, 'qty' => 1, 'price' => $items->price
+                , 'options' => ['img' => $items->products->image1, 'brands' => $items->products->brands->name
+                , 'categories' => $items->products->categories->name]
+            ]);
+        }
+        
+        return redirect('cart/show');
+        // return dd($items);
     }
 }

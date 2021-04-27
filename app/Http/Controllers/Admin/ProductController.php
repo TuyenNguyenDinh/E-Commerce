@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Repositories\ProductEloquentRepository;
 use App\Repositories\BrandEloquentRepository;
 use App\Repositories\CategoryEloquentRepository;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -35,11 +36,19 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $products = $this->products->getAll();
+        $products = Products::paginate(2);
         $categories = $this->categories->getAll();
         $brands = $this->brands->getAll();
+        
+        if($request->has('id_category')){
+            $products = Products::where('id_category',$request->id_category)->get();
+        };
+        if($request->has('id_brand')){
+            $products = Products::where('id_brand',$request->id_brand)->get();
+        }
 
         return view('admin.products.index', array(
             'products' => $products,
@@ -59,6 +68,12 @@ class ProductController extends Controller
         return view('admin.products.create', array('categories' => $categories, 'brands' => $brands));
     }
 
+
+    public function getAttrCategory($id){
+        echo json_encode(DB::table('attributes')->where('id_category', $id)->get());
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -73,11 +88,15 @@ class ProductController extends Controller
         $fileName4 = $this->products->doUpload($request->file('image4'));;
         $old_price = $request->price;
         $price = $old_price;
+        $attributes = ($request->attr1.': ' .$request->attr_name1. '-' .$request->attr2. ': ' .$request->attr_name2.'-'
+        . $request->attr3. ': ' .$request->attr_name3 
+        .'-'.$request->attr4. ': ' .$request->attr_name4);
         $products = $this->products->create(array_merge($request->all(),["old_price" => $old_price],
          ["price" => $price],
          ["discount" => 0],
          ["image1" =>$fileName1], ["image2" => $fileName2], 
-         ["image3" => $fileName3], ["image4" => $fileName4]));
+         ["image3" => $fileName3], ["image4" => $fileName4],
+        ['attributes' => $attributes]));
 
         return response()->json($products);
         // return redirect()->route('products.create');

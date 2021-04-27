@@ -68,6 +68,9 @@
                                         @endforeach
                                     </div>
                                 </div>
+                                <div id="pagination">
+                                    {{$products->links()}}
+                                </div>
                             </div>
                         </div>
                     </div>

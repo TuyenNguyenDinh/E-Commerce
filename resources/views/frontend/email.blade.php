@@ -7,9 +7,9 @@
         <div class="my-account-section d-flex">
             <div class="my-account-section__header d-flex">
                 <div class="my-account-section__header-left">
-                    <div class="my-account-section__header-title">Quên mật khẩu</div>
+                    <div class="my-account-section__header-title">{{ __('content.Forgot password')}}</div>
                     <div class="my-account-section__header-subtitle">
-                        Vui lòng nhập địa chỉ email đăng ký tài khoản, một email khôi phục mật khẩu sẽ được gửi đi
+                        {{ __('content.Please enter your registered email address, a password reset email will be sent')}}
                     </div>
                 </div>
             </div>
@@ -20,7 +20,7 @@
                         <div class="input-with-label" style="margin-bottom: 30px;">
                             <div class="input-with-label__wrapper">
                                 <div class="input-with-label__label">
-                                    <label>Địa Chỉ Email</label>
+                                    <label>{{ __('content.Email address')}}</label>
                                 </div>
                                 <div class="input-with-label__content">
                                     <div class="input-with-validator-wrapper">
@@ -37,7 +37,7 @@
                             </div>
                         </div>
                         <div class="my-account-page__submit">
-                            <button type="submit" class="btn btn-primary" aria-disabled="false">Send Password Reset Link</button>
+                            <button type="submit" class="btn btn-primary" aria-disabled="false">{{ __('content.Send Password Reset Link')}}</button>
                         </div>
                     </form>
                 </div>
