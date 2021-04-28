@@ -45,14 +45,44 @@ class ProductController extends Controller
         
         if($request->has('id_category')){
             $products = Products::where('id_category',$request->id_category)->get();
-        };
+        }
+        
         if($request->has('id_brand')){
             $products = Products::where('id_brand',$request->id_brand)->get();
         }
+        
+        if ($request->has('rangePriceAdmin')) {
+            switch ($request->rangePriceAdmin) {
+                case 1:
+                    $products = Products::all();
+                    break;
+                case 2:
+                    $products = Products::where('price', '<', 5000000)->get();
+                    break;
+                case 3:
+                    $products = Products::where('price', '>=', 5000000)->where('price','<=',10000000)->get();
+                    break;
+               case 4:
+                    $products = Products::where('price', '>=', 10000000)->where('price','<=',15000000)->get();
+                    break;
+                case 5 :
+                    $products = Products::where('price', '>=', 15000000)->where('price','<=',20000000)->get();
+                    break;
+                case 6 :
+                    $products = Products::where('price','>=',20000000)->get();
+                    break;
+            }
+        }
+
+        if ($request->has('searchAdmin')) {
+            $products = Products::where('name_product', 'like', '%' . $request->searchAdmin . '%')->get();
+        }
+
 
         return view('admin.products.index', array(
             'products' => $products,
-            'categories' => $categories, 'brands' => $brands
+            'categories' => $categories, 
+            'brands' => $brands,
         ));
     }
 

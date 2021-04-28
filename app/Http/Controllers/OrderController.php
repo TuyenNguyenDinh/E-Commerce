@@ -23,6 +23,7 @@ class OrderController extends Controller
         $this->orders = $orders;
         $this->customers = $customers;
         $this->orderdetails = $orderdetails;
+
     }
     /**
      * Display a listing of the resource.
@@ -30,8 +31,72 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index(){
+    public function index(Request $request){
         $orders = $this->orders->getAll();
+        $customers = $this->orders->getAll();
+
+        if($request->has('totalPrice')) {
+            switch ($request->totalPrice) {
+                case 1:
+                    $orders = Orders::all();
+                    break;
+                case 2:
+                    $orders = Orders::where('total_price', '<', 10000000)->get();
+                    break;
+                case 3:
+                    $orders = Orders::where('total_price', '>=', 10000000)->where('total_price','<=',15000000)->get();
+                    break;
+               case 4:
+                    $orders = Orders::where('total_price', '>=', 15000000)->where('total_price','<=',20000000)->get();
+                    break;
+                case 5 :
+                    $orders = Orders::where('total_price', '>=', 20000000)->where('total_price','<=',25000000)->get();
+                    break;
+                case 6 :
+                    $orders = Orders::where('total_price','>=',25000000)->get();
+                    break;
+            }
+        }
+        if($request->has('statusOrder')) {
+            switch ($request->statusOrder) {
+                case 1:
+                    $orders = Orders::all();
+                    break;
+                case 2:
+                    $orders = Orders::where('status', '=', "Waiting checking")->get();
+                    break;
+                case 3:
+                    $orders = Orders::where('status', '=', "Checking order")->get();
+                    break;
+               case 4:
+                    $orders = Orders::where('status', '=', "Waiting for the goods")->get();
+                    break;
+                case 5 :
+                    $orders = Orders::where('status', '=', "Shipping")->get();
+                    break;
+                case 6 :
+                    $orders = Orders::where('status','=',"Shipped")->get();
+                    break;
+                case 7 :
+                    $orders = Orders::where('status','=',"Cancel")->get();
+                    break;
+            }
+        }
+        if($request->has('paymentMethod')) {
+            switch ($request->paymentMethod) {
+                case 1:
+                    $orders = Orders::all();
+                    break;
+                case 2:
+                    $orders = Orders::where('payment_method', '=', "COD")->get();
+                    break;
+                case 3:
+                    $orders = Orders::where('payment_method', '>=', "Debit Card")->get();
+                    break;
+                }
+            }
+       
+
         return view('admin.orders.index', ['orders' => $orders]);
     }
 
