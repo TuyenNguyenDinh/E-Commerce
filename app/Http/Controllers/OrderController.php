@@ -32,8 +32,7 @@ class OrderController extends Controller
      */
 
     public function index(Request $request){
-        $orders = $this->orders->getAll();
-        $customers = $this->orders->getAll();
+        $orders = $this->orders->getAll(); 
 
         if($request->has('totalPrice')) {
             switch ($request->totalPrice) {
@@ -95,8 +94,7 @@ class OrderController extends Controller
                     break;
                 }
             }
-       
-
+            
         return view('admin.orders.index', ['orders' => $orders]);
     }
 
