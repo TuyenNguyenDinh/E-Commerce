@@ -29,7 +29,7 @@
                                     <img src="{{asset('image/user_interface.png')}}">
                                 </div>
                                 <div class="userpage-sidebar-menu-entry__text">
-                                    Hồ sơ
+                                    {{ __('content.My Account')}}
                                 </div>
                             </a>
                             <a href="{{asset('user/account/orders')}}" class="userpage-sidebar-menu-entry">
@@ -37,7 +37,7 @@
                                     <img src="{{asset('image/order_interface.png')}}" alt="">
                                 </div>
                                 <div class="userpage-sidebar-menu-entry__text">
-                                    Đơn mua
+                                    {{ __('content.My Order')}}
                                 </div>
                             </a>
                         </div>

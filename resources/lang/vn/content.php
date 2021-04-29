@@ -10,7 +10,7 @@ return [
     'Register' => 'Đăng kí',
     'Logout' => 'Đăng xuất',
     'My Account' => 'Tài khoản',
-    'My order' => 'Đơn hàng',
+    'My Order' => 'Đơn hàng',
     'Collection' => 'Bộ sưu tập',
     'Perfect' => 'Hoàn hảo',
     'Quality' => 'Chất lượng',
@@ -125,5 +125,26 @@ return [
     'Send Password Reset Link' => 'Gửi đường dẫn khôi phục',
     'Reset Password' => 'Khôi phục mật khẩu',
     'Password' => 'Mật khẩu',
+    // 
+
+    'Manage profile information for account security' => 'Quản lý thông tin hồ sơ để bảo mật tài khoản',
+    'Name' => 'Tên',
+    'Email'=>'Email',
+    'Phone number' => 'Số điện thoại',
+    'Address' =>'Địa chỉ',
+    'Province' => 'Tỉnh(Thành Phố)',
+    'District' => 'Quận(Huyện)',
+    'Save' => 'Lưu',
+    'Choose image' => 'Chọn ảnh',
+    'Max size file 5MB' => 'Dụng lượng file tối đa 5 MB',
+
+    // 
+    
+    'Verify Your Email Address' => 'Xác nhận địa chỉ Email của bạn',
+    'A fresh verification link has been sent to your email address.' => 'Link xác minh đã được gửi tới email của bạn.',
+    'Before proceeding, please check your email for a verification link.' => 'Trước khi thực hiện,vui lòng kiểm tra link xác nhận trong hộp thử của bạn.',
+    'If you did not receive the email' => 'Bạn không nhận được email',
+    'click here to request another' => 'Click để gửi yêu cầu',
+
 
 ];

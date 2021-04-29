@@ -154,7 +154,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                         <div class="product_quant">
                             <div class="product-quant_title">
@@ -323,59 +322,6 @@
 <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="{{ asset('js/frontend/showmore/jquery.show-more.js') }}"></script>
 <script type="text/javascript">
-    (function($, window) {
-        var arrowWidth = 25;
-
-        $.fn.sl_province = function(settings) {
-            return this.each(function() {
-
-                $(this).change(function() {
-                    var $this = $(this);
-
-                    // create test element
-                    var text = $this.find("option:selected").text();
-
-                    var $test = $("<span>").html(text).css({
-                        "font-size": $this.css("font-size"), // ensures same size text
-                        "visibility": "hidden" // prevents FOUC
-                    });
-
-
-                    // add to body, get width, and get out
-                    $test.appendTo($this.parent());
-                    var width = $test.width();
-                    $test.remove();
-
-                    // set select width
-                    $this.width(width + arrowWidth);
-
-                    // run on start
-                }).change();
-
-            });
-        };
-
-        // run by default
-        $("select.sl_province").sl_province();
-
-    })(jQuery, window);
-
-
-    function increment() {
-        document.getElementById('qty_number').stepUp();
-    }
-
-    function decrement() {
-        document.getElementById('qty_number').stepDown();
-    }
-
-    function select() {
-        var d = document.getElementById('abc');
-        d.style.display = 'block';
-        var did = d.options[d.selectedIndex].text;
-        document.getElementById('span').value = did;
-    }
-
     $('#product_description_content').showMore({
         minheight: 500,
         animationspeed: 250,
@@ -427,27 +373,6 @@
         });
     })
 
-    function number_format(number, decimals, decPoint, thousandsSep) {
-        decimals = decimals || 0;
-        number = parseFloat(number);
-
-        if (!decPoint || !thousandsSep) {
-            decPoint = '.';
-            thousandsSep = ',';
-        }
-
-        var roundedNumber = Math.round(Math.abs(number) * ('1e' + decimals)) + '';
-        var numbersString = decimals ? roundedNumber.slice(0, decimals * -1) : roundedNumber;
-        var decimalsString = decimals ? roundedNumber.slice(decimals * -1) : '';
-        var formattedNumber = "";
-
-        while (numbersString.length > 3) {
-            formattedNumber += thousandsSep + numbersString.slice(-3)
-            numbersString = numbersString.slice(0, -3);
-        }
-
-        return (number < 0 ? '-' : '') + numbersString + formattedNumber + (decimalsString ? (decPoint + decimalsString) : '');
-    }
 </script>
 
 @stop

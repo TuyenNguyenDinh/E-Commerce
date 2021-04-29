@@ -66,43 +66,44 @@
 							</div>
 							<div class="form-group">
 								<label>Image (max: 4 image) </label>
-								<div class="image-upload-wrap image1">
-									<input class="file-upload-input upload1" name="image1" id="img1" type='file' accept="image/*" onchange="readURL(this, $('.image-upload1'), $('.image1'), $('.content1'))" />
-									<div class="drag-text">
-										<h3>Drag and drop a file or select add Image</h3>
-									</div>
+							</div>
+							<div class="form-group d-flex">
+							<div class="image-upload-wrap image1">
+								<input class="file-upload-input upload1" name="image1" id="img1" type='file' accept="image/*" onchange="readURL(this, $('.image-upload1'), $('.image1'), $('.content1'))" />
+								<div class="drag-text">
+									<h3>Drag and drop a file or select add Image</h3>
 								</div>
-								<div class="file-upload-content content1">
-									<img class="file-upload-image image-upload1" src="#" alt="your image" />
-									<div class="image-title-wrap">
-										<button type="button" onclick="removeUpload($('.upload1'), $('.content1'), $('.image1'))" class="remove-image" class="remove-image">Remove </button>
-									</div>
+							</div>
+							<div class="file-upload-content content1">
+								<img class="file-upload-image image-upload1" src="#" alt="your image" />
+								<div class="image-title-wrap">
+									<button type="button" onclick="removeUpload($('.upload1'), $('.content1'), $('.image1'))" class="remove-image" class="remove-image">Remove </button>
 								</div>
-								<!--  -->
-								<div class="image-upload-wrap image2">
-									<input class="file-upload-input upload2" name="image2" id="img2" type='file' accept="image/*" onchange="readURL(this, $('.image-upload2'), $('.image2'), $('.content2'))" />
-									<div class="drag-text">
-										<h3>Drag and drop a file or select add Image</h3>
-									</div>
+							</div>
+							<!--  -->
+							<div class="image-upload-wrap image2">
+								<input class="file-upload-input upload2" name="image2" id="img2" type='file' accept="image/*" onchange="readURL(this, $('.image-upload2'), $('.image2'), $('.content2'))" />
+								<div class="drag-text">
+									<h3>Drag and drop a file or select add Image</h3>
 								</div>
-								<div class="file-upload-content content2">
-									<img class="file-upload-image image-upload2" src="#" alt="your image" />
-									<div class="image-title-wrap">
-										<button type="button" onclick="removeUpload($('.upload2'), $('.content2'), $('.image2'))" class="remove-image">Remove </button>
-									</div>
+							</div>
+							<div class="file-upload-content content2">
+								<img class="file-upload-image image-upload2" src="#" alt="your image" />
+								<div class="image-title-wrap">
+									<button type="button" onclick="removeUpload($('.upload2'), $('.content2'), $('.image2'))" class="remove-image">Remove </button>
 								</div>
-								<!--  -->
-								<div class="image-upload-wrap image3">
-									<input class="file-upload-input upload3" name="image3" id="img3" type='file' accept="image/*" onchange="readURL(this, $('.image-upload3'), $('.image3'), $('.content3'))" />
-									<div class="drag-text">
-										<h3>Drag and drop a file or select add Image</h3>
-									</div>
+							</div>
+							<!--  -->
+							<div class="image-upload-wrap image3">
+								<input class="file-upload-input upload3" name="image3" id="img3" type='file' accept="image/*" onchange="readURL(this, $('.image-upload3'), $('.image3'), $('.content3'))" />
+								<div class="drag-text">
+									<h3>Drag and drop a file or select add Image</h3>
 								</div>
-								<div class="file-upload-content content3">
-									<img class="file-upload-image image-upload3" src="#" alt="your image" />
-									<div class="image-title-wrap">
-										<button type="button" onclick="removeUpload($('.upload3'), $('.content3'), $('.image3'))" class="remove-image">Remove </button>
-									</div>
+							</div>
+							<div class="file-upload-content content3">
+								<img class="file-upload-image image-upload3" src="#" alt="your image" />
+								<div class="image-title-wrap">
+									<button type="button" onclick="removeUpload($('.upload3'), $('.content3'), $('.image3'))" class="remove-image">Remove </button>
 								</div>
 							</div>
 							<!--  -->
@@ -117,6 +118,7 @@
 								<div class="image-title-wrap">
 									<button type="button" onclick="removeUpload($('.upload4'), $('.content4'), $('.image4'))" class="remove-image">Remove </button>
 								</div>
+							</div>
 							</div>
 							<!--  -->
 							<div class="form-group">

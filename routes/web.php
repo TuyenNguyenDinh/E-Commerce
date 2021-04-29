@@ -20,7 +20,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 Route::group(['middleware' => 'locale'], function () {
     Route::get('change-language/{language}', 'FrontendController@changeLanguage')->name('user.change-language');
     Route::get('/', 'FrontendController@getHome')->name('home');
-    Route::get('category/{id}.html', 'FrontendController@getCategory');
+    Route::get('category/{id}.html', 'FrontendController@getCategory')->middleware('verifi.customer');
     Route::get('brands/{id}.html', 'FrontendController@getBrand');
     Route::get('details/{id}.html', 'FrontendController@getDetail');
     Route::get('getFeeProvince/{id}', 'FrontendController@getFeeProvince');
@@ -29,6 +29,12 @@ Route::group(['middleware' => 'locale'], function () {
     Route::post('forget-password', 'CustomerFrontendController@postEmail');
     Route::get('/reset-password/{token}/{email}', 'ResetPasswordController@getPassword');
     Route::post('/reset-password', 'ResetPasswordController@updatePassword');
+
+    // Verify email
+
+    Route::get('user/email/verify', 'VerificationController@show')->name('verify.notice');
+    Route::get('user/email/verify/{id}/{hash}', 'VerificationController@verify')->name('verify.verify');
+    Route::post('user/email/resend', 'VerificationController@resend')->name('verify.resend');
 
     // Wishlist
     Route::group(['middleware' => 'checklogin'], function () {
@@ -61,6 +67,9 @@ Route::group(['middleware' => 'locale'], function () {
         Route::get('GetDistrict/{id}', 'CustomerFrontendController@GetSubCatAgainstMainCatEdit');
         Route::post('changeProvinceDistrict', 'CustomerFrontendController@changeProvinceDistrict')->name('changeProvinceDistrict');
         Route::post('orders/{id}','CustomerFrontendController@postComments')->name('postComments');
+
+        Route::get('password','CustomerFrontendController@passwrSocial')->name('passwrSocial');
+        Route::post('password','CustomerFrontendController@postPasswrSocial')->name('postPasswrSocial');
     });
 
     Route::group(['middleware' => 'checklogin', 'prefix' => 'cart'], function () {
@@ -71,7 +80,7 @@ Route::group(['middleware' => 'locale'], function () {
         Route::get('update', 'CartController@getUpdateCart');
         Route::get('cartdata', 'CartController@cartdata')->name('cartdata');
         Route::get('checkout', 'CartController@getCheckout')->name('checkout');
-        Route::post('checkout', 'PurchaseController@postPurchase')->name('purchase');
+        Route::post('checkout', 'PurchaseController@postPurchase')->name('purchase')->middleware('checkaddress.phone');
         Route::post('add-address', 'CartController@addAddress')->name('addAddress');
         Route::get('getFeeFromProvince/{id}', 'CartController@getFeeFromProvince');
     });
@@ -95,6 +104,7 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admi
     Route::resource('orderdetails', 'OrderDetailController');
     Route::resource('attributes', 'AttributeController');
     Route::get('getAttrCategory/{id}', 'ProductController@getAttrCategory')->name('attrCate');
+
 });
 
 
@@ -110,6 +120,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('orders', 'OrderController');
     // Route::get('orders/{$id}/details', 'OrderDetailController@show');
     Route::resource('orderdetails', 'OrderDetailController');
+
 });
 
 

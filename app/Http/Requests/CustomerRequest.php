@@ -24,14 +24,23 @@ class CustomerRequest extends FormRequest
     public function rules()
     {
         return [
-          
+            'changePhone' => 'required|max:11',
         ];
     }
 
     public function messages()
     {
-        return [
-            
-        ];
+        if (app()->getLocale() == 'en') {
+            return [
+                'changePhone.required' => 'Phone number required',
+                'changePhone.max' => 'Phone number max: 11 number'
+            ];
+        }
+        else{
+            return [
+                'changePhone.required' => 'Số điện thoại là bắt buộc',
+                'changePhone.max' => 'Số điện thoại không được quá 11 số'
+            ];
+        }
     }
 }

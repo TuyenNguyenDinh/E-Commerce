@@ -20,14 +20,18 @@
                         <div class="input-with-label__content">
                             <div class="my-account__inline-container">
                                 <div class="my-account__input-text">
+                                    @if(is_null($cus->phone))
+                                    Not found
+                                    @else
                                     {{$cus->phone}}
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <form action="{{asset('user/account/change_phone') }}" method="POST">
-                {{ csrf_field() }}
+                    {{ csrf_field() }}
                     <div class="input-with-label">
                         <div class="input-with-label__wrapper">
                             <div class="input-with-label__label">
@@ -36,14 +40,19 @@
                             <div class="input-with-label__content">
                                 <div class="input-with-validator-wrapper">
                                     <div class="input-with-validator">
-                                        <input id="changePhone" type="text" name="changePhone" placeholder maxlength="10">
+                                        <input id="changePhone" type="text" name="changePhone" class="form-control @error('changePhone') is-invalid @enderror" placeholder maxlength="10">
+                                        @error('changePhone')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="my-account-page__submit">
-                    <button type="submit" class="btn btn-primary btn--m btn--inline" aria-disabled="false">Lưu</button>
+                        <button type="submit" class="btn btn-primary btn--m btn--inline" aria-disabled="false">Lưu</button>
                     </div>
                 </form>
             </div>

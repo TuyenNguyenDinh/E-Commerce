@@ -31,22 +31,11 @@ $rangePriceAdmin = request()->get('rangePriceAdmin');
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Filter</h3>
-
-                        <table class="table">
-                            <thead>
-                                <tr class="filters">
-                                    <th>Categories
-                                        <form method="get">
-                                            <select id="assigned-user-filter" name="id_category" class="form-control" onchange='if(this.value != 0) { this.form.submit(); }'>
-                                                <option value="0">Choose category</option>
-                                                @foreach($categories as $category)
-                                                <option value="{{$category->id}}">{{$category->name}}</option>
-                                                @endforeach
-                                            </select>
-                                            <button type="submit" style="display: none;">sub</button>
-                                        </form>
-                                    </th>
-                                    <th>Brands
+                        
+                            <table class="table">
+                                <thead>
+                                    <tr class="filters">
+                                        <th>Brands
                                         <form id="form_find" method="get">
                                             <select id="assigned-user-filter" name="id_brand" class="form-control" onchange='if(this.value != 0) { this.form.submit(); }'>
                                                 <option value="0" selected>Choose brand</option>
@@ -209,6 +198,5 @@ $rangePriceAdmin = request()->get('rangePriceAdmin');
                 }
             });
     }
-
 </script>
 @endsection

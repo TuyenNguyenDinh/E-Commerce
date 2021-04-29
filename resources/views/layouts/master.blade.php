@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,7 +51,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownAccount">
                             <a class="dropdown-item" href="{{asset('user/account/profile')}}"> <i class="far fa-user"></i>{{ __('content.My Account')}}</a>
-                            <a class="dropdown-item" href="{{asset('user/account/orders')}}"><i class="fas fa-file-invoice"></i>{{ __('content.My order')}}</a>
+                            <a class="dropdown-item" href="{{asset('user/account/orders')}}"><i class="fas fa-file-invoice"></i>{{ __('content.My Order')}}</a>
                         </div>
                     </li>
                     <li>
@@ -79,7 +78,7 @@
                     </li>
                     @endif
                     <li class="nav-item dropdown">
-                        @if(session('website_language') == 'en')
+                        @if( app()->getLocale() == 'en')
                         <a class="nav-link dropdown-toggle" href="" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="flag-icon flag-icon-us"> </span> ENG</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown09">
                             <a class="dropdown-item" href="{!! route('user.change-language', ['vn']) !!}"><span class="flag-icon flag-icon-vn"> </span> Vietnam</a>
@@ -395,127 +394,7 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script>
-        $('.products-slick').slick({
-                slidesToShow: 4,
-                slidesToScroll: 1,
-                autoplay: true,
-                autoplaySpeed: 2000,
-                arrows: false,
-                infinity: true,
-                responsive: [{
-                    breakpoint: 1024,
-                    settings: {
-                        slidesToShow: 3,
-                        slidesToScroll: 1,
-                    }
-                }, {
-                    breakpoint: 800,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 1,
-                    }
-                }, {
-                    breakpoint: 480,
-                    settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1
-                    }
-                }]
-            }),
-            $('.logo-slick').slick({
-                slidesToShow: 4,
-                slidesToScroll: 1,
-                autoplay: true,
-                autoplaySpeed: 1000,
-                arrows: false,
-                infinity: true,
-                responsive: [{
-                    breakpoint: 1024,
-                    settings: {
-                        slidesToShow: 3,
-                        slidesToScroll: 1,
-                    }
-                }, {
-                    breakpoint: 800,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 1,
-                    }
-                }, {
-                    breakpoint: 480,
-                    settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1
-                    }
-                }]
-            });
-        $('.product-img_main').slick({
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            arrows: false,
-            fade: true,
-            asNavFor: '.product-img_slide',
-
-        });
-        $('.product-img_slide').slick({
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            asNavFor: '.product-img_main',
-            centerMode: true,
-            focusOnSelect: true,
-            prevArrow: $('.slick-prev'),
-            nextArrow: $('.slick-next'),
-            responsive: [{
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                }
-            }, {
-                breakpoint: 800,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                }
-            }, {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }]
-        });
-    </script>
-    <script>
-        function showhide(id) {
-            var x = document.getElementById(id);
-            if (x.type === "password") {
-                x.type = "text";
-            } else {
-                x.type = "password";
-            }
-        }
-
-        window.addEventListener("load", () => {
-            document.body.classList.remove("preload");
-        });
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const nav = document.querySelector(".nav");
-
-            document.querySelector("#btnNav").addEventListener("click", () => {
-                nav.classList.add("nav--open");
-            });
-
-            document.querySelector(".nav__overlay").addEventListener("click", () => {
-                nav.classList.remove("nav--open");
-            });
-        });
-    </script>
-
+    <script src="{{asset('js/frontend/frontend.js')}}"></script>
     @include('sweetalert::alert')
 </body>
-
-
 </html>

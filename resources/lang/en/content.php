@@ -123,6 +123,26 @@ return [
     'Send Password Reset Link' => 'Send Password Reset Link',
     'Reset Password' => 'Reset Password',
     'Password' => 'Password',
+    // 
 
+    'Manage profile information for account security' => 'Manage profile information for account security',
+    'Name' => 'Name',
+    'Email'=>'Email',
+    'Phone number' => 'Phone number',
+    'Address' =>'Address',
+    'Province' => 'Province',
+    'District' => 'District',
+    'Save' => 'Save',
+    'Choose image' => 'Choose image',
+    'Max size file 5MB' =>'Max size file 5MB',
+
+    'Buy again' => 'Buy again',
+    'View rated' => 'View rated',
+
+    'Verify Your Email Address' => 'Verify Your Email Address',
+    'A fresh verification link has been sent to your email address.'=> 'A fresh verification link has been sent to your email address.',
+    'Before proceeding, please check your email for a verification link.' => 'Before proceeding, please check your email for a verification link.',
+    'If you did not receive the email' => 'If you did not receive the email',
+    'click here to request another' => 'click here to request another',
 
 ];
