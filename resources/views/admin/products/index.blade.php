@@ -1,6 +1,9 @@
 @extends('layouts.admin')
 @section('title','Products')
 @section('main')
+<?php
+$rangePriceAdmin = request()->get('rangePriceAdmin');
+?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
@@ -32,7 +35,6 @@
                             <table class="table">
                                 <thead>
                                     <tr class="filters">
-                                       
                                         <th>Brands
                                         <form id="form_find" method="get">
                                             <select id="assigned-user-filter" name="id_brand" class="form-control" onchange='if(this.value != 0) { this.form.submit(); }'>
@@ -43,10 +45,42 @@
                                             </select>
                                             <button type="submit" style="display: none;">sub</button>
                                         </form>
-                                        </th>
-                                    </tr>
-                                </thead>
-                            </table>
+                                    </th>
+                                    <th>Price
+                                        <form method="get">
+                                            <select id="assigned-user-filter"  name="rangePriceAdmin" class="form-control" onchange='if(this.value != 0) { this.form.submit(); }'>
+                                                <option value="0" selected>Choose range price</option>
+                                                <option {{($rangePriceAdmin==1)?'selected':""}} value="1"> 
+                                                    {{ __('All')}}                                                
+                                                </option>
+                                                <option {{($rangePriceAdmin==2)?'selected':""}} value="2"> 
+                                                    {{ __('Less 5.000.000 đ')}}
+                                                </option>
+                                                <option {{($rangePriceAdmin==3)?'selected':""}} value="3"> 
+                                                    {{ __('5 - 10.000.000 đ')}}
+                                                </option>
+                                                <option {{($rangePriceAdmin==4)?'selected':""}} value="4"> 
+                                                    {{ __('10 - 15.000.000 đ')}}
+                                                </option>
+                                                <option {{($rangePriceAdmin==5)?'selected':""}} value="5"> 
+                                                    {{ __('15 -20.000.000 đ')}}
+                                                </option>
+                                                <option {{($rangePriceAdmin==6)?'selected':""}} value="6"> 
+                                                    {{ __('20.000.000 đ more')}}
+                                                </option>
+                                            </select>
+                                            <button type="submit" style="display: none;">sub</button>
+                                        </form>
+                                    </th>
+                                    <th>Search
+                                        <form class= "d-flex flex-row" id="assigned-user-filter" name="searchAdmin" method="GET" action="{{asset('/admin/products')}}">
+                                            <input class="form-control" type="search" placeholder="Search here" name="searchAdmin" aria-label="Search" required>
+                                            <button type="submit" class="btn btn-primary search-btn">Search</button>
+                                        </form>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
 
                     </div>
                     <!-- /.card-header -->
@@ -80,8 +114,8 @@
                                     <!-- <td class="label_title">
                                         <div id="description_content_{{$product->id}}">
                                         <?php echo $product->description ?>
-                                        </div>
-                                    </td> -->
+                                        </div> -->
+                                    </td>
                                     <td class="text-right py-0 align-middle">
                                         <div class="btn-group btn-group-sm">
                                             <a href="{{ route('products.edit', $product->id) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
