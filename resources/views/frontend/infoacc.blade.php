@@ -4,9 +4,9 @@
     <div class="my-account-section d-flex">
         <div class="my-account-section__header d-flex">
             <div class="my-account-section__header-left">
-                <div class="my-account-section__header-title">Hồ sơ của tôi</div>
+                <div class="my-account-section__header-title">{{ __('content.My Account')}}</div>
                 <div class="my-account-section__header-subtitle">
-                    Quản lý thông tin hồ sơ để bảo mật tài khoản
+                {{ __('content.Manage profile information for account security')}}
                 </div>
             </div>
         </div>
@@ -17,7 +17,7 @@
                     <div class="input-with-label">
                         <div class="input-with-label__wrapper">
                             <div class="input-with-label__label">
-                                <label>Tên</label>
+                                <label>{{ __('content.Name')}}</label>
                             </div>
                             <div class="input-with-label__content">
                                 <div class="input-with-validator-wrapper">
@@ -31,7 +31,7 @@
                     <div class="input-with-label">
                         <div class="input-with-label__wrapper">
                             <div class="input-with-label__label">
-                                <label>Email</label>
+                                <label>{{ __('content.Email')}}</label>
                             </div>
                             <div class="input-with-label__content">
                                 <div class="my-account__inline-container">
@@ -46,12 +46,16 @@
                     <div class="input-with-label">
                         <div class="input-with-label__wrapper">
                             <div class="input-with-label__label">
-                                <label>Số điện thoại</label>
+                                <label>{{ __('content.Phone number')}}</label>
                             </div>
                             <div class="input-with-label__content">
                                 <div class="my-account__inline-container">
                                     <div class="my-account__input-text">
+                                    @if(is_null($cus->phone))
+                                        Not found
+                                    @else
                                         {{$cus->phone}}
+                                    @endif
                                     </div>
                                     <button type="button" class="my-account__no-background-button my-account-profile__change-button" data-toggle="modal" data-target="#changePhone">Thay đổi</button>
                                 </div>
@@ -61,7 +65,7 @@
                     <div class="input-with-label">
                         <div class="input-with-label__wrapper">
                             <div class="input-with-label__label">
-                                <label>Địa chỉ</label>
+                                <label> {{ __('content.Address')}}</label>
                             </div>
                             <div class="input-with-label__content">
                                 <div class="input-with-validator-wrapper">
@@ -75,12 +79,13 @@
                     <div class="input-with-label">
                         <div class="input-with-label__wrapper">
                             <div class="input-with-label__label">
-                                <label>Tỉnh(Thành phố)</label>
+                                <label>{{ __('content.Province')}}</label>
                             </div>
                             <div class="input-with-label__content">
                                 <div class="my-account__inline-container">
                                     <div class="my-account__input-text">
-                                    @if(is_null($cus))
+                                    @if(is_null($cus->id_province))
+                                    Not found
                                     @else
                                         {{$cus->province->province}}
                                     @endif
@@ -93,12 +98,13 @@
                     <div class="input-with-label">
                         <div class="input-with-label__wrapper">
                             <div class="input-with-label__label">
-                                <label>Quận(Huyện)</label>
+                                <label>{{ __('content.District')}}</label>
                             </div>
                             <div class="input-with-label__content">
                                 <div class="my-account__inline-container">
                                     <div class="my-account__input-text">
-                                    @if(is_null($cus))
+                                    @if(is_null($cus->id_district))
+                                        Not found
                                     @else
                                         {{$cus->district->district_name}}
                                     @endif
@@ -108,7 +114,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="my-account-page__submit"><button type="submit" class="btn btn-primary btn--m btn--inline" aria-disabled="false">Lưu</button></div>
+                    <div class="my-account-page__submit"><button type="submit" class="btn btn-primary btn--m btn--inline" aria-disabled="false">{{ __('content.Save')}}</button></div>
                 </div>
                 <div class="my-account-profile__right">
                     <div class="avatar-uploader">
@@ -116,9 +122,9 @@
                             <img id="img_upload" class="avatar-uploader__avatar-image" src="{{asset('upload/'.$cus->image_acc)}}"></img>
                         </div>
                         <input class="avatar-uploader__file-input" name="image_acc" id="upload" type="file" accept=".jpg,.jpeg,.png">
-                        <label type="button" for="upload" class="btn btn-light btn--m btn--inline d-flex align-items-center">Chọn ảnh</label>
+                        <label type="button" for="upload" class="btn btn-light btn--m btn--inline d-flex align-items-center"> {{ __('content.Choose image')}}</label>
                         <div class="avatar-uploader__text-container">
-                            <div class="avatar-uploader__text">Dụng lượng file tối đa 1 MB</div>
+                            <div class="avatar-uploader__text">{{ __('content.Max size file 5MB')}}</div>
                             <div class="avatar-uploader__text">Định dạng:.JPEG, .PNG</div>
                         </div>
                     </div>
@@ -224,9 +230,4 @@
         </div>
     </div>
 </div>
-<script>
-                $products = Products::where('id_category',$request->id_category)->get();
-                $products = Products::where('id_category',$request->id_category)->get();
-
-</script>
 @stop

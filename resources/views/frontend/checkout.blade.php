@@ -31,7 +31,11 @@
                                         <div class="row justify-content-between flex-column">
                                             <div class="col-auto mt-0 addrs-respon">
                                                 <p><b>{{ $cus->name}}</b></p>
-                                                <p>{{ $cus->phone }}</p>
+                                                @if(is_null($cus->phone))
+                                                <p>We cannot find your phone number. <a href="{{asset('user/account/profile')}}">Add now</a></p>
+                                                @else
+                                                <p>{{$cus->phone}}</p>
+                                                @endif
                                                 <select class="delivery_address" name="delivery_address" id="delivery_address">
                                                     <option value="{{$cus->province->id}}||{{$cus->address}}">{{$cus->address}}</option>
                                                     @foreach($ship_addrs as $addrs)
@@ -261,27 +265,6 @@
         });
     });
 
-    function number_format(number, decimals, decPoint, thousandsSep) {
-        decimals = decimals || 0;
-        number = parseFloat(number);
-
-        if (!decPoint || !thousandsSep) {
-            decPoint = '.';
-            thousandsSep = ',';
-        }
-
-        var roundedNumber = Math.round(Math.abs(number) * ('1e' + decimals)) + '';
-        var numbersString = decimals ? roundedNumber.slice(0, decimals * -1) : roundedNumber;
-        var decimalsString = decimals ? roundedNumber.slice(decimals * -1) : '';
-        var formattedNumber = "";
-
-        while (numbersString.length > 3) {
-            formattedNumber += thousandsSep + numbersString.slice(-3)
-            numbersString = numbersString.slice(0, -3);
-        }
-
-        return (number < 0 ? '-' : '') + numbersString + formattedNumber + (decimalsString ? (decPoint + decimalsString) : '');
-    }
 
     $('#addaddress').on('submit', function(event) {
         var route = $('#addaddress').data('route');
@@ -313,32 +296,37 @@
         })
         event.preventDefault();
     });
+    if ('{{is_null($cus->phone)}}') {
+        $('#push_order').submit(function(event) {
+            
+        });
+    } else {
+        $('#push_order').submit(function(event) {
+            var route = $('#push_order').data('route');
+            var form_data = $(this);
+            $.ajax({
+                method: 'POST',
+                url: route,
+                processData: false, // Important!
+                contentType: false,
+                cache: false,
+                data: new FormData(this),
+                success: function(response) {
+                    swal({
+                        closeOnClickOutside: false,
+                        icon: "success",
+                        title: 'Success, thanks for shopping!',
+                        showSpinner: true
+                    });
+                    $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/");
+                },
+                error: function(response) {
+                    alert(response)
 
-    $('#push_order').submit(function(event) {
-		var route = $('#push_order').data('route');
-		var form_data = $(this);
-		$.ajax({
-			method: 'POST',
-			url: route,
-			processData: false, // Important!
-			contentType: false,
-			cache: false,
-			data: new FormData(this),
-			success: function(response) {
-				swal({
-					closeOnClickOutside: false,
-					icon: "success",
-					title: 'Success, thankyou for shopping!',
-					showSpinner: true
-				});
-                $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/");
-			},
-			error: function(response) {
-				alert(response)
-
-			}
-		})
-		event.preventDefault();
-	});
+                }
+            })
+            event.preventDefault();
+        });
+    }
 </script>
 @stop

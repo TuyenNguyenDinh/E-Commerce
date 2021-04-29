@@ -71,6 +71,7 @@ class FrontendController extends Controller
     {
 
         $data['brands'] = Brands::all();
+        $data['keyword'] = $request->key;
         $query = Products::select(DB::raw("*"));
         if ($request->has('key')) {
             $query->where('name_product', 'like', '%' . $request->key . '%');

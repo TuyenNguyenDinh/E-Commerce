@@ -9,16 +9,19 @@ $key = request()->get('key');
 <div class="section">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12 col-md-8 col-sm-8 col-8">
                 <div class="section-title">
                     <h3 class="title">{{ __('Search')}} </h3>
                 </div>
             </div>
-            <div class="col-lg-2 filter_respon">
+            <div class="col-lg-2 col-md-4 col-sm-4 col-4 filter_respon">
                 @include('frontend.advanced_search')
             </div>
             <div class="col-lg-10">
                 <div class="container">
+                    <div class="section-sub-title">
+                        <small><i>Search for keywork: <b>{{$keyword}}</b></i></small>
+                    </div>
                     <div class="products-tabs">
                         @if(count($listProduct) != 0)
                         <div class="tab-content" id="myTabContent">
@@ -84,7 +87,7 @@ $key = request()->get('key');
                                         @endforeach
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                         @else

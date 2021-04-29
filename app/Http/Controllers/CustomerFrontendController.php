@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CustomerRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\Comments;
 use Illuminate\Http\Request;
@@ -37,6 +38,7 @@ class CustomerFrontendController extends Controller
 
     public function Logout()
     {
+        Cart::destroy();    
         Auth::guard('customer')->logout();
         return redirect('/');
     }
@@ -87,8 +89,11 @@ class CustomerFrontendController extends Controller
         $user = Socialite::driver('google')->stateless()->user();
 
         $this->_registerOrLogin($user);
-        return redirect()->route('home');
-    }
+        if(is_null(Auth::guard('customer')->user()->password)){
+            return redirect()->route('passwrSocial');
+        }else{
+            return redirect()->route('home');
+        }    }
 
     /**
      * Redirect the user to the Facebook authentication page.
@@ -110,7 +115,11 @@ class CustomerFrontendController extends Controller
         $user = Socialite::driver('facebook')->stateless()->user();
 
         $this->_registerOrLogin($user);
-        return redirect()->route('home');
+        if(is_null(Auth::guard('customer')->user()->password)){
+            return redirect()->route('passwrSocial');
+        }else{
+            return redirect()->route('home');
+        }
     }
 
     protected function _registerOrLogin($data)
@@ -127,8 +136,21 @@ class CustomerFrontendController extends Controller
         Auth::guard('customer')->login($customer);
     }
 
-    // end
 
+    public function passwrSocial()
+    {
+        $email = Auth::guard('customer')->user()->email;
+        return view('frontend.password_socialite',['email' => $email]);
+    }
+
+    public function postPasswrSocial(Request $request)
+    {
+        $password = Hash::make($request->password);
+        Customers::find(Auth::guard('customer')->user()->id)->update(['password' => $password]);
+        return redirect('/');    
+    }
+
+    // end
 
     public function getInfo()
     {
@@ -241,7 +263,7 @@ class CustomerFrontendController extends Controller
         return view('frontend.change_phone', $data);
     }
 
-    public function changePhone(Request $request)
+    public function changePhone(CustomerRequest $request)
     {
         $newPhone = $request->changePhone;
         Customers::where('phone', '=', Auth::guard('customer')->user()->phone)
