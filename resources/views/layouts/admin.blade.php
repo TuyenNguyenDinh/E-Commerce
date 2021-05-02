@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
+
     <!-- ion slider -->
     <link rel="stylesheet" href="{{asset('plugins/ion-rangeslider/css/ion.rangeSlider.min.css')}}">
     <!-- daterange picker -->
@@ -37,6 +38,9 @@
     <link rel="stylesheet" href="{{asset('css/backend/adminlte.min.css')}}">
     <!-- Sytle -->
     <link rel="stylesheet" href="{{asset('css/backend/style.css')}}">
+    <!-- Slick -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+
     <script src="http://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 
@@ -394,6 +398,25 @@
                                 </li>
                             </ul>
                         </li>
+
+                        <li class="nav-item {{Request::is('admin/banner') ? 'menu-open' : ''}}">
+                            <a href="#" class="nav-link {{Request::is('admin/banner') ? 'active' : ''}}">
+                                <i class="nav-icon fas fa-file-invoice"></i>
+                                <p>
+                                    Layout website
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('banner.index') }}" class="nav-link {{Request::is('admin/banner') ? 'active' : ''}}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Banner</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        
                         <li class="nav-header">LOG OUT</li>
                         <li class="nav-item">
                             <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
@@ -452,6 +475,9 @@
             })
         }
     </script> -->
+    <script src="http://code.jquery.com/jquery-3.4.1.js"></script>
+
+
     <script src="{{asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
@@ -492,6 +518,10 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- Ion Slider -->
     <script src="{{asset('plugins/ion-rangeslider/js/ion.rangeSlider.min.js')}}"></script>
+    <!-- Slick -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <!--  -->
+    <script src="{{asset('js/backend/backend.js')}}"></script>
     <script>
         function readURL(input, idimage, uploadwrp, content) {
             var filePath = input.value;

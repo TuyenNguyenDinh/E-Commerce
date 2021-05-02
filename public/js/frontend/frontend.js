@@ -89,6 +89,35 @@ $('.product-img_slide').slick({
         }
     }]
 });
+
+$('.hot-deal').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: true,
+    prevArrow: $('.slick-prev'),
+    nextArrow: $('.slick-next'),
+    autoplay: true,
+    autoplaySpeed: 2000,
+    responsive: [{
+        breakpoint: 1024,
+        settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1,
+        }
+    }, {
+        breakpoint: 800,
+        settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+        }
+    }, {
+        breakpoint: 480,
+        settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+        }
+    }]
+});
 // 
 
 function showhide(id) {

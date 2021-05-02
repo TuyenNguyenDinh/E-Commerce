@@ -9,8 +9,6 @@ class Comments extends Model
     protected $table = 'comments';
 
 
-
-
     function products(){
         return $this->belongsTo('App\Models\Products','id_product');
     }

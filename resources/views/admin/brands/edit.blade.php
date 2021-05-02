@@ -21,7 +21,7 @@
 <!-- /.content-header -->
 <!-- Main content -->
 <section class="content">
-    <form method="POST" action="{{ route('brands.update', $brands->id) }}" enctype="multipart/form-data">
+    <form id="edit_brands" method="POST" data-route="{{ route('brands.update', $brands->id) }}" enctype="multipart/form-data">
         {{ csrf_field() }}
         @method('PUT')
         <div class="container-fluid">
@@ -73,6 +73,10 @@
                                 </span>
                                 @endif
                             </div>
+                            <!--  -->
+                            <div class="alert alert-danger print-error-msg" style="display:none">
+								<ul></ul>
+							</div>
                         </div>
                     </div>
                     <!-- /.card-body -->
@@ -91,4 +95,37 @@
     </form>
 </section>
 <!-- /.content -->
+<script>
+   $('#edit_brands').submit(function(event) {
+		var route = $('#edit_brands').data('route');
+		var form_date = $(this)
+		$.ajax({
+			method: 'POST',
+			url: route,
+			processData: false, // Important!
+			contentType: false,
+			cache: false,
+			data: new FormData(this),
+			success: function(response) {
+				swal({
+					closeOnClickOutside: false,
+					icon: "success",
+					title: 'Success, edit sussecfully!',
+					showSpinner: true
+				});
+				$(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/admin/brands");
+			},
+			error: function(response) {
+				$(".print-error-msg").find("ul").html('');
+				$(".print-error-msg").css('display', 'block');
+				var err = JSON.parse(response.responseText);
+				$.each(err.errors, function(key, value) {
+					$(".print-error-msg").find("ul").append('<li>' + value[0] + '</li>');
+				})
+
+			}
+		})
+		event.preventDefault();
+	});
+</script>
 @stop

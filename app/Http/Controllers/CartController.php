@@ -43,7 +43,7 @@ class CartController extends Controller
     public function getDeleteCart($id)
     {
         Cart::remove($id);
-        return redirect()->back();
+        return response()->json('ok');
     }
 
     public function getUpdateCart(Request $request)

@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\Support\Facades\App;
 
 class Kernel extends HttpKernel
 {
@@ -70,6 +71,7 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\IsAdmin::class,
         'locale' => \App\Http\Middleware\Locale::class,
         'checkaddress.phone'=> \App\Http\Middleware\checkAddressAndPhone::class,
+        'checkpassword' => \App\Http\Middleware\CheckPasswordSocial::class,
         
     ];
 }

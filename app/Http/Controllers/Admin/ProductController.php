@@ -155,17 +155,22 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
         $fileName1 = $this->products->doUpload($request->file('image1'));
-        $fileName2 = $this->products->doUpload($request->file('image2'));;
-        $fileName3 = $this->products->doUpload($request->file('image3'));;
-        $fileName4 = $this->products->doUpload($request->file('image4'));;
-        $products = $this->products->update($id,array_merge($request->all(),["discount" => 0],["image1" =>$fileName1], ["image2" => $fileName2], ["image3" => $fileName3], ["image4" => $fileName4]));
-        if($products){
-            return redirect()->route('products.index');
-        }
-        return redirect()->route('admin.products.edit');
+        $fileName2 = $this->products->doUpload($request->file('image2'));
+        $fileName3 = $this->products->doUpload($request->file('image3'));
+        $fileName4 = $this->products->doUpload($request->file('image4'));
+        $attributes = ($request->attr1.': ' .$request->attr_name1. '-' .$request->attr2. ': ' .$request->attr_name2.'-'
+        . $request->attr3. ': ' .$request->attr_name3 
+        .'-'.$request->attr4. ': ' .$request->attr_name4);
+        $products = $this->products->update($id,array_merge($request->all()
+        ,["discount" => 0]
+        ,["image1" =>$fileName1], ["image2" => $fileName2]
+        , ["image3" => $fileName3], ["image4" => $fileName4]
+    ,['attributes' => $attributes]));
+       
+        return response()->json($products);
     }
 
     /**

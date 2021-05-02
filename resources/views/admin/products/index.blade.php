@@ -159,8 +159,8 @@ $rangePriceAdmin = request()->get('rangePriceAdmin');
         var deletepr = document.getElementById('delete_product_' + id);
         var route = $('#delete_product_' + id).data('route');
         swal({
-                title: "Xóa?",
-                text: "Bạn có muốn xóa sản phẩm này?",
+                title: "Delete?",
+                text: "Are you sure delete this product?",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
@@ -181,16 +181,19 @@ $rangePriceAdmin = request()->get('rangePriceAdmin');
                             swal({
                                 closeOnClickOutside: false,
                                 icon: "success",
-                                title: 'Thành công, xóa thành công!',
+                                title: 'Deleted product!',
                                 showSpinner: true
                             });
+                            setTimeout(function() {
+                                $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/admin/products");
+                            },2000)
                         },
                         error: function(response) {
                             console.log(response)
                             swal({
                                 closeOnClickOutside: false,
                                 icon: "warning",
-                                title: 'Có lỗi, vui lòng kiểm tra lại!',
+                                title: 'Error, please check again!',
                                 showSpinner: true
                             });
                         }

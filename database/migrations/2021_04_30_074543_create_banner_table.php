@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCountdownTimeTable extends Migration
+class CreateBannerTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateCountdownTimeTable extends Migration
      */
     public function up()
     {
-        Schema::create('countdown_time', function (Blueprint $table) {
-            $table->bigIncrements('$id')->unsigned();
-            $table->dateTime('datetime');
-            $table->string('status',10);
+        Schema::create('banner', function (Blueprint $table) {
+            $table->id();
+            $table->string('image');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateCountdownTimeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('countdown_time');
+        Schema::dropIfExists('banner');
     }
 }

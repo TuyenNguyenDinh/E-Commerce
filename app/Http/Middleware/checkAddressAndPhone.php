@@ -17,9 +17,7 @@ class checkAddressAndPhone
     public function handle($request, Closure $next)
     {
         if (
-            is_null(Auth::guard('customer')->user()->phone) || is_null(Auth::guard('customer')->user()->address)
-            || is_null(Auth::guard('customer')->user()->password)
-        ) {
+            is_null(Auth::guard('customer')->user()->phone) || is_null(Auth::guard('customer')->user()->address)) {
             if (app()->getLocale() == 'en') {
                 return redirect('/')->with('warning', 'Please check your full information before proceeding');
             } else {

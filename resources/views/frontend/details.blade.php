@@ -39,7 +39,6 @@
 
                         </div>
                         <div id="slick-nav-2" class="products-slick-nav">
-
                             <button class="slick-next slick-arrow" aria-label="Next" type="button" style="display: inline-block;">
                                 <i class="far fa-arrow-right"></i>
                             </button>
@@ -111,9 +110,16 @@
                                                 <div class="d-flex">
                                                     <div class="address d-flex item-center">
                                                         @if(Auth::guard('customer')->check())
-                                                        <span>{{Auth::guard('customer')->user()->district->district_name}}</span>
-                                                        <span>,</span>
-                                                        <span> <span>{{Auth::guard('customer')->user()->province->province}}</span></span>
+                                                        <select class="sl_province" name="province" id="province">
+                                                            <option value="" selected disabled>{{Auth::guard('customer')->user()->province->province}}</option>
+                                                            @foreach($provinces as $province)
+                                                            <option value="{{$province->id}}">{{ucfirst($province->province)}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <span>, </span>
+                                                        <select class="sl_district" name="district" id="district">
+                                                            <option value="0" selected disabled>{{Auth::guard('customer')->user()->district->district_name}}</option>
+                                                        </select>
                                                         @else
                                                         <select class="sl_province" name="province" id="province">
                                                             <option value="0" selected disabled>{{ __('content.Choose province')}}</option>
@@ -135,9 +141,11 @@
                                                     <div class="d-flex">
                                                         @if(Auth::guard('customer')->check())
                                                         <div class="currency d-flex item-center">
+                                                            <select class="fee_province" name="fee_province" id="fee_province">
                                                             @foreach($transport_fee as $fee)
-                                                            <span>{{ number_format($fee->transport_fee,0,'.','.') }} đ</span>
+                                                                <option value="0" selected disabled>{{ number_format($fee->transport_fee,0,'.','.') }} đ</option>
                                                             @endforeach
+                                                            </select>
                                                         </div>
                                                         @else
                                                         <div class="currency d-flex item-center">

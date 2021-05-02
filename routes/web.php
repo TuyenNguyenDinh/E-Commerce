@@ -20,7 +20,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 Route::group(['middleware' => 'locale'], function () {
     Route::get('change-language/{language}', 'FrontendController@changeLanguage')->name('user.change-language');
     Route::get('/', 'FrontendController@getHome')->name('home');
-    Route::get('category/{id}.html', 'FrontendController@getCategory')->middleware('verifi.customer');
+    Route::get('category/{id}.html', 'FrontendController@getCategory');
     Route::get('brands/{id}.html', 'FrontendController@getBrand');
     Route::get('details/{id}.html', 'FrontendController@getDetail');
     Route::get('getFeeProvince/{id}', 'FrontendController@getFeeProvince');
@@ -52,9 +52,9 @@ Route::group(['middleware' => 'locale'], function () {
     Route::post('registercustomer', 'CustomerFrontendController@register');
     Route::get('GetSubCatAgainstMainCatEdit/{id}', 'CustomerFrontendController@GetSubCatAgainstMainCatEdit');
 
-    Route::group(['middleware' => 'checklogin', 'prefix' => 'user/account'], function () {
-        Route::get('profile', 'CustomerFrontendController@getInfo');
-        Route::get('orders', 'CustomerFrontendController@getOrders');
+    Route::group(['middleware' => 'checklogin' , 'prefix' => 'user/account'], function () {
+        Route::get('profile', 'CustomerFrontendController@getInfo')->middleware('checkpassword');
+        Route::get('orders', 'CustomerFrontendController@getOrders')->middleware('checkpassword');
         Route::put('orders/{id}', 'CustomerFrontendController@postCancelOrders')->name('cancel_orders');
         Route::get('orders/tracking/{id}', 'CustomerFrontendController@trackingOrders')->name('tracking_orders');
         Route::post('change_profile', 'CustomerFrontendController@changeProfile')->name('changeProfile');
@@ -72,14 +72,14 @@ Route::group(['middleware' => 'locale'], function () {
         Route::post('password','CustomerFrontendController@postPasswrSocial')->name('postPasswrSocial');
     });
 
-    Route::group(['middleware' => 'checklogin', 'prefix' => 'cart'], function () {
+    Route::group(['middleware' => 'checklogin', 'middleware' => 'checkpassword','prefix' => 'cart'], function () {
         Route::get('add/{id}', 'CartController@getAddCart');
         Route::get('add_again/{id}','CustomerFrontendController@buyAgain')->name('buyAgain');
         Route::get('show', 'CartController@getShowCart')->name('cartshow');
-        Route::get('delete/{id}', 'CartController@getDeleteCart');
+        Route::get('delete/{id}', 'CartController@getDeleteCart')->name('deleteCart');
         Route::get('update', 'CartController@getUpdateCart');
         Route::get('cartdata', 'CartController@cartdata')->name('cartdata');
-        Route::get('checkout', 'CartController@getCheckout')->name('checkout');
+        Route::get('checkout', 'CartController@getCheckout')->name('checkout')->middleware('verifi.customer');
         Route::post('checkout', 'PurchaseController@postPurchase')->name('purchase')->middleware('checkaddress.phone');
         Route::post('add-address', 'CartController@addAddress')->name('addAddress');
         Route::get('getFeeFromProvince/{id}', 'CartController@getFeeFromProvince');
@@ -104,7 +104,8 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admi
     Route::resource('orderdetails', 'OrderDetailController');
     Route::resource('attributes', 'AttributeController');
     Route::get('getAttrCategory/{id}', 'ProductController@getAttrCategory')->name('attrCate');
-
+    Route::resource('banner','BannerController');
+    Route::post('uploadMultiple','BannerController@uploadMultiple')->name('banner.uploadMultiple');
 });
 
 

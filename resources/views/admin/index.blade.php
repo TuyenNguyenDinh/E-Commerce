@@ -97,32 +97,68 @@
 							<i class="fas fa-chart-pie mr-1"></i>
 							Sales
 						</h3>
-						<div class="card-tools">
-							<ul class="nav nav-pills ml-auto">
-								<li class="nav-item">
-									<a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-								</li>
-							</ul>
-						</div>
 					</div><!-- /.card-header -->
 					<div class="card-body">
-						<div class="tab-content p-0">
-							<!-- Morris chart - Sales -->
-							<div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
-								<canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-6 col-md-3 text-center">
+									<input type="text" readonly class="knob" value="{{DB::table('customers')->count()}}" data-width="90" data-height="90" data-fgColor="#3c8dbc">
+
+									<div class="knob-label">New Visitors</div>
+								</div>
+								<!-- ./col -->
+								<div class="col-6 col-md-3 text-center">
+									<input type="text" readonly class="knob" value="{{DB::table('products')->where('like', '=', 5)->count()}}" data-width="90" data-height="90" data-fgColor="#f56954">
+
+									<div class="knob-label">Products rated 5 *</div>
+								</div>
+								<!-- ./col -->
+								<div class="col-6 col-md-3 text-center">
+									<input type="text" readonly class="knob" value="{{DB::table('products')->where('like', '=', 1)->count()}}" data-width="90" data-height="90" data-fgColor="#00a65a">
+									<div class="knob-label">Undderrated</div>
+								</div>
+								<!-- ./col -->
+								<div class="col-6 col-md-3 text-center">
+									<input type="text" readonly class="knob" value="{{DB::table('products')->where('quantity', '=',0)->count()}}" data-width="90" data-height="90" data-fgColor="#00c0ef">
+									<div class="knob-label">Sell out</div>
+								</div>
+								<!-- ./col -->
 							</div>
-							<div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
-								<canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
+							<!-- /.row -->
+
+							<div class="row">
+								<div class="col-6 col-md-3 text-center">
+									<input type="text" readonly class="knob" value="{{DB::table('orders')->where('status', 'Waiting for the goods')->count()}}" data-width="90" data-height="90" data-fgColor="#932ab6">
+									<div class="knob-label">Watting the goods</div>
+								</div>
+								<!-- ./col -->
+								<div class="col-6 col-md-3 text-center">
+									<input type="text" class="knob" value="{{DB::table('orders')->where('status','Request to cancel the order')->count()}}" data-width="90" data-height="90" data-fgColor="#39CCCC">
+									<div class="knob-label">Refund/ Refunds pending </div>
+								</div>
+								<div class="col-6 col-md-3 text-center">
+									<input type="text" readonly class="knob" value="{{DB::table('orders')->where('status', 'Checking order')->count()}}" data-width="90" data-height="90" data-fgColor="#00c0ef">
+									<div class="knob-label">Watting check</div>
+								</div>
+								<div class="col-6 col-md-3 text-center">
+									<input type="text" readonly class="knob" value="{{DB::table('orders')->where('status', 'Cancel')->count()}}" data-width="90" data-height="90" data-fgColor="#00c0ef">
+									<div class="knob-label">Orders cancel</div>
+								</div>
+								<!-- ./col -->
 							</div>
+							<div class="row">
+								<div class="col-12 text-center">
+									<input type="text" readonly class="knob" value="{{DB::table('orders')->where('status', 'Shipped')->count()}}" data-width="90" data-height="90" data-fgColor="#00c0ef">
+									<div class="knob-label">Orders completed</div>
+								</div>
+							</div>
+							<!-- /.row -->
 						</div>
 					</div><!-- /.card-body -->
 				</div>
 				<!-- /.card -->
 
-				
+
 				<!-- /.card -->
 			</section>
 			<!-- /.Left col -->
@@ -155,53 +191,7 @@
 				</div>
 				<!-- /.card -->
 
-				<!-- solid sales graph -->
-				<div class="card bg-gradient-info">
-					<div class="card-header border-0">
-						<h3 class="card-title">
-							<i class="fas fa-th mr-1"></i>
-							Sales Graph
-						</h3>
 
-						<div class="card-tools">
-							<button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
-								<i class="fas fa-minus"></i>
-							</button>
-							<button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
-								<i class="fas fa-times"></i>
-							</button>
-						</div>
-					</div>
-					<div class="card-body">
-						<canvas class="chart" id="line-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-					</div>
-					<!-- /.card-body -->
-					<div class="card-footer bg-transparent">
-						<div class="row">
-							<div class="col-4 text-center">
-								<input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60" data-fgColor="#39CCCC">
-
-								<div class="text-white">Mail-Orders</div>
-							</div>
-							<!-- ./col -->
-							<div class="col-4 text-center">
-								<input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60" data-fgColor="#39CCCC">
-
-								<div class="text-white">Online</div>
-							</div>
-							<!-- ./col -->
-							<div class="col-4 text-center">
-								<input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60" data-fgColor="#39CCCC">
-
-								<div class="text-white">In-Store</div>
-							</div>
-							<!-- ./col -->
-						</div>
-						<!-- /.row -->
-					</div>
-					<!-- /.card-footer -->
-				</div>
-				<!-- /.card -->
 
 				<!-- Calendar -->
 				<div class="card bg-gradient-success">

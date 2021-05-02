@@ -8,7 +8,7 @@
                 <h3 class="display-5 mb-2 text-center">{{ __('content.Shopping Cart')}}</h3>
                 <p class="mb-5 text-center">
                     <i id="cart_count" class="text-info font-weight-bold">{{Cart::count()}}</i> {{ __('content.items in your cart')}}
-                    
+
                 </p>
                 @if(Cart::count()>=1)
                 <table class="table table-condensed table-responsive">
@@ -36,7 +36,7 @@
                             </td>
                             <td id="price" data-th="Price">{{number_format($product->price*$product->qty,0,',','.')}} đ</td>
                             <td data-th="Quantity">
-                                <input type="number" name="qty" id="qty" class="form-control form-control-lg text-center" value="{{ $product->qty }}" min=1 onchange="btUpdate(this.value, '{{$product->rowId}}')">
+                                <input type="number" name="qty" id="qty" class="form-control form-control-lg text-center" value="{{ $product->qty }}" onchange="btUpdate(this.value, '{{$product->rowId}}')">
                             </td>
                             <td class="actions" data-th="">
                                 <div class="text-right">
@@ -76,20 +76,25 @@
 </section>
 <script type="text/javascript">
     function btUpdate(qty, rowId) {
-        var url = "{{asset('cart/update')}}";
-        $.ajax({
-            method: 'get',
-            url: url,
-            data: {
-                qty: qty,
-                rowId: rowId
-            },
-            success: function(response) {
-                console.log(response);
+        if (qty < 1) {
+            deleteCart(rowId)
+        } else {
+            var url = "{{asset('cart/update')}}";
+            $.ajax({
+                method: 'get',
+                url: url,
+                data: {
+                    qty: qty,
+                    rowId: rowId
+                },
+                success: function(response) {
+                    console.log(response);
 
-                // location.reload();
-            }
-        });
+                    // location.reload();
+                }
+            });
+        }
+
     };
 
     $('#bt').click(function() {
@@ -98,7 +103,7 @@
         $('#qty_cart').load("{{route('cartdata')}} #cart_count")
     })
 
-    function deleteCart(id) {
+    function deleteCart(rowId) {
         swal({
                 title: "Delete?",
                 text: "Are you sure delete this products?",
@@ -108,12 +113,28 @@
             })
             .then((willDelete) => {
                 if (willDelete) {
-                   
+                    var url = "{{asset('cart/delete')}}" + '/' + rowId;
+                    $.ajax({
+                        method: 'get',
+                        url: url,
+                        data: {
+                            rowId: rowId
+                        },
+                        success: function(response) {
+                            swal({
+                                text: "Delete successfully, page will redirect after 2s",
+                                icon: "success",
+                                buttons: false,
+                            })
+                            setTimeout(function() {
+                                $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/cart/show");
+                            },2000)
+                        }
+                    });
+                }else{
+                    $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/cart/show");
                 }
             });
     }
-    
-
-
 </script>
 @stop

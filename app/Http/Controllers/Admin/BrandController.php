@@ -75,10 +75,8 @@ class BrandController extends Controller
         
         $fileName = $this->brands->doUpload($request->file('image'));
         $result = $this->brands->update($id, array_merge($request->all(), ['image' => $fileName]));
-        if($result){
-            return redirect()->route('brands.index');
-        }
-        return redirect()->route('brands.edit');
+       
+        return response()->json($result);
         
     }
 

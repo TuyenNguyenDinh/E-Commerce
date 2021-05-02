@@ -77,10 +77,7 @@ class CategoryController extends Controller
     {
         $data = $request->all();
         $categories = $this->categories->update($id, $data);
-        if($categories){
-            return redirect()->route('categories.index');
-        }
-        return redirect()->route('categories.edit');
+        return response()->json($categories);
     }
 
     /**

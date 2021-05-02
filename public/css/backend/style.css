@@ -89,3 +89,38 @@
     border-top: none;
     border-bottom: none!important;
 }
+
+.products-slick-nav_left {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    z-index: 10;
+}
+
+.products-slick-nav {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    z-index: 10;
+}
+
+.products-slick-nav_left .slick-prev:before,
+.products-slick-nav .slick-next:before {
+    font-size: 14px;
+}
+
+.slick-prev,
+.slick-next {
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid #E4E7ED;
+    outline: none;
+}
+
+.slick-slide {
+    opacity: 0.4;
+}
+
+.slick-center {
+    opacity: unset;
+}

@@ -35,7 +35,7 @@
                     </td>
                     <td class="actions" data-th="">
                         <div class="text-right">
-                            <a href="{{asset('cart/delete/'.$product->rowId)}}">
+                            <a onclick="deleteCart('{{$product->rowId}}')" style="cursor: pointer;">
                                 <button class="btn btn-white border-secondary bg-white btn-md mb-2">
                                     <i class="fas fa-trash"></i>
                                 </button>
@@ -52,7 +52,6 @@
             </button>
         </div>
         <div id="subtotal" class="float-right text-right">
-
             <h4>{{ __('content.Total')}}:</h4>
             <h1>{{$total}} đ</h1>
         </div>
@@ -70,26 +69,64 @@
 @endif
 <script type="text/javascript">
     function btUpdate(qty, rowId) {
-        var url = "{{asset('cart/update')}}";
-        $.ajax({
-            method: 'get',
-            url: url,
-            data: {
-                qty: qty,
-                rowId: rowId
-            },
-            success: function(response) {
-                console.log(response);
+        if (qty < 1) {
+            deleteCart(rowId)
+        } else {
+            var url = "{{asset('cart/update')}}";
+            $.ajax({
+                method: 'get',
+                url: url,
+                data: {
+                    qty: qty,
+                    rowId: rowId
+                },
+                success: function(response) {
+                    console.log(response);
 
-                // location.reload();
-            }
-        });
+                    // location.reload();
+                }
+            });
+        }
+
     };
 
     $('#bt').click(function() {
         alert('upload success');
         $('#listCart').load("{{route('cartdata')}}");
         $('#qty_cart').load("{{route('cartdata')}} #cart_count")
-
     })
+
+    function deleteCart(rowId) {
+        swal({
+                title: "Delete?",
+                text: "Are you sure delete this products?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    var url = "{{asset('cart/delete')}}" + '/' + rowId;
+                    $.ajax({
+                        method: 'get',
+                        url: url,
+                        data: {
+                            rowId: rowId
+                        },
+                        success: function(response) {
+                            swal({
+                                text: "Delete successfully, page will redirect after 2s",
+                                icon: "success",
+                                buttons: false,
+                            })
+                            setTimeout(function() {
+                                $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/cart/show");
+                            },2000)
+                        }
+                    });
+                }else{
+                    $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/cart/show");
+                }
+            });
+    }
 </script>

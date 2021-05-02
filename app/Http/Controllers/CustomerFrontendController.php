@@ -145,6 +145,12 @@ class CustomerFrontendController extends Controller
 
     public function postPasswrSocial(Request $request)
     {
+        $request->validate([
+            'email' => 'required|email|exists:customers',
+            'password' => 'required|string|min:6|confirmed',
+            'password_confirmation' => 'required',
+      
+        ]);
         $password = Hash::make($request->password);
         Customers::find(Auth::guard('customer')->user()->id)->update(['password' => $password]);
         return redirect('/');    

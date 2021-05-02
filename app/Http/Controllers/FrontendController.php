@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\Countdown;
 use App\Models\Brands;
 use App\Models\Categories;
@@ -32,7 +33,8 @@ class FrontendController extends Controller
         $data['brands_image'] = Brands::all();
         $data['products'] = Products::all();
         $data['products_selling'] = Products::where('discount','>',0)->get();
-        return view('frontend.index', $data );
+        $data['banner'] = Banner::all();
+        return view('frontend.index', $data);
     }
 
     public function getCategory($id)

@@ -23,7 +23,8 @@
 
 <!-- Main content -->
 <section class="content">
-    <div class="container-fluid">
+    <form id="edit_categories" data-route="{{ route('categories.update', $categories->id) }}" method="post" enctype="multipart/form-data">
+        <div class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <div class="card card-primary">
@@ -36,18 +37,16 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('categories.update', $categories->id) }}" method="post" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             @method('PUT')
                             <div class="form-group">
                                 <label for="inputName">Name category</label>
-                                <input required type="text" id="inputName" name="name" value="{{ $categories->name }}" class="form-control">
-                                @if ($errors->has('name'))
-                                <span class="help-block">
-                                    <strong style="color: red;">{{ $errors->first('name')}}</strong></br>
-                                </span>
-                                @endif
+                                <input type="text" id="inputName" name="name" value="{{ $categories->name }}" class="form-control">
                             </div>
+                            <!--  -->
+                            <div class="alert alert-danger print-error-msg" style="display:none">
+								<ul></ul>
+							</div>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -66,4 +65,37 @@
     </form>
 </section>
 <!-- /.content -->
+<script>
+    $('#edit_categories').submit(function(event) {
+		var route = $('#edit_categories').data('route');
+		var form_date = $(this)
+		$.ajax({
+			method: 'POST',
+			url: route,
+			processData: false, // Important!
+			contentType: false,
+			cache: false,
+			data: new FormData(this),
+			success: function(response) {
+				swal({
+					closeOnClickOutside: false,
+					icon: "success",
+					title: 'Success, edit sussecfully!',
+					showSpinner: true
+				});
+				$(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/admin/categories");
+			},
+			error: function(response) {
+				$(".print-error-msg").find("ul").html('');
+				$(".print-error-msg").css('display', 'block');
+				var err = JSON.parse(response.responseText);
+				$.each(err.errors, function(key, value) {
+					$(".print-error-msg").find("ul").append('<li>' + value[0] + '</li>');
+				})
+
+			}
+		})
+		event.preventDefault();
+	});
+</script>
 @stop
