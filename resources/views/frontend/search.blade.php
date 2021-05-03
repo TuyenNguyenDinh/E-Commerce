@@ -63,7 +63,7 @@ $key = request()->get('key');
                                                     <button class="add-to-compare">
                                                         <a href="{{asset('wishlist/add/'.$item->id.'.html')}}">
                                                             <i class="fas fa-exchange-alt"></i>
-                                                            <span class="tooltipp"> {{ __('add to wishlist')}}</span>
+                                                            <span class="tooltipp"> {{ __('Add to wishlist')}}</span>
                                                         </a>
                                                     </button>
                                                     <button class="details">

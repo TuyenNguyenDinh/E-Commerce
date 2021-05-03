@@ -18,7 +18,7 @@
                         {{ __('content.If you did not receive the email') }},
                         <form class="d-inline" method="POST" action="{{ route('verify.resend') }}">
                             @csrf
-                            <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('content.click here to request another') }}</button>.
+                            <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('content.click here to another request ') }}</button>.
                         </form>
                     </div>
                 </div>

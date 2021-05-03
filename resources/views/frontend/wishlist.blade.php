@@ -48,7 +48,7 @@
                                             <button class="add-to-compare">
                                                 <a href="{{asset('wishlist/add/'.$product_list->products->id.'.html')}}">
                                                     <i class="fas fa-heart"></i>
-                                                    <span class="tooltipp"> {{ __('content.add to wishlist')}}</span>
+                                                    <span class="tooltipp"> {{ __('content.Add to wishlist')}}</span>
                                                 </a>
                                             </button>
                                             <button class="details">

@@ -135,7 +135,7 @@
                                         </div>
                                         <div class="row ">
                                             <div class="flex-column flex-sm-row" style="flex:1">
-                                                <p><b>{{ __('content.Transport fee for province')}}</b></p>
+                                                <p><b>{{ __('content.Transport fee by province')}}</b></p>
                                             </div>
                                             <div class="flex-sm-col col-auto my-auto">
                                                 @foreach(DB::table('transport_fee')->where('id_province', $cus->id_province)->get() as $fee)

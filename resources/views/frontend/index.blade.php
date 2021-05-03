@@ -96,7 +96,7 @@
                                                 <button class="add-to-compare">
                                                     <a href="{{asset('wishlist/add/'.$product->id.'.html')}}">
                                                         <i class="fas fa-heart"></i>
-                                                        <span class="tooltipp"> {{ __('content.add to wishlist')}}</span>
+                                                        <span class="tooltipp"> {{ __('content.Add to wishlist')}}</span>
                                                     </a>
                                                 </button>
                                                 <button class="details">
@@ -193,7 +193,7 @@
                                                 <button class="add-to-compare">
                                                     <a href="{{asset('wishlist/add/'.$product->id.'.html')}}">
                                                         <i class="fas fa-heart"></i>
-                                                        <span class="tooltipp"> {{ __('content.add to wishlist')}}</span>
+                                                        <span class="tooltipp"> {{ __('content.Add to wishlist')}}</span>
                                                     </a>
                                                 </button>
                                                 <button class="details">
@@ -244,7 +244,7 @@
                 </div>
                 <div class="sb-text">
                     <h6>{{ __('content.Delivery on time')}}</h6>
-                    <p>{{ __('content.If good have problems')}}</p>
+                    <p>{{ __('content.If there is no problem')}}</p>
                 </div>
             </div>
         </div>

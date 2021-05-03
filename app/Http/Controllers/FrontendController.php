@@ -169,10 +169,10 @@ class FrontendController extends Controller
             'password' => $request->password,
         ];
 
-        if (Auth::guard('customer')->attempt($arr)) {
-            return redirect('/');
+        if (Auth::guard('customer')->attempt($arr) == 'en') {
+            return redirect('/')->with('success', 'Login Success!');
         } else {
-            return redirect('/')->with('warning', 'Tài khoản hoặc mật khẩu không đúng.');
+            return redirect('/')->with('warning', 'Invalid email or password. Please try again!');
         }
     }
 
@@ -200,6 +200,11 @@ class FrontendController extends Controller
     public function deleteWishItems($id)
     {
         Wishlist::find($id)->delete();
-        return redirect('/')->with('success', 'Xóa thành công!.');
+
+        if (app()->getLocale() == 'en') {
+            return redirect('/')->with('success','Delete Success!');
+        } else {
+            return redirect('/')->with('warning', 'Please check the information before proceeding');
+        }
     }
 }
