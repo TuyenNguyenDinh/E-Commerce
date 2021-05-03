@@ -310,14 +310,20 @@ class CustomerFrontendController extends Controller
             $message->to($request->email);
             $message->subject('Reset Password Notification');
         });
-        return redirect('/')->with('success', 'Send mail success, please check your mail to reset password');
+        if (app()->getLocale() == 'en') {
+            return redirect('/')->with('success','Send mail success, please check your mail to reset password');
+        } else {
+            return redirect('/')->with('warning', 'Please check the information before proceeding');
+        }
     }
 
     public function postCancelOrders(Request $request, $id)
     {
         $reasons = $request->reasons;
         Orders::find($id)->update(array_merge(['status' => 'Request to cancel the order', 'reasons_cancel_order' => $reasons]));
-        return redirect('user/account/orders')->with('success', 'Send successfully, please wait seller checking your reasons');
+        if (app()->getLocale() == 'en') {
+        return redirect('user/account/orders')->with('success', 'Send successfully! Please wait for the seller to check your reasons');
+        }
     }
 
     public function trackingOrders($id)
@@ -345,7 +351,9 @@ class CustomerFrontendController extends Controller
             $comments->save();
             Products::find($products->id_product)->update(['like' => round($comments->avg('rate'))]);
         }
-        return redirect('/')->with('success', 'Thank you for rated');
+        if (app()->getLocale() == 'en') {
+        return redirect('/')->with('success', 'Thank you for rated!');
+        }
     }
 
     public function buyAgain($id){

@@ -129,8 +129,9 @@ class OrderController extends Controller
         } else {
             $this->orders->update($id, array_merge(['status' => $request->status, 'ship_date' => date('Y-m-d')]));
         }
-        return redirect()->route('orders.index')->with('success', 'Update successs');
-
+        if (app()->getLocale() == 'en') {
+        return redirect()->route('orders.index')->with('success', 'Updated success');
+        }
     }
 
     /**

@@ -57,10 +57,11 @@ class VerificationController extends Controller
         if ($response = $this->verified($request)) {
             return $response;
         }
-
+        if (app()->getLocale() == 'en') {
         return $request->wantsJson()
             ? new JsonResponse([], 204)
             : redirect('/')->with('success', 'Verified success');
+        }
     }
 
     /**

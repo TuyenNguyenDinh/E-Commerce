@@ -95,7 +95,7 @@
                                                 <img src="{{asset('image/icon-free-shipping.png')}}" alt="" width="25px" height="18px"> {{ __('content.Free shipping')}}
                                             </div>
                                             <div class="gRuynh">
-                                                {{ __('content.Free shipping when the order reaches minimum value')}}
+                                                {{ __('content.Free shipping when the order reaches the minimum value')}}
                                             </div>
                                         </div>
                                     </div>
@@ -248,8 +248,8 @@
                                 {{ __('content.at delivery')}}
                             </li>
                             <li><i class="far fa-undo-alt"></i>
-                                {{ __('content.Change product when broken')}}
-                                <b>{{ __('content.12 month')}}</b>
+                                {{ __('content.One-for-one warranty')}}
+                                <b>{{ __('content.12 months')}}</b>
                                 {{ __('content.at home (free first month)')}}
                             </li>
                             <li><i class="fad fa-mobile-android-alt"></i>
@@ -273,7 +273,7 @@
             <div class="product_reviews">
                 <div class="product_reviews_head">
                     <div class="product_reviews_title text-uppercase">
-                        <h4>{{ __('content.Product rates')}}</h4>
+                        <h4>{{ __('content.Product Reviews')}}</h4>
                     </div>
                     @if(round($comments->avg('rate')) == 0)
                     <div class="wrapper">
