@@ -14,28 +14,28 @@ class Products extends Model
     protected $dateFormat = 'U';
 
 
-    function categories()
+    function Categories()
     {
         return $this->belongsTo('App\Models\Categories', 'id_category');
     }
 
-    function brands()
+    function Brands()
     {
         return $this->belongsTo('App\Models\Brands', 'id_brand');
     }
 
-    function comments()
+    function Comments()
     {
         return $this->hasMany('App\Models\Comments', 'id_product');
     }
 
-    function wishlist()
+    function Wishlist()
     {
         return $this->hasMany('App\Models\Wishlist', 'id_product');
     }
 
 
-    function orderdetails()
+    function Orderdetails()
     {
         return $this->hasMany('App\Models\Orderdetails','id_product');
     }

@@ -25,11 +25,11 @@ class Orders extends Model
         return $this->hasMany('App\Models\Comments','id_order');
     }
 
-    function province(){
+    function Province(){
         return $this->belongsTo('App\Models\Province', 'id_province');
     }
 
-    function district(){
+    function District(){
         return $this->belongsTo('App\Models\District','id_district');
     }
 

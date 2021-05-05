@@ -7,18 +7,18 @@
             <div class="tab-pills_order w-100">
                 <nav>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Tất cả</a>
-                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Chờ xác nhận</a>
-                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Chờ lấy hàng</a>
-                        <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">Đang giao</a>
-                        <a class="nav-item nav-link" id="nav-about-tab1" data-toggle="tab" href="#nav-about1" role="tab" aria-controls="nav-about1" aria-selected="false">Đã giao</a>
-                        <a class="nav-item nav-link" id="nav-about-tab2" data-toggle="tab" href="#nav-about2" role="tab" aria-controls="nav-about2" aria-selected="false">Đã hủy</a>
+                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">{{ __('content.All')}}</a>
+                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">{{ __('content.Checking order')}}</a>
+                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">{{ __('content.Waiting for the goods')}}</a>
+                        <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">{{ __('content.Shipping')}}</a>
+                        <a class="nav-item nav-link" id="nav-about-tab1" data-toggle="tab" href="#nav-about1" role="tab" aria-controls="nav-about1" aria-selected="false">{{ __('content.Shipped')}}</a>
+                        <a class="nav-item nav-link" id="nav-about-tab2" data-toggle="tab" href="#nav-about2" role="tab" aria-controls="nav-about2" aria-selected="false">{{ __('content.Cancel')}}</a>
                     </div>
                 </nav>
                 <div class="tab-content py-4 px-4 px-sm-0" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                         @if(count($orders) == 0)
-                        <h1>không có hóa đơn</h1>
+                        <h1>{{ __('content.Not found')}}</h1>
                         @else
                         @foreach($orders as $order)
                         <div class="purchase-list-page_checkout">
@@ -26,7 +26,7 @@
                                 <div class="order-card_content">
                                     <div class="order-content_header d-flex container-fluid">
                                         <div class="order-content_header_order" style="flex: 1">
-                                            <div class="order-content_header_order_id">Order {{$order->id}}</div>
+                                            <div class="order-content_header_order_id">{{ __('content.Order')}} {{$order->id}}</div>
                                         </div>
                                         <div class="order-content_header_status_wrapper">
                                             <a href="#" class="order-content_header_order_delivery_status">
@@ -36,9 +36,9 @@
                                         </div>
                                         <div class="order-content_header_status">
                                             @if(count(DB::table('comments')->where('id_order',$order->id)->get()) == 0)
-                                            Not rated
+                                            {{ __('content.Not rated')}}
                                             @else
-                                            rated
+                                            {{ __('content.Rated')}}
                                             @endif
                                         </div>
                                     </div>
@@ -80,7 +80,7 @@
                                     <div class="purchase-card_button container-fluid">
                                         <div class="purchase-card_button_total-payment">
                                             <div class="purchase-card_button_label-price">
-                                                <span>Total: </span>
+                                                <span>{{ __('content.Total')}}: </span>
                                             </div>
                                             <div class="purchase-card_button_total_price">
                                                 <h3>{{number_format($order->total_price,0,',','.')}}đ</h3>
@@ -89,11 +89,11 @@
                                         @if($order->status == "Checking order" )
                                         <div class="purchase-card_button_container">
                                             <div class="purchase-card_button-show">
-                                                <button class="btn btn-red text-white" data-toggle="modal" data-target="#cancelOrder_{{$order->id}}">Cancel order</button>
+                                                <button class="btn btn-red text-white" data-toggle="modal" data-target="#cancelOrder_{{$order->id}}">{{ __('content.Cancel order')}}</button>
                                             </div>
                                             <div class="purchase-card_button-show">
                                                 <a href="{{route('tracking_orders', $order->id)}}">
-                                                    <button class="btn btn-light">Tracking orders</button>
+                                                    <button class="btn btn-light">{{ __('content.Tracking orders')}}</button>
                                                 </a>
                                             </div>
                                         </div>
@@ -101,12 +101,12 @@
                                         <div class="purchase-card_button_container">
                                             <div class="purchase-card_button-show">
                                                 <a href="{{asset('cart/add_again/'.$order->id)}}">
-                                                    <button class="btn btn-red text-white">Buy again</button>
+                                                    <button class="btn btn-red text-white">{{ __('content.Buy again')}}</button>
                                                 </a>
                                             </div>
                                             <div class="purchase-card_button-show">
                                                 <a href="{{route('tracking_orders', $order->id)}}">
-                                                    <button class="btn btn-light">Tracking orders</button>
+                                                    <button class="btn btn-light">{{ __('content.Tracking orders')}}</button>
                                                 </a>
                                             </div>
                                         </div>
@@ -114,26 +114,37 @@
                                         @if(count(DB::table('comments')->where('id_order',$order->id)->get()) == 0)
                                         <div class="purchase-card_button_container">
                                             <div class="purchase-card_button-show">
-                                                <button class="btn btn-red text-white" data-toggle="modal" data-target="#ratingOrder_{{$order->id}}">Rate order</button>
+                                                <button class="btn btn-red text-white" data-toggle="modal" data-target="#ratingOrder_{{$order->id}}">{{ __('content.Rate order')}}</button>
                                             </div>
                                             <div class="purchase-card_button-show">
                                                 <a href="{{route('tracking_orders', $order->id)}}">
-                                                    <button class="btn btn-light">Tracking orders</button>
+                                                    <button class="btn btn-light">{{ __('content.Tracking orders')}}</button>
                                                 </a>
                                             </div>
                                         </div>
                                         @else
                                         <div class="purchase-card_button_container">
                                             <div class="purchase-card_button-show">
-                                                <button class="btn btn-red text-white" data-toggle="modal" data-target="#viewRating_{{$order->id}}">Review rated</button>
+                                                <button class="btn btn-red text-white" data-toggle="modal" data-target="#viewRating_{{$order->id}}">{{ __('content.View rated')}}</button>
                                             </div>
                                             <div class="purchase-card_button-show">
                                                 <a href="{{route('tracking_orders', $order->id)}}">
-                                                    <button class="btn btn-light">Tracking orders</button>
+                                                    <button class="btn btn-light">{{ __('content.Tracking orders')}}</button>
                                                 </a>
                                             </div>
                                         </div>
                                         @endif
+                                        @elseif($order->status == "Waiting for the goods")
+                                        <div class="purchase-card_button_container">
+                                            <div class="purchase-card_button-show">
+                                                <button class="btn btn-red text-white" disabled>{{ __('content.Received')}}</button>
+                                            </div>
+                                            <div class="purchase-card_button-show">
+                                                <a href="{{route('tracking_orders', $order->id)}}">
+                                                    <button class="btn btn-light">{{ __('content.Tracking orders')}}</button>
+                                                </a>
+                                            </div>
+                                        </div>
                                         @endif
                                     </div>
                                 </div>
@@ -149,9 +160,9 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-title text-left my-account-section__header">
-                                            <h4>Cancel order {{$order->id}}</h4>
+                                            <h4>{{ __('content.Cancel order')}} {{$order->id}}</h4>
                                             <div class="my-account-section__header-subtitle">
-                                                Please choose reasons cacelled order
+                                                {{ __('content.Please choose reasons cancelled order')}}
                                             </div>
                                         </div>
 
@@ -161,13 +172,13 @@
                                                 @method('PUT')
                                                 <div class="form-group mb-3">
                                                     <select name="reasons" id="reasons reasons_{{$order->id}}" class="form-control rounded-pill border-0 shadow-sm px-4">
-                                                        <option value="Change delivery address" selected>Change delivery address</option>
-                                                        <option value="Change products in order">Change products in order</option>
-                                                        <option value="Don't want to buy">Don't want to buy</option>
-                                                        <option value="Wrong/duplicate order">Wrong/duplicate order</option>
+                                                        <option value="Change delivery address" selected>{{ __('content.Change delivery address')}}</option>
+                                                        <option value="Change products in order">{{ __('content.Change products in order')}}</option>
+                                                        <option value="Don't want to buy">{{ __("content.Don't want to buy")}}</option>
+                                                        <option value="Wrong/duplicate order">{{ __('content.Wrong/duplicate order')}}</option>
                                                     </select>
                                                 </div>
-                                                <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Send request</button>
+                                                <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">{{ __('content.Send request')}}</button>
                                             </form>
                                         </div>
 
@@ -187,7 +198,7 @@
                                         <form action="{{route('postComments',$order->id)}}" method="post">
                                             {{csrf_field()}}
                                             <div class="form-title text-left my-account-section__header">
-                                                <h4>Rating order {{$order->id}}</h4>
+                                                <h4>{{ __('content.Rating order')}} {{$order->id}}</h4>
                                             </div>
                                             @foreach($order_details as $order_detail)
                                             @if($order_detail->id_order != $order->id)
@@ -224,12 +235,12 @@
                                                     </div>
                                                 </div>
                                                 <div class="comments-content w-100">
-                                                    <textarea name="comments[{{$order_detail->id}}]" id="comments_{{$order_detail->id}}" cols="30" rows="10" maxlength="300" style="resize: none; width: 100%; ; height:136px" placeholder="Hãy chia sẻ vì sao sản phẩm này không tốt nhé"></textarea>
+                                                    <textarea name="comments[{{$order_detail->id}}]" id="comments_{{$order_detail->id}}" cols="30" rows="10" maxlength="300" style="resize: none; width: 100%; ; height:136px" placeholder="{{ __('content.Please comment why product is not good')}}"></textarea>
                                                 </div>
                                             </div>
                                             @endif
                                             @endforeach
-                                            <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Send request</button>
+                                            <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">{{ __('content.Send request')}}</button>
                                         </form>
 
                                     </div>
@@ -246,7 +257,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-title text-left my-account-section__header">
-                                            <h4>View rated order {{$order->id}}</h4>
+                                            <h4>{{ __('content.View rated')}} {{ __('content.order')}} {{$order->id}}</h4>
                                         </div>
                                         @foreach($rating as $order_detail)
                                         @if($order_detail->id_order == $order->id)
@@ -297,7 +308,7 @@
                     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                             @if(count($waiting_check) == 0)
-                            <h1>không có hóa đơn</h1>
+                            <h1>{{ __('content.Not found')}}</h1>
                             @else
                             @foreach($waiting_check as $order)
                             <div class="purchase-list-page_checkout">
@@ -305,7 +316,7 @@
                                     <div class="order-card_content">
                                         <div class="order-content_header d-flex container-fluid">
                                             <div class="order-content_header_order" style="flex: 1">
-                                                <div class="order-content_header_order_id">Order {{$order->id}}</div>
+                                                <div class="order-content_header_order_id">{{ __('content.Order')}} {{$order->id}}</div>
                                             </div>
                                             <div class="order-content_header_status_wrapper">
                                                 <a href="#" class="order-content_header_order_delivery_status">
@@ -314,7 +325,7 @@
                                                 </a>
                                             </div>
                                             <div class="order-content_header_status">
-                                                Chưa đánh giá
+                                                {{ __('content.Not rated')}}
                                             </div>
                                         </div>
                                         @foreach($order_details as $order_detail)
@@ -355,7 +366,7 @@
                                         <div class="purchase-card_button container-fluid">
                                             <div class="purchase-card_button_total-payment">
                                                 <div class="purchase-card_button_label-price">
-                                                    <span>Total: </span>
+                                                    <span>{{ __('content.Total')}}: </span>
                                                 </div>
                                                 <div class="purchase-card_button_total_price">
                                                     <h3>{{number_format($order->total_price,0,',','.')}}đ</h3>
@@ -364,11 +375,11 @@
                                             @if($order->status == "Checking order" )
                                             <div class="purchase-card_button_container">
                                                 <div class="purchase-card_button-show">
-                                                    <button class="btn btn-red text-white" data-toggle="modal" data-target="#cancelOrder__{{$order->id}}">Cancel order</button>
+                                                    <button class="btn btn-red text-white" data-toggle="modal" data-target="#cancelOrder__{{$order->id}}">{{ __('content.Cancel order')}}</button>
                                                 </div>
                                                 <div class="purchase-card_button-show">
                                                     <a href="{{route('tracking_orders', $order->id)}}">
-                                                        <button class="btn btn-light">Tracking orders</button>
+                                                        <button class="btn btn-light">{{ __('content.Tracking orders')}}</button>
                                                     </a>
                                                 </div>
                                             </div>
@@ -388,9 +399,9 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="form-title text-left my-account-section__header">
-                                                <h4>Cancel order {{$order->id}}</h4>
+                                                <h4>{{ __('content.Cancel order')}} {{$order->id}}</h4>
                                                 <div class="my-account-section__header-subtitle">
-                                                    Please choose reasons cacelled order
+                                                    {{ __('content.Please choose reasons cacelled order')}}
                                                 </div>
                                             </div>
 
@@ -400,13 +411,13 @@
                                                     @method('PUT')
                                                     <div class="form-group mb-3">
                                                         <select name="reasons" id="reasons reasons_{{$order->id}}" class="form-control rounded-pill border-0 shadow-sm px-4">
-                                                            <option value="Change delivery address" selected>Change delivery address</option>
-                                                            <option value="Change products in order">Change products in order</option>
-                                                            <option value="Don't want to buy">Don't want to buy</option>
-                                                            <option value="Wrong/duplicate order">Wrong/duplicate order</option>
+                                                            <option value="Change delivery address" selected>{{ __('content.Change delivery address')}}</option>
+                                                            <option value="Change products in order">{{ __('content.Change products in order')}}</option>
+                                                            <option value="Don't want to buy">{{ __("content.Don't want to buy")}}</option>
+                                                            <option value="Wrong/duplicate order">{{ __('content.Wrong/duplicate order')}}</option>
                                                         </select>
                                                     </div>
-                                                    <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Send request</button>
+                                                    <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">{{ __('content.Send request')}}</button>
                                                 </form>
                                             </div>
 
@@ -421,7 +432,7 @@
                     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                             @if(count($waiting_the_goods) == 0)
-                            <h1>không có hóa đơn</h1>
+                            <h1>{{ __('content.Not found')}}</h1>
                             @else
                             @foreach($waiting_the_goods as $order)
                             <div class="purchase-list-page_checkout">
@@ -429,7 +440,7 @@
                                     <div class="order-card_content">
                                         <div class="order-content_header d-flex container-fluid">
                                             <div class="order-content_header_order" style="flex: 1">
-                                                <div class="order-content_header_order_id">Order {{$order->id}}</div>
+                                                <div class="order-content_header_order_id">{{ __('content.Order')}} {{$order->id}}</div>
                                             </div>
                                             <div class="order-content_header_status_wrapper">
                                                 <a href="#" class="order-content_header_order_delivery_status">
@@ -438,7 +449,7 @@
                                                 </a>
                                             </div>
                                             <div class="order-content_header_status">
-                                                Chưa đánh giá
+                                            {{ __('content.Not rated')}}
                                             </div>
                                         </div>
                                         @foreach($order_details as $order_detail)
@@ -479,20 +490,20 @@
                                         <div class="purchase-card_button container-fluid">
                                             <div class="purchase-card_button_total-payment">
                                                 <div class="purchase-card_button_label-price">
-                                                    <span>Total: </span>
+                                                    <span>{{ __('content.Total')}}: </span>
                                                 </div>
                                                 <div class="purchase-card_button_total_price">
                                                     <h3>{{number_format($order->total_price,0,',','.')}}đ</h3>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="purchase-card_button_container">
                                                 <div class="purchase-card_button-show">
-                                                    <button class="btn btn-red text-white" disabled>Received</button>
+                                                    <button class="btn btn-red text-white" disabled>{{ __('content.Received')}}</button>
                                                 </div>
                                                 <div class="purchase-card_button-show">
                                                     <a href="{{route('tracking_orders', $order->id)}}">
-                                                        <button class="btn btn-light">Tracking orders</button>
+                                                        <button class="btn btn-light">{{ __('content.Tracking orders')}}</button>
                                                     </a>
                                                 </div>
                                             </div>
@@ -507,7 +518,7 @@
                     <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                             @if(count($shipping) == 0)
-                            <h1>không có hóa đơn</h1>
+                            <h1>{{ __('content.Not found')}}</h1>
                             @else
                             @foreach($shipping as $order)
                             <div class="purchase-list-page_checkout">
@@ -515,7 +526,7 @@
                                     <div class="order-card_content">
                                         <div class="order-content_header d-flex container-fluid">
                                             <div class="order-content_header_order" style="flex: 1">
-                                                <div class="order-content_header_order_id">Order {{$order->id}}</div>
+                                                <div class="order-content_header_order_id">{{ __('content.Order')}} {{$order->id}}</div>
                                             </div>
                                             <div class="order-content_header_status_wrapper">
                                                 <a href="#" class="order-content_header_order_delivery_status">
@@ -524,7 +535,7 @@
                                                 </a>
                                             </div>
                                             <div class="order-content_header_status">
-                                                Chưa đánh giá
+                                            {{ __('content.Not rated')}}
                                             </div>
                                         </div>
                                         @foreach($order_details as $order_detail)
@@ -565,7 +576,7 @@
                                         <div class="purchase-card_button container-fluid">
                                             <div class="purchase-card_button_total-payment">
                                                 <div class="purchase-card_button_label-price">
-                                                    <span>Total: </span>
+                                                    <span>{{ __('content.Total')}}: </span>
                                                 </div>
                                                 <div class="purchase-card_button_total_price">
                                                     <h3>{{number_format($order->total_price,0,',','.')}}đ</h3>
@@ -573,11 +584,11 @@
                                             </div>
                                             <div class="purchase-card_button_container">
                                                 <div class="purchase-card_button-show">
-                                                    <button class="btn btn-red text-white" disabled>Received</button>
+                                                    <button class="btn btn-red text-white" disabled>{{ __('content.Received')}}</button>
                                                 </div>
                                                 <div class="purchase-card_button-show">
                                                     <a href="{{route('tracking_orders', $order->id)}}">
-                                                        <button class="btn btn-light">Tracking orders</button>
+                                                        <button class="btn btn-light">{{ __('content.Tracking orders')}}</button>
                                                     </a>
                                                 </div>
                                             </div>
@@ -592,7 +603,7 @@
                     <div class="tab-pane fade" id="nav-about1" role="tabpanel" aria-labelledby="nav-about-tab1">
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                             @if(count($shipped) == 0)
-                            <h1>không có hóa đơn</h1>
+                            <h1>{{ __('content.Not found')}}</h1>
                             @else
                             @foreach($shipped as $order)
                             <div class="purchase-list-page_checkout">
@@ -600,7 +611,7 @@
                                     <div class="order-card_content">
                                         <div class="order-content_header d-flex container-fluid">
                                             <div class="order-content_header_order" style="flex: 1">
-                                                <div class="order-content_header_order_id">Order {{$order->id}}</div>
+                                                <div class="order-content_header_order_id">{{ __('content.Order')}} {{$order->id}}</div>
                                             </div>
                                             <div class="order-content_header_status_wrapper">
                                                 <a href="#" class="order-content_header_order_delivery_status">
@@ -610,9 +621,9 @@
                                             </div>
                                             <div class="order-content_header_status">
                                                 @if(count(DB::table('comments')->where('id_order',$order->id)->get()) == 0)
-                                                Not rated
+                                                {{ __('content.Not rated')}}
                                                 @else
-                                                rated
+                                                {{ __('content.Rated')}}
                                                 @endif
                                             </div>
                                         </div>
@@ -654,7 +665,7 @@
                                         <div class="purchase-card_button container-fluid">
                                             <div class="purchase-card_button_total-payment">
                                                 <div class="purchase-card_button_label-price">
-                                                    <span>Total: </span>
+                                                    <span>{{ __('content.Total')}}`: </span>
                                                 </div>
                                                 <div class="purchase-card_button_total_price">
                                                     <h3>{{number_format($order->total_price,0,',','.')}}đ</h3>
@@ -664,22 +675,22 @@
                                             @if(count(DB::table('comments')->where('id_order',$order->id)->get()) == 0)
                                             <div class="purchase-card_button_container">
                                                 <div class="purchase-card_button-show">
-                                                    <button class="btn btn-red text-white" data-toggle="modal" data-target="#ratingOrder_shipped_{{$order->id}}">Rate order</button>
+                                                    <button class="btn btn-red text-white" data-toggle="modal" data-target="#ratingOrder_shipped_{{$order->id}}">{{ __('content.Rate order')}}</button>
                                                 </div>
                                                 <div class="purchase-card_button-show">
                                                     <a href="{{route('tracking_orders', $order->id)}}">
-                                                        <button class="btn btn-light">Tracking orders</button>
+                                                        <button class="btn btn-light">{{ __('content.Tracking orders')}}</button>
                                                     </a>
                                                 </div>
                                             </div>
                                             @else
                                             <div class="purchase-card_button_container">
                                                 <div class="purchase-card_button-show">
-                                                    <button class="btn btn-red text-white" data-toggle="modal" data-target="#viewRating_shipped_{{$order->id}}">Review rated</button>
+                                                    <button class="btn btn-red text-white" data-toggle="modal" data-target="#viewRating_shipped_{{$order->id}}">{{ __('content.View rated')}}</button>
                                                 </div>
                                                 <div class="purchase-card_button-show">
                                                     <a href="{{route('tracking_orders', $order->id)}}">
-                                                        <button class="btn btn-light">Tracking orders</button>
+                                                        <button class="btn btn-light">{{ __('content.Tracking orders')}}</button>
                                                     </a>
                                                 </div>
                                             </div>
@@ -699,9 +710,9 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="form-title text-left my-account-section__header">
-                                                <h4>Cancel order {{$order->id}}</h4>
+                                                <h4>{{ __('content.Cancel order')}} {{$order->id}}</h4>
                                                 <div class="my-account-section__header-subtitle">
-                                                    Please choose reasons cacelled order
+                                                {{ __('content.Please choose reasons cancelled order')}}
                                                 </div>
                                             </div>
 
@@ -711,13 +722,13 @@
                                                     @method('PUT')
                                                     <div class="form-group mb-3">
                                                         <select name="reasons_{{$order->id}}" id="reasons_{{$order->id}}" class="form-control rounded-pill border-0 shadow-sm px-4">
-                                                            <option value="Change delivery address" selected>Change delivery address</option>
-                                                            <option value="Change products in order">Change products in order</option>
-                                                            <option value="Don't want to buy">Don't want to buy</option>
-                                                            <option value="Wrong/duplicate order">Wrong/duplicate order</option>
+                                                            <option value="Change delivery address" selected>{{ __('content.Change delivery address')}}</option>
+                                                            <option value="Change products in order">{{ __('content.Change products in order')}}</option>
+                                                            <option value="Don't want to buy">{{ __("content.Don't want to buy")}}</option>
+                                                            <option value="Wrong/duplicate order">{{ __('content.Wrong/duplicate order')}}</option>
                                                         </select>
                                                     </div>
-                                                    <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Send request</button>
+                                                    <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">{{ __('content.Send request')}}</button>
                                                 </form>
                                             </div>
 
@@ -737,7 +748,7 @@
                                             <form action="{{route('postComments',$order->id)}}" method="post">
                                                 {{csrf_field()}}
                                                 <div class="form-title text-left my-account-section__header">
-                                                    <h4>Rating order {{$order->id}}</h4>
+                                                    <h4>{{ __('content.Rating order')}} {{$order->id}}</h4>
                                                 </div>
                                                 @foreach($order_details as $order_detail)
                                                 @if($order_detail->id_order != $order->id)
@@ -774,12 +785,12 @@
                                                         </div>
                                                     </div>
                                                     <div class="comments-content w-100">
-                                                        <textarea name="comments[{{$order_detail->id}}]" id="comments_{{$order_detail->id}}" cols="30" rows="10" maxlength="300" style="resize: none; width: 100%; ; height:136px" placeholder="Hãy chia sẻ vì sao sản phẩm này không tốt nhé"></textarea>
+                                                        <textarea name="comments[{{$order_detail->id}}]" id="comments_{{$order_detail->id}}" cols="30" rows="10" maxlength="300" style="resize: none; width: 100%; ; height:136px" placeholder="{{ __('content.Please comment why product is not good')}}"></textarea>
                                                     </div>
                                                 </div>
                                                 @endif
                                                 @endforeach
-                                                <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Send request</button>
+                                                <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">{{ __('content.Send request')}}</button>
                                             </form>
                                         </div>
                                     </div>
@@ -795,7 +806,7 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="form-title text-left my-account-section__header">
-                                                <h4>View rated order {{$order->id}}</h4>
+                                                <h4>{{ __('content.View rated')}} {{ __('content.order')}} {{$order->id}}</h4>
                                             </div>
                                             @foreach($rating as $order_detail)
                                             @if($order_detail->id_order == $order->id)
@@ -845,7 +856,7 @@
                     <div class="tab-pane fade" id="nav-about2" role="tabpanel" aria-labelledby="nav-about-tab2">
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                             @if(count($cancel) == 0)
-                            <h1>không có hóa đơn</h1>
+                            <h1>{{ __('content.Not found')}}</h1>
                             @else
                             @foreach($cancel as $order)
                             <div class="purchase-list-page_checkout">
@@ -853,7 +864,7 @@
                                     <div class="order-card_content">
                                         <div class="order-content_header d-flex container-fluid">
                                             <div class="order-content_header_order" style="flex: 1">
-                                                <div class="order-content_header_order_id">Order {{$order->id}}</div>
+                                                <div class="order-content_header_order_id">{{ __('content.Order')}} {{$order->id}}</div>
                                             </div>
                                             <div class="order-content_header_status_wrapper">
                                                 <a href="#" class="order-content_header_order_delivery_status">
@@ -862,7 +873,7 @@
                                                 </a>
                                             </div>
                                             <div class="order-content_header_status">
-                                                Chưa đánh giá
+                                            {{ __('content.Not rated')}}
                                             </div>
                                         </div>
                                         @foreach($order_details as $order_detail)
@@ -903,37 +914,26 @@
                                         <div class="purchase-card_button container-fluid">
                                             <div class="purchase-card_button_total-payment">
                                                 <div class="purchase-card_button_label-price">
-                                                    <span>Total: </span>
+                                                    <span>{{ __('content.Total')}}: </span>
                                                 </div>
                                                 <div class="purchase-card_button_total_price">
                                                     <h3>{{number_format($order->total_price,0,',','.')}}đ</h3>
                                                 </div>
                                             </div>
-                                            @if($order->status == "Cancel" )
+                                            
                                             <div class="purchase-card_button_container">
                                                 <div class="purchase-card_button-show">
                                                     <a href="{{asset('cart/add_again/'.$order->id)}}">
-                                                        <button class="btn btn-red text-white">Buy again</button>
+                                                        <button class="btn btn-red text-white">{{ __('content.Buy again')}}</button>
                                                     </a>
                                                 </div>
                                                 <div class="purchase-card_button-show">
                                                     <a href="{{route('tracking_orders', $order->id)}}">
-                                                        <button class="btn btn-light">Tracking orders</button>
+                                                        <button class="btn btn-light">{{ __('content.Tracking orders')}}</button>
                                                     </a>
                                                 </div>
                                             </div>
-                                            @else
-                                            <div class="purchase-card_button_container">
-                                                <div class="purchase-card_button-show">
-                                                    <button class="btn btn-red text-white" disabled>Received</button>
-                                                </div>
-                                                <div class="purchase-card_button-show">
-                                                    <a href="{{route('tracking_orders', $order->id)}}">
-                                                        <button class="btn btn-light">Tracking orders</button>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            @endif
+                                          
 
                                         </div>
                                     </div>

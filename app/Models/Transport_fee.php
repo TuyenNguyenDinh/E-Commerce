@@ -11,7 +11,7 @@ class Transport_fee extends Model
     protected $dateFormat = 'U';
 
 
-    function province()
+    function Province()
     {
         return $this->belongsTo('App\Models\Province', 'id_province');
     }

@@ -10,7 +10,7 @@ class Attributes extends Model
     public $timestamps = false;
     protected $dateFormat = 'U';
 
-    function categories()
+    function Categories()
     {
         return $this->belongsTo('App\Models\Categories', 'id_category');
     }

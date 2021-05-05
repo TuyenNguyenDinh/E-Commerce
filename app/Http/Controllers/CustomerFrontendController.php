@@ -38,7 +38,7 @@ class CustomerFrontendController extends Controller
 
     public function Logout()
     {
-        Cart::destroy();    
+        Cart::destroy();
         Auth::guard('customer')->logout();
         return redirect('/');
     }
@@ -61,7 +61,11 @@ class CustomerFrontendController extends Controller
         $customer->image_acc = 'img_user.jpg';
         $customer->save();
 
-        alert('Register success', 'Tạo tài khoản thành công, vui lòng đăng nhập!', 'success');
+        if (app()->getLocale() == 'en') {
+            alert('Register success', 'Create account successfully, please login!', 'success');
+        } else {
+            alert('Thành công', 'Tạo tài khoản thành công, vui lòng đăng nhập!', 'success');
+        }
 
         return redirect('/');
     }
@@ -89,11 +93,12 @@ class CustomerFrontendController extends Controller
         $user = Socialite::driver('google')->stateless()->user();
 
         $this->_registerOrLogin($user);
-        if(is_null(Auth::guard('customer')->user()->password)){
+        if (is_null(Auth::guard('customer')->user()->password)) {
             return redirect()->route('passwrSocial');
-        }else{
+        } else {
             return redirect()->route('home');
-        }    }
+        }
+    }
 
     /**
      * Redirect the user to the Facebook authentication page.
@@ -115,9 +120,9 @@ class CustomerFrontendController extends Controller
         $user = Socialite::driver('facebook')->stateless()->user();
 
         $this->_registerOrLogin($user);
-        if(is_null(Auth::guard('customer')->user()->password)){
+        if (is_null(Auth::guard('customer')->user()->password)) {
             return redirect()->route('passwrSocial');
-        }else{
+        } else {
             return redirect()->route('home');
         }
     }
@@ -140,7 +145,7 @@ class CustomerFrontendController extends Controller
     public function passwrSocial()
     {
         $email = Auth::guard('customer')->user()->email;
-        return view('frontend.password_socialite',['email' => $email]);
+        return view('frontend.password_socialite', ['email' => $email]);
     }
 
     public function postPasswrSocial(Request $request)
@@ -149,11 +154,11 @@ class CustomerFrontendController extends Controller
             'email' => 'required|email|exists:customers',
             'password' => 'required|string|min:6|confirmed',
             'password_confirmation' => 'required',
-      
+
         ]);
         $password = Hash::make($request->password);
         Customers::find(Auth::guard('customer')->user()->id)->update(['password' => $password]);
-        return redirect('/');    
+        return redirect('/');
     }
 
     // end
@@ -176,10 +181,18 @@ class CustomerFrontendController extends Controller
         $data = array_merge($request->all(), ["image_acc" => $fileName]);
         $customers->update($data);
         if ($customers) {
-            Alert::success('Thành công', 'Cập nhật hồ sơ thành công');
+            if (app()->getLocale() == 'en') {
+                Alert::success('Success', 'Update successfully');
+            } else {
+                Alert::success('Thành công', 'Cập nhật hồ sơ thành công');
+            }
             return redirect('/');
         } else {
-            Alert::warring('Lỗi', 'Có lỗi');
+            if (app()->getLocale() == 'en') {
+                Alert::warning('Error', 'Found error!');
+            } else {
+                Alert::warring('Lỗi', 'Có lỗi');
+            }
             return redirect('/');
         }
     }
@@ -243,9 +256,13 @@ class CustomerFrontendController extends Controller
     public function changeEmail(Request $request)
     {
         $newEmail = $request->changeEmail;
-        $email = Customers::where('email', '=', Auth::guard('customer')->user()->email)
+        Customers::where('email', '=', Auth::guard('customer')->user()->email)
             ->update(array('email' => $newEmail));
-        Alert::success('Success', 'Change email successfully');
+        if (app()->getLocale() == 'en') {
+            Alert::success('Success', 'Change email successfully');
+        } else {
+            Alert::success('Thành công', 'Đổi email thành công');
+        }
         return redirect("/");
     }
 
@@ -274,8 +291,12 @@ class CustomerFrontendController extends Controller
         $newPhone = $request->changePhone;
         Customers::where('phone', '=', Auth::guard('customer')->user()->phone)
             ->update(array('phone' => $newPhone));
-        Alert::success('Thành công', 'Đổi số điện thoại thành công');
-        return redirect("/");
+        if (app()->getLocale() == 'en') {
+            Alert::success('Success', 'Change phone number successfully');
+        } else {
+            Alert::success('Thành công', 'Đổi số điện thoại thành công');
+        }
+        return redirect()->back();
     }
 
     public function changeProvinceDistrict(Request $request)
@@ -284,8 +305,12 @@ class CustomerFrontendController extends Controller
         $newDistrict = $request->district;
         Customers::where('id_province', '=', Auth::guard('customer')->user()->id_province)
             ->update(array('id_province' => $newProvince, 'id_district' => $newDistrict));
-        Alert::success('Thành công', 'Đổi số điện thoại thành công');
-        return redirect("/");
+        if (app()->getLocale() == 'en') {
+            Alert::success('Success', 'Change province & district successfully');
+        } else {
+            Alert::success('Thành công', 'Đổi tỉnh thành(quận/huyện) thành công');
+        }
+        return redirect()->back();
     }
 
 
@@ -311,9 +336,9 @@ class CustomerFrontendController extends Controller
             $message->subject('Reset Password Notification');
         });
         if (app()->getLocale() == 'en') {
-            return redirect('/')->with('success','Send mail success, please check your mail to reset password');
+            return redirect('/')->with('success', 'Send mail success, please check your mail to reset password');
         } else {
-            return redirect('/')->with('warning', 'Please check the information before proceeding');
+            return redirect('/')->with('success', 'Gửi mail thành công, vui lòng kiểm tra thư khôi phục mật khẩu của bạn');
         }
     }
 
@@ -322,7 +347,9 @@ class CustomerFrontendController extends Controller
         $reasons = $request->reasons;
         Orders::find($id)->update(array_merge(['status' => 'Request to cancel the order', 'reasons_cancel_order' => $reasons]));
         if (app()->getLocale() == 'en') {
-        return redirect('user/account/orders')->with('success', 'Send successfully! Please wait for the seller to check your reasons');
+            return redirect('user/account/orders')->with('success', 'Send successfully! Please wait for the seller to check your reasons');
+        }else{
+            return redirect('user/account/orders')->with('success', 'Gửi yêu cầu thành công! Vui lòng đợi người bán kiểm tra yêu cầu');
         }
     }
 
@@ -352,21 +379,23 @@ class CustomerFrontendController extends Controller
             Products::find($products->id_product)->update(['like' => round($comments->avg('rate'))]);
         }
         if (app()->getLocale() == 'en') {
-        return redirect('/')->with('success', 'Thank you for rated!');
+            return redirect('/')->with('success', 'Thank you for rated!');
+        }else{
+            return redirect('/')->with('success', 'Cảm ơn đã đánh giá!');
         }
     }
 
-    public function buyAgain($id){
-        $product = Orderdetails::where('id_order',$id)->get();
-        foreach($product as $items){
+    public function buyAgain($id)
+    {
+        $product = Orderdetails::where('id_order', $id)->get();
+        foreach ($product as $items) {
             Cart::add([
-                'id' => $items->products->id, 'name' => $items->products->name_product
-                , 'weight' => 0, 'qty' => 1, 'price' => $items->price
-                , 'options' => ['img' => $items->products->image1, 'brands' => $items->products->brands->name
-                , 'categories' => $items->products->categories->name]
+                'id' => $items->products->id, 'name' => $items->products->name_product, 'weight' => 0, 'qty' => 1, 'price' => $items->price, 'options' => [
+                    'img' => $items->products->image1, 'brands' => $items->products->brands->name, 'categories' => $items->products->categories->name
+                ]
             ]);
         }
-        
+
         return redirect('cart/show');
         // return dd($items);
     }

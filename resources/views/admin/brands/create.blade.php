@@ -60,15 +60,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label>Description</label>
-                                <textarea name="description" id="summernote" class="input100 @error('description') is-invalid @enderror">Place <em>some</em> <u>text</u> <strong>here</strong></textarea>
-                                @if ($errors->has('description'))
-                                <span class="help-block">
-                                    <strong style="color: red;">{{ $errors->first('description')}}</strong>
-                                </span>
-                                @endif
-                            </div>
+                            <!--  -->
                             <div class="alert alert-danger print-error-msg" style="display:none">
                                 <ul></ul>
                             </div>

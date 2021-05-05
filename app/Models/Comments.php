@@ -9,15 +9,15 @@ class Comments extends Model
     protected $table = 'comments';
 
 
-    function products(){
+    function Products(){
         return $this->belongsTo('App\Models\Products','id_product');
     }
 
-    function customers(){
+    function Customers(){
         return $this->belongsTo('App\Models\Customers', 'id_customer');
     }
 
-    function orders(){
+    function Orders(){
         return $this->belongsTo('App\Models\Orders','id_order');
     }
 

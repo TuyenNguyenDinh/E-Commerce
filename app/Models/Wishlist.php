@@ -11,7 +11,7 @@ class Wishlist extends Model
     protected $dateFormat = 'U';
 
 
-    function products(){
+    function Products(){
         return $this->belongsTo('App\Models\Products','id_product');
     }
 

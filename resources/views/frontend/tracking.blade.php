@@ -4,24 +4,24 @@
 <div class="account-tabs col-lg-9 col-md-12">
     <div class="container container-tracking">
         @if($orders->id_customer != Auth::guard('customer')->user()->id)
-        <h1>Not found order</h1>
+        <h1>{{ __('content.Not found')}}</h1>
         @else
         @if($orders->status == "Cancel")
         <article class="card">
-            <header class="card-header"> My Orders / Tracking </header>
+            <header class="card-header"> {{ __('content.My Orders')}} / {{ __('content.Tracking')}} </header>
             <div class="card-body">
-                <h6>Order ID: {{$orders->id}}</h6>
+                <h6>{{ __('content.Order')}} ID: {{$orders->id}}</h6>
                 <article class="card">
                     <div class="card-body row">
-                        <div class="col"> <strong>Customer:</strong> <br> {{$orders->customers->name}} </div>
-                        <div class="col"> <strong>Address:</strong> <br> {{$orders->customers->phone}} <br> {{$orders->delivery_address}} </div>
-                        <div class="col"> <strong>Status:</strong> <br> {{$orders->status}} </div>
-                        <div class="col"> <strong>Reasons to cancel order</strong> <br> {{$orders->reasons_cancel_order}} </div>
+                        <div class="col"> <strong>{{ __('content.Customer')}}:</strong> <br> {{$orders->customers->name}} </div>
+                        <div class="col"> <strong>{{ __('content.Address')}}:</strong> <br> {{$orders->customers->phone}} <br> {{$orders->delivery_address}} </div>
+                        <div class="col"> <strong>{{ __('content.Status')}}:</strong> <br> {{$orders->status}} </div>
+                        <div class="col"> <strong>{{ __('content.Reasons to cancel order')}}</strong> <br> {{$orders->reasons_cancel_order}} </div>
                     </div>
                 </article>
                 <div class="track">
-                    <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Order confirmed</span> </div>
-                    <div class="step active"> <span class="icon"> <i class="fal fa-exclamation"></i> </span> <span class="text"> Cancel order</span> </div>
+                    <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">{{ __('content.Order confirmed')}}</span> </div>
+                    <div class="step active"> <span class="icon"> <i class="fal fa-exclamation"></i> </span> <span class="text"> {{ __('content.Cancel order')}}</span> </div>
                 </div>
                 <hr>
                 <ul class="row">
@@ -39,9 +39,18 @@
                 </ul>
                 <table class="table table-bordered tabler-hover">
                     <thead>
+                    <tr>
+                            @foreach($fee_transport as $fee)
+                            @if($fee->id_province == $orders->id_province)
+                            <th>{{ __('content.Fee transport')}}</th>
+                            <th>{{number_format($fee->transport_fee,0,'.','.')}} đ</th>
+                            @else
+                            @endif
+                            @endforeach
+                        </tr>
                         <tr>
-                            <th>Total price</th>
-                            <th>{{number_format($orders->total_price,0,'.','.')}}</th>
+                            <th>{{ __('content.Total price')}}</th>
+                            <th style="font-size: 33px; color:#D10024">{{number_format($orders->total_price,0,'.','.')}} đ</th>
                         </tr>
                         <tr></tr>
                     </thead>
@@ -49,56 +58,56 @@
                 <hr>
 
                 <hr>
-                <a href="#" class="btn btn-warning" data-abc="true"> <i class="fa fa-chevron-left"></i> Back to orders</a>
+                <a href="#" class="btn btn-warning" data-abc="true"> <i class="fa fa-chevron-left"></i> {{ __('content.Back to orders')}}</a>
             </div>
         </article>
         @else
         <article class="card">
-            <header class="card-header"> My Orders / Tracking </header>
+            <header class="card-header"> {{ __('content.My Orders')}} / {{ __('content.Tracking')}} </header>
             <div class="card-body">
-                <h6>Order ID: {{$orders->id}}</h6>
+                <h6>{{ __('content.Order')}} ID: {{$orders->id}}</h6>
                 <article class="card">
                     <div class="card-body row">
-                        <div class="col"> <strong>Estimated Delivery time:</strong> <br>{{$orders->ship_date}} </div>
-                        <div class="col"> <strong>Address:</strong> <br> {{$orders->customers->phone}} <br> {{$orders->delivery_address}} </div>
-                        <div class="col"> <strong>Status:</strong> <br> {{$orders->status}} </div>
+                        <div class="col"> <strong>{{ __('content.Estimated Delivery time')}}:</strong> <br>{{$orders->ship_date}} </div>
+                        <div class="col"> <strong>{{ __('content.Address')}}:</strong> <br> {{$orders->customers->phone}} <br> {{$orders->delivery_address}} </div>
+                        <div class="col"> <strong>{{ __('content.Status')}}:</strong> <br> {{$orders->status}} </div>
                     </div>
                 </article>
                 <div class="track">
                     @if($orders->status == "Checking order")
-                    <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Order confirmed</span> </div>
-                    <div class="step"> <span class="icon"> <i class="fa fa-user"></i> </span> <span class="text"> Picked by courier</span> </div>
-                    <div class="step"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> On the way </span> </div>
-                    <div class="step"> <span class="icon"> <i class="fa fa-box"></i> </span> <span class="text">Ready for pickup</span> </div>
-                    <div class="step"> <span class="icon"> <i class="fa fa-star"></i> </span> <span class="text">Picked</span> </div>
+                    <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">{{ __('content.Order confirmed')}}</span> </div>
+                    <div class="step"> <span class="icon"> <i class="fa fa-user"></i> </span> <span class="text"> {{ __('content.Picked by courier')}}</span> </div>
+                    <div class="step"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> {{ __('content.On the way')}} </span> </div>
+                    <div class="step"> <span class="icon"> <i class="fa fa-box"></i> </span> <span class="text">{{ __('content.Ready for pickup')}}</span> </div>
+                    <div class="step"> <span class="icon"> <i class="fa fa-star"></i> </span> <span class="text">{{ __('content.Picked')}}</span> </div>
 
                     @elseif($orders->status == "Confirmed by the seller")
-                    <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Order confirmed</span> </div>
-                    <div class="step"> <span class="icon"> <i class="fa fa-user"></i> </span> <span class="text"> Picked by courier</span> </div>
-                    <div class="step"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> On the way </span> </div>
-                    <div class="step"> <span class="icon"> <i class="fa fa-box"></i> </span> <span class="text">Ready for pickup</span> </div>
-                    <div class="step"> <span class="icon"> <i class="fa fa-star"></i> </span> <span class="text">Picked</span> </div>
+                    <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">{{ __('content.Order confirmed')}}</span> </div>
+                    <div class="step"> <span class="icon"> <i class="fa fa-user"></i> </span> <span class="text"> {{ __('content.Picked by courier')}}</span> </div>
+                    <div class="step"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> {{ __('content.On the way')}} </span> </div>
+                    <div class="step"> <span class="icon"> <i class="fa fa-box"></i> </span> <span class="text">{{ __('content.Ready for pickup')}}</span> </div>
+                    <div class="step"> <span class="icon"> <i class="fa fa-star"></i> </span> <span class="text">{{ __('content.Picked')}}</span> </div>
 
                     @elseif($orders->status == "Waiting for the goods")
-                    <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Order confirmed</span> </div>
-                    <div class="step active"> <span class="icon"> <i class="fa fa-user"></i> </span> <span class="text"> Picked by courier</span> </div>
-                    <div class="step"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> On the way </span> </div>
-                    <div class="step"> <span class="icon"> <i class="fa fa-box"></i> </span> <span class="text">Ready for pickup</span> </div>
-                    <div class="step"> <span class="icon"> <i class="fa fa-star"></i> </span> <span class="text">Picked</span> </div>
+                    <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">{{ __('content.Order confirmed')}}</span> </div>
+                    <div class="step active"> <span class="icon"> <i class="fa fa-user"></i> </span> <span class="text"> {{ __('content.Picked by courier')}}</span> </div>
+                    <div class="step"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> {{ __('content.On the way')}} </span> </div>
+                    <div class="step"> <span class="icon"> <i class="fa fa-box"></i> </span> <span class="text">{{ __('content.Ready for pickup')}}</span> </div>
+                    <div class="step"> <span class="icon"> <i class="fa fa-star"></i> </span> <span class="text">{{ __('content.Picked')}}</span> </div>
 
                     @elseif($orders->status == "Shipping")
-                    <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Order confirmed</span> </div>
-                    <div class="step active"> <span class="icon"> <i class="fa fa-user"></i> </span> <span class="text"> Picked by courier</span> </div>
-                    <div class="step active"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> On the way </span> </div>
-                    <div class="step"> <span class="icon"> <i class="fa fa-box"></i> </span> <span class="text">Ready for pickup</span> </div>
-                    <div class="step"> <span class="icon"> <i class="fa fa-star"></i> </span> <span class="text">Picked</span> </div>
+                    <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">{{ __('content.Order confirmed')}}</span> </div>
+                    <div class="step active"> <span class="icon"> <i class="fa fa-user"></i> </span> <span class="text"> {{ __('content.Picked by courier')}}</span> </div>
+                    <div class="step active"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> {{ __('content.On the way')}} </span> </div>
+                    <div class="step"> <span class="icon"> <i class="fa fa-box"></i> </span> <span class="text">{{ __('content.Ready for pickup')}}</span> </div>
+                    <div class="step"> <span class="icon"> <i class="fa fa-star"></i> </span> <span class="text">{{ __('content.Picked')}}</span> </div>
 
                     @elseif($orders->status == "Shipped")
-                    <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Order confirmed</span> </div>
-                    <div class="step active"> <span class="icon"> <i class="fa fa-user"></i> </span> <span class="text"> Picked by courier</span> </div>
-                    <div class="step active"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> On the way </span> </div>
-                    <div class="step active"> <span class="icon"> <i class="fa fa-box"></i> </span> <span class="text">Ready for pickup</span> </div>
-                    <div class="step active"> <span class="icon"> <i class="fa fa-star"></i> </span> <span class="text">Picked</span> </div>
+                    <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">{{ __('content.Order confirmed')}}</span> </div>
+                    <div class="step active"> <span class="icon"> <i class="fa fa-user"></i> </span> <span class="text"> {{ __('content.Picked by courier')}}</span> </div>
+                    <div class="step active"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> {{ __('content.On the way')}} </span> </div>
+                    <div class="step active"> <span class="icon"> <i class="fa fa-box"></i> </span> <span class="text">{{ __('content.Ready for pickup')}}</span> </div>
+                    <div class="step active"> <span class="icon"> <i class="fa fa-star"></i> </span> <span class="text">{{ __('content.Picked')}}</span> </div>
                     @endif
                 </div>
                 <hr>
@@ -120,21 +129,21 @@
                         <tr>
                             @foreach($fee_transport as $fee)
                             @if($fee->id_province == $orders->id_province)
-                            <th>Fee transport</th>
+                            <th>{{ __('content.Fee transport')}}</th>
                             <th>{{number_format($fee->transport_fee,0,'.','.')}} đ</th>
                             @else
                             @endif
                             @endforeach
                         </tr>
                         <tr>
-                            <th>Total price</th>
+                            <th>{{ __('content.Total price')}}</th>
                             <th style="font-size: 33px; color:#D10024">{{number_format($orders->total_price,0,'.','.')}} đ</th>
                         </tr>
                         <tr></tr>
                     </thead>
                 </table>
                 <hr>
-                <a href="{{asset('user/account/orders')}}" class="btn btn-warning" data-abc="true"> <i class="fa fa-chevron-left"></i> Back to orders</a>
+                <a href="{{asset('user/account/orders')}}" class="btn btn-warning" data-abc="true"> <i class="fa fa-chevron-left"></i> {{ __('content.Back to orders')}}</a>
             </div>
         </article>
         @endif

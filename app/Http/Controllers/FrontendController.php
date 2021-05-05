@@ -24,7 +24,7 @@ class FrontendController extends Controller
     public function changeLanguage($language)
     {
         Session::put('website_language', $language);
-    
+
         return redirect()->back();
     }
 
@@ -32,7 +32,7 @@ class FrontendController extends Controller
     {
         $data['brands_image'] = Brands::all();
         $data['products'] = Products::all();
-        $data['products_selling'] = Products::where('discount','>',0)->get();
+        $data['products_selling'] = Products::where('discount', '>', 0)->get();
         $data['banner'] = Banner::all();
         return view('frontend.index', $data);
     }
@@ -40,7 +40,7 @@ class FrontendController extends Controller
     public function getCategory($id)
     {
         $data['cate_name'] = Categories::find($id);
-        $data['products'] = Products::where('id_category',$id)->paginate(2);
+        $data['products'] = Products::where('id_category', $id)->paginate(2);
         return view('frontend.category', $data);
     }
 
@@ -56,8 +56,8 @@ class FrontendController extends Controller
         $data['items'] = Products::find($id);
         $data['comments'] = Comments::where('id_product', $id)->get();
         $data['provinces'] = Province::all();
-        if(Auth::guard('customer')->check()){
-            $data['transport_fee'] = Transport_fee::where('id_province',Auth::guard('customer')->user()->id_province)->get();
+        if (Auth::guard('customer')->check()) {
+            $data['transport_fee'] = Transport_fee::where('id_province', Auth::guard('customer')->user()->id_province)->get();
         }
         return view('frontend.details', $data);
     }
@@ -65,9 +65,7 @@ class FrontendController extends Controller
     public function getFeeProvince($id)
     {
         echo json_encode(DB::table('transport_fee')->where('id_province', $id)->get());
-
     }
-
 
     public function getSearch(Request $request)
     {
@@ -106,21 +104,21 @@ class FrontendController extends Controller
                     $query->where('price', '<', 5000000);
                     break;
                 case 2:
-                    $query->where('price', '>=', 5000000)->where('price','<=',10000000);
+                    $query->where('price', '>=', 5000000)->where('price', '<=', 10000000);
                     break;
-               case 3:
-                    $query->where('price', '>=', 10000000)->where('price','<=',15000000);
+                case 3:
+                    $query->where('price', '>=', 10000000)->where('price', '<=', 15000000);
                     break;
-                case 4 :
-                    $query->where('price', '>=', 15000000)->where('price','<=',20000000);
+                case 4:
+                    $query->where('price', '>=', 15000000)->where('price', '<=', 20000000);
                     break;
-                case 5 :
-                    $query->where('price','>=',20000000);
+                case 5:
+                    $query->where('price', '>=', 20000000);
                     break;
             }
         }
 
-        if($request->has('sort_rate')){
+        if ($request->has('sort_rate')) {
             switch ($request->sort_rate) {
                 case 1:
                     $query->where('like', 1);
@@ -128,13 +126,13 @@ class FrontendController extends Controller
                 case 2:
                     $query->where('like', 2);
                     break;
-               case 3:
+                case 3:
                     $query->where('like', 3);
                     break;
-                case 4 :
+                case 4:
                     $query->where('like', 4);
                     break;
-                case 5 :
+                case 5:
                     $query->where('like', 5);
                     break;
             }
@@ -170,9 +168,13 @@ class FrontendController extends Controller
         ];
 
         if (Auth::guard('customer')->attempt($arr) == 'en') {
-            return redirect('/')->with('success', 'Login Success!');
+            return redirect('/');
         } else {
-            return redirect('/')->with('warning', 'Invalid email or password. Please try again!');
+            if (app()->getLocale() == 'en') {
+                return redirect('/')->with('warning', 'Invalid email or password. Please try again!');
+            }else{
+                return redirect('/')->with('warning', 'Email hoặc mật khẩu không hợp lệ, vui lòng kiểm tra lại!');
+            }
         }
     }
 
@@ -202,9 +204,9 @@ class FrontendController extends Controller
         Wishlist::find($id)->delete();
 
         if (app()->getLocale() == 'en') {
-            return redirect('/')->with('success','Delete Success!');
+            return redirect('/')->with('success', 'Delete Success!');
         } else {
-            return redirect('/')->with('warning', 'Please check the information before proceeding');
+            return redirect('/')->with('success', 'Xóa thành công!');
         }
     }
 }

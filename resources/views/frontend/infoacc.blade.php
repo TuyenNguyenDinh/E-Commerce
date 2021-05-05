@@ -6,7 +6,7 @@
             <div class="my-account-section__header-left">
                 <div class="my-account-section__header-title">{{ __('content.My Account')}}</div>
                 <div class="my-account-section__header-subtitle">
-                {{ __('content.Manage profile information for account security')}}
+                    {{ __('content.Manage profile information for account security')}}
                 </div>
             </div>
         </div>
@@ -51,11 +51,11 @@
                             <div class="input-with-label__content">
                                 <div class="my-account__inline-container">
                                     <div class="my-account__input-text">
-                                    @if(is_null($cus->phone))
+                                        @if(is_null($cus->phone))
                                         Not found
-                                    @else
+                                        @else
                                         {{$cus->phone}}
-                                    @endif
+                                        @endif
                                     </div>
                                     <button type="button" class="my-account__no-background-button my-account-profile__change-button" data-toggle="modal" data-target="#changePhone">Thay đổi</button>
                                 </div>
@@ -84,11 +84,11 @@
                             <div class="input-with-label__content">
                                 <div class="my-account__inline-container">
                                     <div class="my-account__input-text">
-                                    @if(is_null($cus->id_province))
-                                    Not found
-                                    @else
+                                        @if(is_null($cus->id_province))
+                                        Not found
+                                        @else
                                         {{$cus->province->province}}
-                                    @endif
+                                        @endif
                                     </div>
                                     <button type="button" class="my-account__no-background-button my-account-profile__change-button" data-toggle="modal" data-target="#changeProvinceDistrict">Thay đổi</button>
                                 </div>
@@ -103,11 +103,11 @@
                             <div class="input-with-label__content">
                                 <div class="my-account__inline-container">
                                     <div class="my-account__input-text">
-                                    @if(is_null($cus->id_district))
+                                        @if(is_null($cus->id_district))
                                         Not found
-                                    @else
+                                        @else
                                         {{$cus->district->district_name}}
-                                    @endif
+                                        @endif
                                     </div>
                                     <button type="button" class="my-account__no-background-button my-account-profile__change-button" data-toggle="modal" data-target="#changeProvinceDistrict">Thay đổi</button>
                                 </div>
@@ -230,4 +230,5 @@
         </div>
     </div>
 </div>
+
 @stop

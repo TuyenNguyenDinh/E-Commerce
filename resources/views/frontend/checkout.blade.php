@@ -302,6 +302,7 @@
         });
     } else {
         $('#push_order').submit(function(event) {
+            swal({title: 'Please wating...'});
             var route = $('#push_order').data('route');
             var form_data = $(this);
             $.ajax({
@@ -313,12 +314,12 @@
                 data: new FormData(this),
                 success: function(response) {
                     swal({
-                        closeOnClickOutside: false,
                         icon: "success",
-                        title: 'Success, thanks for shopping!',
+                        title: 'Success, thanks for shopping! Page will redirect after 2s',
                         showSpinner: true
                     });
-                    $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/");
+                    setTimeout(function(){$(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/")},2000)
+                    
                 },
                 error: function(response) {
                     alert(response)

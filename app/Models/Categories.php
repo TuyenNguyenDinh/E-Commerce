@@ -11,11 +11,11 @@ class Categories extends Model
     protected $dateFormat = 'U';
 
    
-    function products(){
+    function Products(){
         return $this->hasMany('App\Models\Products', 'id_category');
     }
 
-    function attributes(){
+    function Attributes(){
         return $this->hasMany('App\Models\Attributes', 'id_category');
     }
 

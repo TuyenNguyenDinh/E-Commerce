@@ -11,7 +11,7 @@ $key = request()->get('key');
         <div class="row">
             <div class="col-lg-12 col-md-8 col-sm-8 col-8">
                 <div class="section-title">
-                    <h3 class="title">{{ __('Search')}} </h3>
+                    <h3 class="title">{{ __('content.Search')}} </h3>
                 </div>
             </div>
             <div class="col-lg-2 col-md-4 col-sm-4 col-4 filter_respon">
@@ -20,7 +20,7 @@ $key = request()->get('key');
             <div class="col-lg-10">
                 <div class="container">
                     <div class="section-sub-title">
-                        <small><i>Search for keywork: <b>{{$keyword}}</b></i></small>
+                        <small><i>{{ __('content.Search')}} {{ __('content.for keywork')}}: <b>{{$keyword}}</b></i></small>
                     </div>
                     <div class="products-tabs">
                         @if(count($listProduct) != 0)
@@ -43,7 +43,6 @@ $key = request()->get('key');
                                             </div>
                                             <div class="product-body">
                                                 <p class="product-category">{{$item->categories->name}}</p>
-
                                                 <h3 class="product-name">
                                                     <a href="#">{{$item->name_product}}</a>
                                                 </h3>
@@ -62,14 +61,14 @@ $key = request()->get('key');
                                                 <div class="product-btns">
                                                     <button class="add-to-compare">
                                                         <a href="{{asset('wishlist/add/'.$item->id.'.html')}}">
-                                                            <i class="fas fa-exchange-alt"></i>
-                                                            <span class="tooltipp"> {{ __('Add to wishlist')}}</span>
+                                                            <i class="fas fa-heart"></i>
+                                                            <span class="tooltipp"> {{ __('content.Add to wishlist')}}</span>
                                                         </a>
                                                     </button>
                                                     <button class="details">
                                                         <a href="{{asset('details/'.$item->id.'.html')}}" style="color: black;">
                                                             <i class="fas fa-eye"></i>
-                                                            <span class="tooltipp">{{ __('details')}}</span>
+                                                            <span class="tooltipp">{{ __('content.details')}}</span>
                                                         </a>
                                                     </button>
                                                 </div>
@@ -79,7 +78,7 @@ $key = request()->get('key');
                                                     <button class="add-to-cart-btn">
                                                         <i class="far fa-shopping-cart">
                                                         </i>
-                                                        {{ __('add to cart')}}
+                                                        {{ __('content.add to cart')}}
                                                     </button>
                                                 </a>
                                             </div>

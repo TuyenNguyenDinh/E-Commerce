@@ -92,6 +92,7 @@
     background: #fff;
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 13%);
     border-radius: .125rem;
+    overflow: auto;
 }
 
 .my-account-section {
@@ -99,6 +100,7 @@
     padding: 0 30px 20px;
     background: #fff;
     overflow: visible;
+    width: 1000px;
 }
 
 .my-account-section__header {
@@ -140,7 +142,6 @@
 }
 
 .my-account-profile__right {
-    width: 17.5rem;
     display: flex;
     justify-content: center;
     overflow: hidden;
@@ -298,6 +299,10 @@
 
 .swal-modal {
     margin-left: -16px;
+}
+
+.tab-overflow_x {
+    width: 959px;
 }
 
 .nav-tabs .nav-item.show .nav-link,

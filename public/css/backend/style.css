@@ -124,3 +124,7 @@
 .slick-center {
     opacity: unset;
 }
+
+.card-body {
+    overflow: auto;
+}

@@ -11,15 +11,15 @@ class Customer_shipping_address extends Model
     protected $dateFormat = 'U';
 
 
-    function customers(){
+    function Customers(){
         return $this->belongsTo('App\Models\Customers','id_customer');
     }
 
-    function province(){
+    function Province(){
         return $this->belongsTo('App\Models\Province','id_province');
     }
 
-    function district(){
+    function District(){
         return $this->belongsTo('App\Models\District','id_district');
     }
 

@@ -61,18 +61,7 @@
                                         <button type="button" onclick="removeUpload()" class="remove-image">Remove </button>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Description</label><br>
-                                <textarea name="description" id="summernote">
-                                    <?php echo $brands->description ?>
-                                </textarea>
-                                @if ($errors->has('description'))
-                                <span class="help-block">
-                                    <strong style="color: red;">{{ $errors->first('description')}}</strong></br>
-                                </span>
-                                @endif
-                            </div>
+                            </div>                            
                             <!--  -->
                             <div class="alert alert-danger print-error-msg" style="display:none">
 								<ul></ul>

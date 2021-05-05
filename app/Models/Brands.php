@@ -10,7 +10,7 @@ class Brands extends Model
     public $timestamps = false;
     protected $dateFormat = 'U';
 
-    function products(){
+    function Products(){
         return $this->hasMany('App\Models\Products', 'id_brand');
     }
 

@@ -22,23 +22,23 @@ class Customers extends Authenticatable
         return $this->hasMany('App\Models\Customers', 'id_customer');
     }
 
-    function wishlist(){
+    function Wishlist(){
         return $this->hasMany('App\Models\Wishlist','id_customer');
     }
 
-    function orders(){
+    function Orders(){
         return $this->hasMany('App\Models\Orders','id_customer');
     }
 
-    function customer_shipping_address(){
+    function Customer_shipping_address(){
         return $this->hasMany('App\Models\Customer_shipping_address','id_customer');
     }
 
-    function district(){
+    function District(){
         return $this->belongsTo('App\Models\District', 'id_district');
     }
 
-    function province(){
+    function Province(){
         return $this->belongsTo('App\Models\Province', 'id_province');
     }
 

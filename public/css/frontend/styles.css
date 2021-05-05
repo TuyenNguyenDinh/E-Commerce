@@ -717,6 +717,14 @@ nav>li>a:focus,
     display: table;
 }
 
+#pagination .pagination {
+    justify-content: center;
+}
+
+.page-item.active .page-link {
+    z-index: 1!important;
+}
+
 
 /* partent-logo */
 
@@ -825,6 +833,9 @@ nav>li>a:focus,
     }
     .main-nav>li+li {
         margin-left: 0px;
+    }
+    .shop-body h3 {
+        font-size: unset;
     }
 }
 

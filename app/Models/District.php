@@ -11,15 +11,15 @@ class District extends Model
     protected $dateFormat = 'U';
 
 
-    function province(){
+    function Province(){
         return $this->belongsTo('App\Models\Province','id_province');
     }
 
-    function customers(){
+    function Customers(){
         return $this->hasMany('App\Models\Customers', 'id_district');
     }
 
-    function orders(){
+    function Orders(){
         return $this->hasMany('App\Models\District','id_district');
     }
 

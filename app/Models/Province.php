@@ -11,23 +11,23 @@ class Province extends Model
     protected $dateFormat = 'U';
 
 
-    function disctrict(){
+    function Disctrict(){
         return $this->hasMany('App\Models\District','id_district');
     }
 
-    function customers(){
+    function Customers(){
         return $this->hasMany('App\Models\Customers', 'id_province');
     }
 
-    function customers_shipping_address(){
+    function Customers_shipping_address(){
         return $this->hasMany('App\Models\Customers_shipping_address', 'id_province');
     }
 
-    function transport_fee(){
+    function Transport_fee(){
         return $this->hasMany('App\Models\Transport_fee','id_province');
     }
 
-    function orders(){
+    function Orders(){
         return $this->hasMany('App\Models\Province', 'id_province');
     }
 

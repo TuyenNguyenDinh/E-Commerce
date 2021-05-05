@@ -130,9 +130,7 @@
                                                     <i class="fab fa-facebook"></i>
                                                 </button>
                                             </a>
-                                            <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip" data-placement="top" title="Linkedin">
-                                                <i class="fab fa-linkedin"></i>
-                                            </button>
+                                            
                                             </di>
                                         </div>
                                         <div class="modal-footer d-flex justify-content-center">
@@ -165,7 +163,7 @@
                             <div class="header-search">
                                 <form role="search" method="GET" class="full-width" action="{{asset('/product')}}">
                                     <input class="input" type="search" placeholder="Search here" name="key" aria-label="Search" required>
-                                    <button type="submit" class="search-btn">Search</button>
+                                    <button type="submit" class="search-btn">{{ __('content.Search')}}</button>
                                 </form>
                             </div>
                         </div>
@@ -233,7 +231,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="main-nav navbar-nav nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{asset('/')}}">Home <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="{{asset('/')}}">{{ __('content.Home')}} <span class="sr-only">(current)</span></a>
                         </li>
                         @foreach ($categories as $category)
                         <li class="nav-item">
@@ -399,6 +397,29 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="{{asset('js/frontend/frontend.js')}}"></script>
     @include('sweetalert::alert')
+    <script>
+        $(function() {
+            $(document).ready(function() {
+                $('#province').on('change', function() {
+                    let id = $(this).val();
+                    $('#district').empty();
+                    $('#district').append(`<option value="0" disabled selected>Processing...</option>`);
+                    $.ajax({
+                        type: 'GET',
+                        url: "{{asset('GetSubCatAgainstMainCatEdit')}}" + '/' + id,
+                        success: function(response) {
+                            var response = JSON.parse(response);
+                            console.log(response);
+                            $('#district').empty();
+                            response.forEach(element => {
+                                $('#district').append(`<option value="${element['id']}">${element['district_name']}</option>`);
+                            });
+                        }
+                    });
+                });
+            });
+        })
+    </script>
 </body>
 
 </html>
