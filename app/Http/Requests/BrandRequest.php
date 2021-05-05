@@ -28,7 +28,7 @@ class BrandRequest extends FormRequest
                 $rules = [
                     'name'=> 'required|max:30|min:2',
                     'image' => 'required|image|max:10000|',
-                    'description' => 'required|max:500|min:10'
+            
                  
                 ];
                 break;
@@ -37,7 +37,6 @@ class BrandRequest extends FormRequest
                 $rules = [
                     'name'=> 'required|max:30|min:2|unique:brands,name',
                     'image' => 'required|image|max:10000|',
-                    'description' => 'required|max:500|min:10'
                 ];
                 break;
         }
@@ -48,16 +47,13 @@ class BrandRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Tên thương hiệu không được để trống',
-            'name.max' => 'Tên thương hiệu không được quá 30 kí tự',
-            'name.min' => 'Tên thương hiệu phải có ít nhất 2 kí tự',
-            'name.unique' => 'Tên thương hiệu đã tồn tại, vui lòng nhập 1 tên khác',
-            'image.required' =>  'Ảnh không được để trống',
-            'image.image' => 'Tệp phải là ảnh',
-            'image.max' =>'Ảnh có kích thước nhỏ hơn 10MB',
-            'description.required' => 'Mô tả không được để trống',
-            'description.max' => 'Mô tả không được quá 500 kí tự',
-            'description.min' => 'Mô tả phải ít nhất 10 kí tự',
+            'name.required' => 'The brand name is required',
+            'name.max' => 'The brand name is no more than 30 characters',
+            'name.min' => 'The brand name minimum required is 2 characters',
+            'name.unique' => 'The brand name already exists, please enter another',
+            'image.required' =>  'The image is required',
+            'image.image' => 'The file must image format',
+            'image.max' =>'The file size is no more than 10MB',
         ];
     }
 }
