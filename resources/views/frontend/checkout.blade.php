@@ -277,21 +277,39 @@
             url: route,
             data: form_data.serialize(),
             success: function(response) {
-                swal({
-                    closeOnClickOutside: false,
-                    icon: "Success",
-                    title: 'Add address successfully!',
-                    showSpinner: true,
+                if("{{app()->getLocale() == 'en'}}"){
+                    swal({
+                        closeOnClickOutside: false,
+                        icon: "Success",
+                        title: 'Add address successfully!',
+                        showSpinner: true,
                 });
+                }else{
+                    swal({
+                        closeOnClickOutside: false,
+                        icon: "Success",
+                        title: 'Thêm địa chỉ thành công!',
+                        showSpinner: true,
+                });
+                }
                 window.location.reload();
             },
             error: function(response) {
-                swal({
-                    closeOnClickOutside: false,
-                    icon: "Warning",
-                    title: 'Error, please try again',
-                    showSpinner: true
-                });
+                if("{{app()->getLocale() == 'en'}}"){
+                    swal({
+                        closeOnClickOutside: false,
+                        icon: "Warning",
+                        title: 'Error, please try again',
+                        showSpinner: true
+                    });
+                }else{
+                    swal({
+                        closeOnClickOutside: false,
+                        icon: "Warning",
+                        title: 'Lỗi, vui lòng thử lại',
+                        showSpinner: true
+                    });
+                }
             },
         })
         event.preventDefault();
@@ -313,11 +331,19 @@
                 cache: false,
                 data: new FormData(this),
                 success: function(response) {
-                    swal({
-                        icon: "success",
-                        title: 'Success, thanks for shopping! Page will redirect after 2s',
-                        showSpinner: true
+                    if("{{app()->getLocale() == 'en'}}"){
+                        swal({
+                            icon: "success",
+                            title: 'Success, thanks for shopping! Page will redirect after 2s',
+                            showSpinner: true
+                        });
+                    }else{
+                        swal({
+                            icon: "success",
+                            title: 'Đặt hàng thành công! Trang sẽ chuyển hướng sau 2s',
+                            showSpinner: true
                     });
+                    }
                     setTimeout(function(){$(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/")},2000)
                     
                 },

@@ -141,9 +141,9 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-title text-left my-account-section__header">
-                                <h4>Đổi email</h4>
+                                <h4>{{ __('content.Change email')}}</h4>
                                 <div class="my-account-section__header-subtitle">
-                                    Để cập nhật email mới, vui lòng xác nhận bằng cách nhập mật khẩu
+                                {{ __('content.Change to new email, please enter your password')}}
                                 </div>
                             </div>
                             <div class="d-flex flex-column text-center">
@@ -152,7 +152,7 @@
                                     <div class="form-group">
                                         <input type="password" name="verifyemail" class="form-control" id="verifyemail" placeholder="Password...">
                                     </div>
-                                    <button type="submit" class="btn btn-info btn-block btn-round">Xác nhận</button>
+                                    <button type="submit" class="btn btn-info btn-block btn-round">{{ __('content.Confirm')}}</button>
                                 </form>
                             </div>
                             </di>
@@ -170,9 +170,9 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-title text-left my-account-section__header">
-                                <h4>Đổi số điện thoại</h4>
+                                <h4>{{ __('content.Change phone number')}}</h4>
                                 <div class="my-account-section__header-subtitle">
-                                    Để cập nhật số điện thoại mới, vui lòng xác nhận bằng cách nhập mật khẩu
+                                {{ __('content.Change to new phone mumber, please enter your password')}}
                                 </div>
                             </div>
                             <div class="d-flex flex-column text-center">
@@ -199,7 +199,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-title text-left my-account-section__header">
-                                <h4>Đổi Tỉnh thành, Quận(Huyện)</h4>
+                                <h4>{{ __('content.Change Province, District')}}</h4>
                                 <div class="my-account-section__header-subtitle">
 
                                 </div>
@@ -209,16 +209,16 @@
                                     {{csrf_field()}}
                                     <div class="form-group">
                                         <select name="province" id="province" class="form-control rounded-pill border-0 shadow-sm px-4">
-                                            <option value="0" selected disabled>---Chọn tỉnh---</option>
+                                            <option value="0" selected disabled>---{{ __('content.Choose Province')}}---</option>
                                             @foreach($pr as $province)
                                             <option value="{{$province->id}}">{{ucfirst($province->province)}}</option>
                                             @endforeach
                                         </select>
                                         <select name="district" id="district" class="form-control rounded-pill border-0 shadow-sm px-4" placeholder="Select Sub Category">
-                                            <option value="0" selected disabled>---Chọn Quận(Huyện)---</option>
+                                            <option value="0" selected disabled>---{{ __('content.Choose District')}}---</option>
                                         </select>
                                     </div>
-                                    <button type="submit" class="btn btn-info btn-block btn-round">Xác nhận</button>
+                                    <button type="submit" class="btn btn-info btn-block btn-round">{{ __('content.Confirm')}}</button>
                                 </form>
                             </div>
                             </di>

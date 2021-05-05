@@ -185,5 +185,16 @@ return [
     'If you did not receive the email' => 'Bạn không nhận được email',
     'click here to another request ' => 'Click để gửi yêu cầu',
 
+    //info Account
+
+    'Change email' => 'Thay đổi Email',
+    'Change to new email, please enter your password' => 'Để thay đổi Email, vui lòng nhập mật khẩu của bạn',
+    'Change phone number' => 'Thay đổi số điện thoại',
+    'Change to new phone mumber, please enter your password' => 'Để thay đổi số điện thoại, vui lòng nhập mật khẩu của bạn',
+    'Change Province, District' => 'Thay đổi Tỉnh(Thành phố), Quận(Huyện)',
+    'Choose Province' => 'Chọn Tỉnh(Thành phố)',
+    'Choose District' => 'Chọn Quận(Huyện)',
+    'Confirm' => 'Xác nhận',
+
 
 ];

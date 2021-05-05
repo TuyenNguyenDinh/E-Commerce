@@ -36,21 +36,21 @@ class RegisterRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Không được để trống',
-            'name.max' => 'Tên không được quá 30 kí tự',
-            'phone.required'=> 'Số điện thoại không được để trống',
-            'phone.max' => 'Số điện thoại không được quá 10 số',
-            'phone.numeric' => 'Số điện thoại phải ở dạng số',
-            'password.required' => 'Mật khẩu không được để trống',
-            'password.max' => 'Mật khẩu tối đa 10 kí tự',
-            'password.min' => 'Mật khẩu ít nhất là 5 kí tự',
-            'rePassword.required' => 'Mật khẩu không được để trống',
-            'rePassword.same' => 'Mật khẩu nhập lại không khớp',
-            'email.required' => 'Email không được để trống',
-            'email.email' => 'Sai định dạng, phải là ...@example.com',
-            'email.unique' => 'Email đã tồn tại, vui lòng nhập 1 email khác',
-            'address.required' => 'Địa chỉ không được để trống',
-            'address.max' =>  'Địa chỉ không được quá 100 kí tự'
+            'name.required' => 'The name is required',
+            'name.max' => 'The name is no more than 30 characters',
+            'phone.required'=> 'The phone number is required',
+            'phone.max' => 'The phone number is no more than 11 character',
+            'phone.numeric' => 'The phone number must number format',
+            'password.required' => 'The password is required',
+            'password.max' => 'The password is no more than 10 characters',
+            'password.min' => 'The password minimum required is 5 characters',
+            'rePassword.required' => 'The password is required',
+            'rePassword.same' => 'The password is not match',
+            'email.required' => 'The email is required',
+            'email.email' => 'Invalid format, it must be ...@example.com',
+            'email.unique' => 'Email already exists, please enter another email',
+            'address.required' => 'The address is required',
+            'address.max' =>  'The address is no more than 100 characters'
         ];
     }
 }

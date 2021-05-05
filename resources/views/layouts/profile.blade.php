@@ -79,12 +79,21 @@
                 if (response.success) {
                     location.href = "{{route ('changeEmail') }}";
                 } else {
-                    swal({
+                    if("{{app()->getLocale() == 'en'}}"){
+                        swal({
+                            closeOnClickOutside: false,
+                            icon: "warning",
+                            title: 'Wrong password, please check again!',
+                            showSpinner: true
+                        });
+                    }else{
+                        swal({
                         closeOnClickOutside: false,
                         icon: "warning",
                         title: 'Sai mật khẩu, vui lòng kiểm tra lại!',
                         showSpinner: true
                     });
+                    }
                 }
             },
         })
@@ -103,12 +112,21 @@
                 if (response.success) {
                     location.href = "{{route ('changePhone') }}";
                 } else {
-                    swal({
+                    if("{{app()->getLocale() == 'en'}}"){
+                        swal({
+                            closeOnClickOutside: false,
+                            icon: "warning",
+                            title: 'Wrong password, please check again!',
+                            showSpinner: true
+                        });
+                    }else{
+                        swal({
                         closeOnClickOutside: false,
                         icon: "warning",
                         title: 'Sai mật khẩu, vui lòng kiểm tra lại!',
                         showSpinner: true
                     });
+                    }
                 }
             },
         })

@@ -46,10 +46,10 @@ class CategoryRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Tên danh mục không được để trống',
-            'name.max' => 'Tên danh mục không được quá 30 kí tự',
-            'name.min' => 'Tên danh mục phải có ít nhất 2 kí tự',
-            'name.unique' => 'Tên danh mục đã tồn tại, vui lòng nhập 1 tên khác'
+            'name.required' => 'The category name is required',
+            'name.max' => 'The category name is no more than 30 characters',
+            'name.min' => 'The category name minimum required is 2 characters',
+            'name.unique' => 'The category name already exists, please enter another'
         ];
     }
 }
