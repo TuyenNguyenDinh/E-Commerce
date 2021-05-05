@@ -142,9 +142,9 @@
                                                         @if(Auth::guard('customer')->check())
                                                         <div class="currency d-flex item-center">
                                                             <select class="fee_province" name="fee_province" id="fee_province">
-                                                            @foreach($transport_fee as $fee)
+                                                                @foreach($transport_fee as $fee)
                                                                 <option value="0" selected disabled>{{ number_format($fee->transport_fee,0,'.','.') }} đ</option>
-                                                            @endforeach
+                                                                @endforeach
                                                             </select>
                                                         </div>
                                                         @else
@@ -168,6 +168,7 @@
                                 <p>{{ __('content.Quantity')}}</p>
                             </div>
                             <div class="product_quant_input">
+                                @if($items->quantity != 0)
                                 <div style="margin-right: 15px">
                                     <div class="button_quant_input">
                                         <button class="_quant_minus" onclick="decrement()">-</button>
@@ -176,18 +177,36 @@
                                     </div>
                                 </div>
                                 <p>{{$items->quantity}} {{ __('content.Products available')}}</p>
+                                @else
+                                <div style="margin-right: 15px">
+                                    <div class="button_quant_input">
+                                        <button class="_quant_minus" onclick="decrement()">-</button>
+                                        <input class="_quant input_quant" type="number" id="qty_number" name="qty_number" value="0" min=0 max=0>
+                                        <button class="_quant_plus" onclick="increment()">+</button>
+                                    </div>
+                                </div>
+                                <p style="color: red;">Out of stock</p>
+                                @endif
                             </div>
                         </div>
                         <div class="button-add_cart">
+                            @if($items->quantity !=0 )
                             <a href="{{asset('cart/add/'.$items->id)}}">
                                 <button type="button" class="btn btn-primary add_wishlist">
                                     <i class="fal fa-cart-plus"></i>
                                     {{ __('content.Add to cart')}}
                                 </button>
                             </a>
-                            <a href="#">
+                            <a href="{{asset('purchase/'. $items->id)}}">
                                 <button type="button" class="btn btn-primary">{{ __('content.Buy now')}}</button>
                             </a>
+                            @else
+                            <button type="button" class="btn btn-primary disable-btn" disabled>
+                                <i class="fal fa-cart-plus"></i>
+                                {{ __('content.Add to cart')}}
+                            </button>
+                            <button type="button" class="btn btn-primary disable-btn" disabled>{{ __('content.Buy now')}}</button>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -223,7 +242,7 @@
                         <label class="label_title">{{ __('content.Size')}}</label>
                         <div class="product_track_side d-flex">
                             <span>{{$items->attributes}}</span>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -282,43 +301,43 @@
                     @else
                     <div class="product_reviews_content">
                         @foreach ($comments as $comment)
-                            <div class="reviews_wrapper">
-                                <div class="row">
-                                    <div class="col-lg-1 col-md-2">
-                                        <div class="logo_acc">
-                                            <div>
-                                                <img src="{{ asset('upload/'.$comment->customers->image_acc) }}" height="50px" width="50px">
-                                            </div>
+                        <div class="reviews_wrapper">
+                            <div class="row">
+                                <div class="col-lg-1 col-md-2">
+                                    <div class="logo_acc">
+                                        <div>
+                                            <img src="{{ asset('upload/'.$comment->customers->image_acc) }}" height="50px" width="50px">
                                         </div>
                                     </div>
-                                    <div class="col-lg-9 col-md-7">
-                                        <div class="user_acc d-flex align-items-center">
-                                            <div class="row">
-                                                <div class="username_acc">
-                                                    <span>{{$comment->customers->name}}</span>
-                                                </div>
-                                                <div class="datetime_post d-flex align-items-center">
-                                                    <span>{{$comment->created_at}}</span>
-                                                </div>
+                                </div>
+                                <div class="col-lg-9 col-md-7">
+                                    <div class="user_acc d-flex align-items-center">
+                                        <div class="row">
+                                            <div class="username_acc">
+                                                <span>{{$comment->customers->name}}</span>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-3">
-                                        <div class="user_rating">
-                                            <div class="star-icon">
-                                                @for($i = 1; $i <= $comment->rate; $i++)
-                                                    <i class="fas fa-star"></i>
-                                                @endfor
+                                            <div class="datetime_post d-flex align-items-center">
+                                                <span>{{$comment->created_at}}</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="user_reviews_content">
-                                    <p>{{$comment->comments}}
-                                    </p>
+                                <div class="col-lg-2 col-md-3">
+                                    <div class="user_rating">
+                                        <div class="star-icon">
+                                            @for($i = 1; $i <= $comment->rate; $i++)
+                                                <i class="fas fa-star"></i>
+                                                @endfor
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            @endforeach
+                            <div class="user_reviews_content">
+                                <p>{{$comment->comments}}
+                                </p>
+                            </div>
+                        </div>
+                        @endforeach
                     </div>
                     @endif
 
@@ -380,7 +399,6 @@
             });
         });
     })
-
 </script>
 
 @stop

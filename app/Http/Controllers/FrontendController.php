@@ -7,6 +7,8 @@ use App\Models\Countdown;
 use App\Models\Brands;
 use App\Models\Categories;
 use App\Models\Comments;
+use App\Models\Customer_shipping_address;
+use App\Models\Customers;
 use App\Models\Products;
 use App\Models\Province;
 use App\Models\Transport_fee;
@@ -172,7 +174,7 @@ class FrontendController extends Controller
         } else {
             if (app()->getLocale() == 'en') {
                 return redirect('/')->with('warning', 'Invalid email or password. Please try again!');
-            }else{
+            } else {
                 return redirect('/')->with('warning', 'Email hoặc mật khẩu không hợp lệ, vui lòng kiểm tra lại!');
             }
         }
@@ -208,5 +210,22 @@ class FrontendController extends Controller
         } else {
             return redirect('/')->with('success', 'Xóa thành công!');
         }
+    }
+
+    public function productBuyNow(Request $request, $id)
+    {
+        
+            $data['products'] = Products::find($id);
+            $id_cus = Auth::guard('customer')->user()->id;
+            $data['cus'] = Customers::find($id_cus);
+            $data['ship_addrs'] = Customer_shipping_address::where('id_customer', $id_cus)->get();
+            $data['cus'] = Customers::find($id);
+            $pr = Province::all();
+            $data['transport_fee'] = Transport_fee::all();
+            return view('frontend.purchase_product', $data, ['pr' => $pr]);
+            
+                // echo $data['products']->id;
+            
+            // return dd($data);
     }
 }
