@@ -195,5 +195,7 @@ return [
     'Confirm' => 'Confirm',
 
     'out of stock' => 'out of stock',
+    'We cannot find your phone number' => 'We cannot find your phone number',
+    'We cannot find your address' => 'We cannot find your address',
 
 ];

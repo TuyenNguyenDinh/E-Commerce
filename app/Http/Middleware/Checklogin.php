@@ -20,7 +20,7 @@ class Checklogin
             return $next($request);
         } else {
             if (app()->getLocale() == 'en') {
-                return redirect('/')->with('warning','Please Login to continue!');
+                return redirect('/')->with('warning','Please login to continue!');
             }else{
                 return redirect('/')->with('warning','Vui lòng đăng nhập để tiếp tục!');    
             }

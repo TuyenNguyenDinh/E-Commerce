@@ -25,7 +25,7 @@
                     </div>
                     <div class="shop-body">
                         <h3>{{ __('content.Perfect')}}<br>{{ __('content.Quality')}}</h3>
-                        <a href="#" class="cta-btn text-uppercase">shop now
+                        <a class="cta-btn text-uppercase" style="cursor:pointer">shop now
                             <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -38,7 +38,7 @@
                     </div>
                     <div class="shop-body">
                         <h3>{{ __('content.More')}}<br>{{ __('content.Brands')}}</h3>
-                        <a href="#" class="cta-btn text-uppercase">shop now
+                        <a class="cta-btn text-uppercase" style="cursor:pointer">shop now
                             <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>

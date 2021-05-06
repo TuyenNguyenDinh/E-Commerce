@@ -360,92 +360,138 @@
     $(function() {
         $(document).ready(function() {
             $('#bt-add-cart').on('click', function() {
-                var id = "{{$items->id}}";
-                $.ajax({
-                    type: 'GET',
-                    url: "{{asset('cart/add')}}/" + id,
-                    success: function(response) {
-                        if ("{{app()->getLocale() == 'en'}}") {
-                            swal({
-                                closeOnClickOutside: false,
-                                icon: "success",
-                                title: 'Add products in cart successfully',
-                                showSpinner: true
-                            });
-                        } else {
-                            swal({
-                                closeOnClickOutside: false,
-                                icon: "success",
-                                title: 'Thêm sản phẩm vào giỏ hàng thành công',
-                                showSpinner: true
-                            });
-                        };
-                        setTimeout(function(){window.location.reload()},1000)
-                    },
-                    error: function(response) {
-                        if ("{{app()->getLocale() == 'en'}}") {
-                            swal({
-                                closeOnClickOutside: false,
-                                icon: "Warning",
-                                title: 'Error, please check again!',
-                                showSpinner: true
-                            });
-                        } else {
-                            swal({
-                                closeOnClickOutside: false,
-                                icon: "Warning",
-                                title: 'Lỗi, vui lòng kiểm tra lại',
-                                showSpinner: true
-                            });
-                        };
+                if ("Auth::guard('customer')->check()") {
+                    if ("{{app()->getLocale() == 'en'}}") {
+                        swal({
+                            closeOnClickOutside: false,
+                            icon: "warning",
+                            title: 'Please login to continue!',
+                            showSpinner: true
+                        })
+                    } else {
+                        swal({
+                            closeOnClickOutside: false,
+                            icon: "warning",
+                            title: 'Vui lòng đăng nhập để tiếp tục!',
+                            showSpinner: true
+                        })
                     }
-                })
+                    setTimeout(function() {
+                        $(location).attr('href', 'http://localhost/ecommerce/E-Commerce/public/')
+                    }, 1000)
+                } else {
+                    var id = "{{$items->id}}";
+                    $.ajax({
+                        type: 'GET',
+                        url: "{{asset('cart/add')}}/" + id,
+                        success: function(response) {
+                            if ("{{app()->getLocale() == 'en'}}") {
+                                swal({
+                                    closeOnClickOutside: false,
+                                    icon: "success",
+                                    title: 'Add products in cart successfully',
+                                    showSpinner: true
+                                });
+                            } else {
+                                swal({
+                                    closeOnClickOutside: false,
+                                    icon: "success",
+                                    title: 'Thêm sản phẩm vào giỏ hàng thành công',
+                                    showSpinner: true
+                                });
+                            };
+                            setTimeout(function() {
+                                window.location.reload()
+                            }, 1000)
+                        },
+                        error: function(response) {
+                            if ("{{app()->getLocale() == 'en'}}") {
+                                swal({
+                                    closeOnClickOutside: false,
+                                    icon: "warning",
+                                    title: 'Error, please check again!',
+                                    showSpinner: true
+                                });
+                            } else {
+                                swal({
+                                    closeOnClickOutside: false,
+                                    icon: "warning",
+                                    title: 'Lỗi, vui lòng kiểm tra lại',
+                                    showSpinner: true
+                                });
+                            };
+                        }
+                    })
+                }
             })
         });
 
         $(document).ready(function() {
             $('#bt-purchase').on('click', function() {
-                var id = "{{$items->id}}"
-                $.ajax({
-                    type: 'GET',
-                    url: "{{asset('cart/purchase')}}/" + id,
-                    success: function(response) {
-                        if ("{{app()->getLocale() == 'en'}}") {
-                            swal({
-                                closeOnClickOutside: false,
-                                icon: "success",
-                                title: 'Add products in cart successfully',
-                                showSpinner: true
-                            });
-                        } else {
-                            swal({
-                                closeOnClickOutside: false,
-                                icon: "success",
-                                title: 'Thêm sản phẩm vào giỏ hàng thành công',
-                                showSpinner: true
-                            });
-                        };
-                        setTimeout(function(){$(location).attr('href', 'http://localhost/ecommerce/E-Commerce/public/cart/show')},1000)
-
-                    },
-                    error: function(response) {
-                        if ("{{app()->getLocale() == 'en'}}") {
-                            swal({
-                                closeOnClickOutside: false,
-                                icon: "Warning",
-                                title: 'Error, please check again!',
-                                showSpinner: true
-                            });
-                        } else {
-                            swal({
-                                closeOnClickOutside: false,
-                                icon: "Warning",
-                                title: 'Lỗi, vui lòng kiểm tra lại',
-                                showSpinner: true
-                            });
-                        }
+                if ("Auth::guard('customer')->check()") {
+                    if ("{{app()->getLocale() == 'en'}}") {
+                        swal({
+                            closeOnClickOutside: false,
+                            icon: "warning",
+                            title: 'Please login to continue!',
+                            showSpinner: true
+                        })
+                    } else {
+                        swal({
+                            closeOnClickOutside: false,
+                            icon: "warning",
+                            title: 'Vui lòng đăng nhập để tiếp tục!',
+                            showSpinner: true
+                        })
                     }
-                })
+                    setTimeout(function() {
+                        $(location).attr('href', 'http://localhost/ecommerce/E-Commerce/public/')
+                    }, 1000)
+                } else {
+                    var id = "{{$items->id}}"
+                    $.ajax({
+                        type: 'GET',
+                        url: "{{asset('cart/purchase')}}/" + id,
+                        success: function(response) {
+                            if ("{{app()->getLocale() == 'en'}}") {
+                                swal({
+                                    closeOnClickOutside: false,
+                                    icon: "success",
+                                    title: 'Add products in cart successfully',
+                                    showSpinner: true
+                                });
+                            } else {
+                                swal({
+                                    closeOnClickOutside: false,
+                                    icon: "success",
+                                    title: 'Thêm sản phẩm vào giỏ hàng thành công',
+                                    showSpinner: true
+                                });
+                            };
+                            setTimeout(function() {
+                                $(location).attr('href', 'http://localhost/ecommerce/E-Commerce/public/cart/show')
+                            }, 1000)
+
+                        },
+                        error: function(response) {
+                            if ("{{app()->getLocale() == 'en'}}") {
+                                swal({
+                                    closeOnClickOutside: false,
+                                    icon: "Warning",
+                                    title: 'Error, please check again!',
+                                    showSpinner: true
+                                });
+                            } else {
+                                swal({
+                                    closeOnClickOutside: false,
+                                    icon: "Warning",
+                                    title: 'Lỗi, vui lòng kiểm tra lại',
+                                    showSpinner: true
+                                });
+                            }
+                        }
+                    })
+                }
             })
         })
 

@@ -32,16 +32,22 @@
                                             <div class="col-auto mt-0 addrs-respon">
                                                 <p><b>{{ $cus->name}}</b></p>
                                                 @if(is_null($cus->phone))
-                                                <p>We cannot find your phone number. <a href="{{asset('user/account/profile')}}">Add now</a></p>
+                                                <p>{{ __('content.We cannot find your phone number')}}. <a href="{{asset('user/account/profile')}}">Add now</a></p>
                                                 @else
                                                 <p>{{$cus->phone}}</p>
                                                 @endif
+                                                <!--  -->
+                                                @if(is_null($cus->address))
+                                                <p>{{ __('content.We cannot find your address')}}. <a href="{{asset('user/account/profile')}}">Add now</a></p>
+                                                @else
                                                 <select class="delivery_address" name="delivery_address" id="delivery_address">
                                                     <option value="{{$cus->province->id}}||{{$cus->address}}">{{$cus->address}}</option>
                                                     @foreach($ship_addrs as $addrs)
                                                     <option value="{{$addrs->province->id}}||{{$addrs->address_detail}}">{{$addrs->address_detail}}</option>
                                                     @endforeach
                                                 </select>
+                                                @endif
+                                                
                                             </div>
                                             <div class="col-auto mt-0" style="padding-top: 23px;">
                                                 <a data-toggle="modal" data-target="#addAddress" style="cursor:pointer">
@@ -67,32 +73,7 @@
                                                 <textarea name="notes" id="notes" cols="50" rows="2" style="height: 50px; resize: none;  width: calc(100% - 50px);"></textarea>
                                             </div>
                                         </div>
-                                        <!-- <div class="row mt-4">
-                                        <div class="col">
-                                            <p class="text-muted mb-2">SHIPPING UNIT</p>
-                                            <hr class="mt-0">
-                                            <div class="shipping-unit_wrapper d-flex">
-                                                <div class="d-flex align-items-baseline flex-column">
-                                                    <div class="shipping_unit-name-group">
-                                                        <input type="checkbox" name="shipping-unit-name" id="shipping-unit-name">
-                                                        <label for="shipping-unit-name">
-                                                            <div class="shipping-unit_wrapper-name">
-                                                                <h5>Giao hàng tiết kiệm</h5>
-                                                            </div>
-                                                        </label>
-                                                    </div>
-                                                    <div class="shipping_unit-name-group">
-                                                        <input type="checkbox" name="shipping-unit-name" id="shipping-unit-name">
-                                                        <label for="shipping-unit-name">
-                                                            <div class="shipping-unit_wrapper-name">
-                                                                <h5>Giao hàng tiết kiệm</h5>
-                                                            </div>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> -->
+
                                     </div>
                                 </div>
                             </div>
@@ -279,14 +260,14 @@ git</div>
                 if ("{{app()->getLocale() == 'en'}}") {
                     swal({
                         closeOnClickOutside: false,
-                        icon: "Success",
+                        icon: "success",
                         title: 'Add address successfully!',
                         showSpinner: true,
                     });
                 } else {
                     swal({
                         closeOnClickOutside: false,
-                        icon: "Success",
+                        icon: "success",
                         title: 'Thêm địa chỉ thành công!',
                         showSpinner: true,
                     });
@@ -297,14 +278,14 @@ git</div>
                 if ("{{app()->getLocale() == 'en'}}") {
                     swal({
                         closeOnClickOutside: false,
-                        icon: "Warning",
+                        icon: "warning",
                         title: 'Error, please try again',
                         showSpinner: true
                     });
                 } else {
                     swal({
                         closeOnClickOutside: false,
-                        icon: "Warning",
+                        icon: "warning",
                         title: 'Lỗi, vui lòng thử lại',
                         showSpinner: true
                     });
