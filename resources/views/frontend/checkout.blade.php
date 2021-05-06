@@ -212,7 +212,7 @@
             </div>
         </div>
     </div>
-</div>
+git</div>
 <script>
     $(function() {
         $('#provinceAdd').select2({
@@ -223,7 +223,6 @@
             theme: 'bootstrap4',
         });
     })
-
 
 
     $(document).ready(function() {
@@ -277,32 +276,32 @@
             url: route,
             data: form_data.serialize(),
             success: function(response) {
-                if("{{app()->getLocale() == 'en'}}"){
+                if ("{{app()->getLocale() == 'en'}}") {
                     swal({
                         closeOnClickOutside: false,
                         icon: "Success",
                         title: 'Add address successfully!',
                         showSpinner: true,
-                });
-                }else{
+                    });
+                } else {
                     swal({
                         closeOnClickOutside: false,
                         icon: "Success",
                         title: 'Thêm địa chỉ thành công!',
                         showSpinner: true,
-                });
+                    });
                 }
                 window.location.reload();
             },
             error: function(response) {
-                if("{{app()->getLocale() == 'en'}}"){
+                if ("{{app()->getLocale() == 'en'}}") {
                     swal({
                         closeOnClickOutside: false,
                         icon: "Warning",
                         title: 'Error, please try again',
                         showSpinner: true
                     });
-                }else{
+                } else {
                     swal({
                         closeOnClickOutside: false,
                         icon: "Warning",
@@ -316,11 +315,13 @@
     });
     if ('{{is_null($cus->phone)}}') {
         $('#push_order').submit(function(event) {
-            
+
         });
     } else {
         $('#push_order').submit(function(event) {
-            swal({title: 'Please wating...'});
+            swal({
+                title: 'Please wating...'
+            });
             var route = $('#push_order').data('route');
             var form_data = $(this);
             $.ajax({
@@ -331,21 +332,23 @@
                 cache: false,
                 data: new FormData(this),
                 success: function(response) {
-                    if("{{app()->getLocale() == 'en'}}"){
+                    if ("{{app()->getLocale() == 'en'}}") {
                         swal({
                             icon: "success",
                             title: 'Success, thanks for shopping! Page will redirect after 2s',
                             showSpinner: true
                         });
-                    }else{
+                    } else {
                         swal({
                             icon: "success",
                             title: 'Đặt hàng thành công! Trang sẽ chuyển hướng sau 2s',
                             showSpinner: true
-                    });
+                        });
                     }
-                    setTimeout(function(){$(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/")},2000)
-                    
+                    setTimeout(function() {
+                        $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/")
+                    }, 2000)
+
                 },
                 error: function(response) {
                     alert(response)
