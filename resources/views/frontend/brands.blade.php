@@ -27,7 +27,7 @@
                                         <div class="product-body">
                                             <p class="product-category">{{$product->categories->name}}</p>
                                             <h3 class="product-name">
-                                                <a href="#">{{$product->name_product}}</a>
+                                                <a href="{{asset('details/'.$product->id.'.html')}}">{{$product->name_product}}</a>
                                             </h3>
                                             <h4 class="product-price">
                                                 {{number_format($product->price,0,',','.')}} đ
@@ -53,6 +53,7 @@
                                             </div>
                                         </div>
                                         <div class="add-to-cart">
+                                            @if($product->quantity != 0)
                                             <a href="{{asset('cart/add/'.$product->id)}}">
                                                 <button class="add-to-cart-btn">
                                                     <i class="far fa-shopping-cart">
@@ -60,12 +61,21 @@
                                                     {{ __('content.add to cart')}}
                                                 </button>
                                             </a>
+                                            @else
+                                            <button class="add-to-cart-btn">
+                                                <i class="far fa-shopping-cart">
+                                                </i>
+                                                {{ __('content.out of stock')}}
+                                            </button>
+                                            @endif
                                         </div>
                                     </div>
                                     @endforeach
                                 </div>
                             </div>
-
+                            <div id="pagination">
+                                {{$products_brand->links()}}
+                            </div>
                         </div>
 
                     </div>

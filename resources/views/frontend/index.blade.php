@@ -120,7 +120,7 @@
                                             <button class="add-to-cart-btn">
                                                 <i class="far fa-shopping-cart">
                                                 </i>
-                                                {{ __('content.Out of stock')}}
+                                                {{ __('content.out of stock')}}
                                             </button>
                                         @endif
                                         </div>

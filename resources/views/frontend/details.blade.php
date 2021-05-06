@@ -191,15 +191,15 @@
                         </div>
                         <div class="button-add_cart">
                             @if($items->quantity !=0 )
-                            <a href="{{asset('cart/add/'.$items->id)}}">
-                                <button type="button" class="btn btn-primary add_wishlist">
-                                    <i class="fal fa-cart-plus"></i>
-                                    {{ __('content.Add to cart')}}
-                                </button>
-                            </a>
-                            <a href="{{asset('purchase/'. $items->id)}}">
-                                <button type="button" class="btn btn-primary">{{ __('content.Buy now')}}</button>
-                            </a>
+                            <!-- <a href="{{asset('cart/add/'.$items->id)}}"> -->
+                            <button type="button" id="bt-add-cart" class="btn btn-primary add_wishlist">
+                                <i class="fal fa-cart-plus"></i>
+                                {{ __('content.Add to cart')}}
+                            </button>
+                            <!-- </a> -->
+                            <!-- <a href="{{asset('cart/purchase/'. $items->id)}}"> -->
+                            <button type="button" id="bt-purchase" class="btn btn-primary">{{ __('content.Buy now')}}</button>
+                            <!-- </a> -->
                             @else
                             <button type="button" class="btn btn-primary disable-btn" disabled>
                                 <i class="fal fa-cart-plus"></i>
@@ -356,7 +356,100 @@
         buttontxtless: "read less",
 
     })
+
     $(function() {
+        $(document).ready(function() {
+            $('#bt-add-cart').on('click', function() {
+                var id = "{{$items->id}}";
+                $.ajax({
+                    type: 'GET',
+                    url: "{{asset('cart/add')}}/" + id,
+                    success: function(response) {
+                        if ("{{app()->getLocale() == 'en'}}") {
+                            swal({
+                                closeOnClickOutside: false,
+                                icon: "success",
+                                title: 'Add products in cart successfully',
+                                showSpinner: true
+                            });
+                        } else {
+                            swal({
+                                closeOnClickOutside: false,
+                                icon: "success",
+                                title: 'Thêm sản phẩm vào giỏ hàng thành công',
+                                showSpinner: true
+                            });
+                        };
+                        setTimeout(function(){window.location.reload()},1000)
+                    },
+                    error: function(response) {
+                        if ("{{app()->getLocale() == 'en'}}") {
+                            swal({
+                                closeOnClickOutside: false,
+                                icon: "Warning",
+                                title: 'Error, please check again!',
+                                showSpinner: true
+                            });
+                        } else {
+                            swal({
+                                closeOnClickOutside: false,
+                                icon: "Warning",
+                                title: 'Lỗi, vui lòng kiểm tra lại',
+                                showSpinner: true
+                            });
+                        };
+                    }
+                })
+            })
+        });
+
+        $(document).ready(function() {
+            $('#bt-purchase').on('click', function() {
+                var id = "{{$items->id}}"
+                $.ajax({
+                    type: 'GET',
+                    url: "{{asset('cart/purchase')}}/" + id,
+                    success: function(response) {
+                        if ("{{app()->getLocale() == 'en'}}") {
+                            swal({
+                                closeOnClickOutside: false,
+                                icon: "success",
+                                title: 'Add products in cart successfully',
+                                showSpinner: true
+                            });
+                        } else {
+                            swal({
+                                closeOnClickOutside: false,
+                                icon: "success",
+                                title: 'Thêm sản phẩm vào giỏ hàng thành công',
+                                showSpinner: true
+                            });
+                        };
+                        setTimeout(function(){$(location).attr('href', 'http://localhost/ecommerce/E-Commerce/public/cart/show')},1000)
+
+                    },
+                    error: function(response) {
+                        if ("{{app()->getLocale() == 'en'}}") {
+                            swal({
+                                closeOnClickOutside: false,
+                                icon: "Warning",
+                                title: 'Error, please check again!',
+                                showSpinner: true
+                            });
+                        } else {
+                            swal({
+                                closeOnClickOutside: false,
+                                icon: "Warning",
+                                title: 'Lỗi, vui lòng kiểm tra lại',
+                                showSpinner: true
+                            });
+                        }
+                    }
+                })
+            })
+        })
+
+
         $(document).ready(function() {
             $('#province').on('change', function() {
                 let id = $(this).val();
@@ -367,7 +460,6 @@
                     url: "{{asset('GetSubCatAgainstMainCatEdit')}}/" + id,
                     success: function(response) {
                         var response = JSON.parse(response);
-                        console.log(response);
                         $('#district').empty();
                         response.forEach(element => {
                             $('#district').append(`<option value="${element['id']}">${element['district_name']}</option>`);
@@ -376,8 +468,7 @@
                 });
             });
         });
-    })
-    $(function() {
+
         $(document).ready(function() {
             $('#province').on('change', function() {
                 let id = $(this).val();
@@ -388,7 +479,6 @@
                     url: "{{asset('getFeeProvince')}}/" + id,
                     success: function(response) {
                         var response = JSON.parse(response);
-                        console.log(response);
                         $('#fee_province').empty();
                         response.forEach(element => {
                             var fee = (element['transport_fee']);

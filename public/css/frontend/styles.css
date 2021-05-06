@@ -899,6 +899,20 @@ nav>li>a:focus,
 }
 
 
+/* scroll top */
+
+#backtotop {
+    display: none;
+    padding: 5px 3px;
+    background: #D10024;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 20px;
+    right: 5px;
+}
+
+
 /* Modal */
 
 @media (min-width: 576px) {

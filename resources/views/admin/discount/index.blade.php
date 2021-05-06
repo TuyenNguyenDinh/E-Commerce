@@ -6,12 +6,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Danh sách sản phẩm</h1>
+                <h1 class="m-0">List Products</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Danh sách sản phẩm</li>
+                    <li class="breadcrumb-item active">List products</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -27,7 +27,6 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">DataTable with minimal features & hover style</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -35,12 +34,12 @@
                             <thead>
                                 <tr class="bg-primary text-center">
                                     <th>ID</th>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Ảnh sản phẩm</th>
-                                    <th>Giá hiện tại</th>
-                                    <th>Phần trăm giảm giá</th>
-                                    <th>Giá mới</th>
-                                    <th>Tùy chọn</th>
+                                    <th>Name product</th>
+                                    <th>Image</th>
+                                    <th>Current price</th>
+                                    <th>Discount percent</th>
+                                    <th>New price</th>
+                                    <th>Options</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,13 +61,13 @@
                             </tbody>
                             <tfoot>
                                 <tr class="text-center">
-                                    <th>ID</th>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Ảnh sản phẩm</th>
-                                    <th>Giá hiện tại</th>
-                                    <th>Phần trăm giảm giá</th>
-                                    <th>Giá mới</th>
-                                    <th>Tùy chọn</th>
+                                <th>ID</th>
+                                    <th>Name product</th>
+                                    <th>Image</th>
+                                    <th>Current price</th>
+                                    <th>Discount percent</th>
+                                    <th>New price</th>
+                                    <th>Options</th>
                                 </tr>
                             </tfoot>
                         </table>

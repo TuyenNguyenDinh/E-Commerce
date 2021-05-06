@@ -38,44 +38,42 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+        $paginate = 5;
         $products = $this->products->getAll();
-        $products = Products::paginate(2);
+        $products = Products::paginate($paginate);
         $categories = $this->categories->getAll();
         $brands = $this->brands->getAll();
         
-        if($request->has('id_category')){
-            $products = Products::where('id_category',$request->id_category)->get();
-        }
         
         if($request->has('id_brand')){
-            $products = Products::where('id_brand',$request->id_brand)->get();
+            $products = Products::where('id_brand',$request->id_brand)->paginate($paginate);
         }
         
         if ($request->has('rangePriceAdmin')) {
             switch ($request->rangePriceAdmin) {
                 case 1:
-                    $products = Products::all();
+                    $products = Products::paginate($paginate);
                     break;
                 case 2:
-                    $products = Products::where('price', '<', 5000000)->get();
+                    $products = Products::where('price', '<', 5000000)->paginate($paginate);
                     break;
                 case 3:
-                    $products = Products::where('price', '>=', 5000000)->where('price','<=',10000000)->get();
+                    $products = Products::where('price', '>=', 5000000)->where('price','<=',10000000)->paginate($paginate);
                     break;
                case 4:
-                    $products = Products::where('price', '>=', 10000000)->where('price','<=',15000000)->get();
+                    $products = Products::where('price', '>=', 10000000)->where('price','<=',15000000)->paginate($paginate);
                     break;
                 case 5 :
-                    $products = Products::where('price', '>=', 15000000)->where('price','<=',20000000)->get();
+                    $products = Products::where('price', '>=', 15000000)->where('price','<=',20000000)->paginate($paginate);
                     break;
                 case 6 :
-                    $products = Products::where('price','>=',20000000)->get();
+                    $products = Products::where('price','>=',20000000)->paginate($paginate);
                     break;
             }
         }
 
         if ($request->has('searchAdmin')) {
-            $products = Products::where('name_product', 'like', '%' . $request->searchAdmin . '%')->get();
+            $products = Products::where('name_product', 'like', '%' . $request->searchAdmin . '%')->paginate($paginate);
         }
 
 

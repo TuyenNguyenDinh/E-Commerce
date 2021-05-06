@@ -34,73 +34,74 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index()
+    public function index(Request $request)
     {
+        $paginate = 10;
         $orders = $this->orders->getAll();
+        $orders = Orders::paginate($paginate);
         $customers = $this->orders->getAll();
-        
-        if($request->has('totalPrice')) {
+            if($request->has('totalPrice')) {
             switch ($request->totalPrice) {
                 case 1:
-                    $orders = Orders::all();
+                    $orders = Orders::paginate($paginate);
                     break;
                 case 2:
-                    $orders = Orders::where('total_price', '<', 10000000)->get();
+                    $orders = Orders::where('total_price', '<', 10000000)->paginate($paginate);
                     break;
                 case 3:
-                    $orders = Orders::where('total_price', '>=', 10000000)->where('total_price','<=',15000000)->get();
+                    $orders = Orders::where('total_price', '>=', 10000000)->where('total_price','<=',15000000)->paginate($paginate);
                     break;
                case 4:
-                    $orders = Orders::where('total_price', '>=', 15000000)->where('total_price','<=',20000000)->get();
+                    $orders = Orders::where('total_price', '>=', 15000000)->where('total_price','<=',20000000)->paginate($paginate);
                     break;
                 case 5 :
-                    $orders = Orders::where('total_price', '>=', 20000000)->where('total_price','<=',25000000)->get();
+                    $orders = Orders::where('total_price', '>=', 20000000)->where('total_price','<=',25000000)->paginate($paginate);
                     break;
                 case 6 :
-                    $orders = Orders::where('total_price','>=',25000000)->get();
+                    $orders = Orders::where('total_price','>=',25000000)->paginate($paginate);
                     break;
             }
         }
         if($request->has('statusOrder')) {
             switch ($request->statusOrder) {
                 case 1:
-                    $orders = Orders::all();
+                    $orders = Orders::paginate($paginate);
                     break;
                 case 2:
-                    $orders = Orders::where('status', '=', "Waiting checking")->get();
+                    $orders = Orders::where('status', '=', "Waiting checking")->paginate($paginate);
                     break;
                 case 3:
-                    $orders = Orders::where('status', '=', "Checking order")->get();
+                    $orders = Orders::where('status', '=', "Checking order")->paginate($paginate);
                     break;
                case 4:
-                    $orders = Orders::where('status', '=', "Waiting for the goods")->get();
+                    $orders = Orders::where('status', '=', "Waiting for the goods")->paginate($paginate);
                     break;
                 case 5 :
-                    $orders = Orders::where('status', '=', "Shipping")->get();
+                    $orders = Orders::where('status', '=', "Shipping")->paginate($paginate);
                     break;
                 case 6 :
-                    $orders = Orders::where('status','=',"Shipped")->get();
+                    $orders = Orders::where('status','=',"Shipped")->paginate($paginate);
                     break;
                 case 7 :
-                    $orders = Orders::where('status','=',"Cancel")->get();
+                    $orders = Orders::where('status','=',"Cancel")->paginate($paginate);
                     break;
             }
         }
         if($request->has('paymentMethod')) {
             switch ($request->paymentMethod) {
                 case 1:
-                    $orders = Orders::all();
+                    $orders = Orders::paginate($paginate);
                     break;
                 case 2:
-                    $orders = Orders::where('payment_method', '=', "COD")->get();
+                    $orders = Orders::where('payment_method', '=', "COD")->paginate($paginate);
                     break;
                 case 3:
-                    $orders = Orders::where('payment_method', '>=', "Debit Card")->get();
+                    $orders = Orders::where('payment_method', '>=', "Debit Card")->paginate($paginate);
                     break;
                 }
             }
 
-        return view('admin.orders.index', ['orders' => $orders]);
+        return view('admin.orders.index', ['orders' => $orders, 'customers' => $customers]);
     }
 
 
@@ -112,8 +113,9 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
+        $paginate = 10;
         $data['customers'] = $this->customers->find($id);
-        $data['orders'] = Orders::where('id_customer', $id)->get();
+        $data['orders'] = Orders::where('id_customer', $id)->paginate($paginate);
         $data['orders_details'] = $this->orderdetails->getAll();
         return view('admin.orders.show', $data);
     }

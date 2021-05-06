@@ -7,6 +7,7 @@ use App\Http\Requests\CategoryRequest;
 use App\Models\Categories;
 use Illuminate\Http\Request;
 use App\Repositories\CategoryEloquentRepository;
+use WindowsAzure\Common\Internal\Atom\Category;
 
 class CategoryController extends Controller
 {
@@ -24,7 +25,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $paginate = 10;
         $categories = $this->categories->getAll();
+        $categories = Categories::paginate($paginate);
         return view('admin.categories.index', array('categories' => $categories));
     }
     /**

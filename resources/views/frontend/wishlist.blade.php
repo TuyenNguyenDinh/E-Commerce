@@ -30,7 +30,7 @@
                                     <div class="product-body">
                                         <p class="product-category">{{$product_list->products->categories->name}}</p>
                                         <h3 class="product-name">
-                                            <a href="#">{{$product_list->products->name_product}}</a>
+                                            <a href="{{asset('details/'.$product_list->products->id.'.html')}}">{{$product_list->products->name_product}}</a>
                                         </h3>
                                         <h4 class="product-price">
                                             {{number_format($product_list->products->price,0,',','.')}} đ
@@ -66,6 +66,7 @@
                                         </div>
                                     </div>
                                     <div class="add-to-cart">
+                                        @if($product_list->products->quantity != 0)
                                         <a href="{{asset('cart/add/'.$product_list->products->id)}}">
                                             <button class="add-to-cart-btn">
                                                 <i class="far fa-shopping-cart">
@@ -73,6 +74,13 @@
                                                 {{ __('content.add to cart')}}
                                             </button>
                                         </a>
+                                        @else
+                                        <button class="add-to-cart-btn">
+                                            <i class="far fa-shopping-cart">
+                                            </i>
+                                            {{ __('content.out of stock')}}
+                                        </button>
+                                        @endif
                                     </div>
                                 </div>
                                 @endforeach

@@ -41,15 +41,17 @@ class FrontendController extends Controller
 
     public function getCategory($id)
     {
+        $paginate = 10;
         $data['cate_name'] = Categories::find($id);
-        $data['products'] = Products::where('id_category', $id)->paginate(2);
+        $data['products'] = Products::where('id_category', $id)->paginate($paginate);
         return view('frontend.category', $data);
     }
 
     public function getBrand($id)
     {
+        $paginate = 10;
         $data['brands'] = Brands::find($id);
-        $data['products_brand'] = Products::where('id_brand', $id)->get();
+        $data['products_brand'] = Products::where('id_brand', $id)->paginate($paginate);
         return view('frontend.brands', $data);
     }
 
@@ -212,20 +214,4 @@ class FrontendController extends Controller
         }
     }
 
-    public function productBuyNow(Request $request, $id)
-    {
-        
-            $data['products'] = Products::find($id);
-            $id_cus = Auth::guard('customer')->user()->id;
-            $data['cus'] = Customers::find($id_cus);
-            $data['ship_addrs'] = Customer_shipping_address::where('id_customer', $id_cus)->get();
-            $data['cus'] = Customers::find($id);
-            $pr = Province::all();
-            $data['transport_fee'] = Transport_fee::all();
-            return view('frontend.purchase_product', $data, ['pr' => $pr]);
-            
-                // echo $data['products']->id;
-            
-            // return dd($data);
-    }
 }

@@ -24,7 +24,9 @@ class BrandController extends Controller
      */
     public function index()
     {
+        $paginate = 10;
         $brands = $this->brands->getAll();
+        $brands = Brands::paginate($paginate);
         return view('admin.brands.index', array('brands' => $brands));
     }
     /**

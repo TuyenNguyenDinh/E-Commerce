@@ -183,4 +183,17 @@ return [
     'If you did not receive the email' => 'If you did not receive the email',
     'click here to another request ' => 'click here to another request ',
 
+    //info Account
+
+    'Change email' => 'Change email',
+    'Change to new email, please enter your password' => 'Change to new email, please enter your password',
+    'Change phone number' => 'Change phone number',
+    'Change to new phone mumber, please enter your password' => 'Change to new phone mumber, please enter your password',
+    'Change Province, District' => 'Change Province, District',
+    'Choose Province' => 'Choose Province',
+    'Choose District' => 'Choose District',
+    'Confirm' => 'Confirm',
+
+    'out of stock' => 'out of stock',
+
 ];

@@ -40,7 +40,7 @@
                             </td>
                             <td class="actions" data-th="">
                                 <div class="text-right">
-                                    <a href="#" onclick="deleteCart('{{$product->rowId}}')">
+                                    <a onclick="deleteCart('{{$product->rowId}}')" style="cursor: pointer">
                                         <button class="btn btn-white border-secondary bg-white btn-md mb-2">
                                             <i class="fas fa-trash"></i>
                                         </button>
@@ -104,14 +104,15 @@
     })
 
     function deleteCart(rowId) {
-        swal({
-                title: "Delete?",
-                text: "Are you sure delete this products?",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willDelete) => {
+        if("{{app()->getLocale() == 'en'}}"){
+            swal({
+                    title: "Delete?",
+                    text: "Are you sure delete this products?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
                 if (willDelete) {
                     var url = "{{asset('cart/delete')}}" + '/' + rowId;
                     $.ajax({
@@ -122,19 +123,53 @@
                         },
                         success: function(response) {
                             swal({
-                                text: "Delete successfully, page will redirect after 2s",
+                                text: "Delete successfully, page will redirect after 1s",
                                 icon: "success",
                                 buttons: false,
                             })
                             setTimeout(function() {
                                 $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/cart/show");
-                            },2000)
+                            },1000)
                         }
                     });
                 }else{
                     $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/cart/show");
                 }
             });
+        }else{
+            swal({
+                    title: "Xóa?",
+                    text: "Bạn có muốn xóa sản phẩm này?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                if (willDelete) {
+                    var url = "{{asset('cart/delete')}}" + '/' + rowId;
+                    $.ajax({
+                        method: 'get',
+                        url: url,
+                        data: {
+                            rowId: rowId
+                        },
+                        success: function(response) {
+                            swal({
+                                text: "Xóa thành công, Trang sẽ chuyển hướng sau 1s",
+                                icon: "success",
+                                buttons: false,
+                            })
+                            setTimeout(function() {
+                                $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/cart/show");
+                            },1000)
+                        }
+                    });
+                }else{
+                    $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/cart/show");
+                }
+            });
+        }
+    
     }
 </script>
 @stop

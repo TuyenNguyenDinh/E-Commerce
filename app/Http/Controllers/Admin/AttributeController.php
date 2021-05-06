@@ -16,7 +16,8 @@ class AttributeController extends Controller
      */
     public function index()
     {
-        $attr = Attributes::all();
+        $paginate = 10;
+        $attr = Attributes::paginate($paginate);
         return view('admin.attributes.index', array('attr' => $attr));
     }
     /**

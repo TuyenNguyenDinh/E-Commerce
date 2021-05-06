@@ -28,7 +28,7 @@ class CartController extends Controller
             'options' => ['img' => $product->image1, 'brands' => $product->brands->name, 'categories' => $product->categories->name]
         ]);
         return redirect('cart/show');
-        // return dd($qty);
+        // return response()->json('add ok');
     }
 
     public function getShowCart()

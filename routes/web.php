@@ -29,7 +29,6 @@ Route::group(['middleware' => 'locale'], function () {
     Route::post('forget-password', 'CustomerFrontendController@postEmail');
     Route::get('/reset-password/{token}/{email}', 'ResetPasswordController@getPassword');
     Route::post('/reset-password', 'ResetPasswordController@updatePassword');
-    Route::get('purchase/{id}','FrontendController@productBuyNow')->middleware('checklogin');
 
     // Verify email
 
@@ -73,7 +72,7 @@ Route::group(['middleware' => 'locale'], function () {
         Route::post('password','CustomerFrontendController@postPasswrSocial')->name('postPasswrSocial');
     });
 
-    Route::group(['middleware' => 'checklogin', 'prefix' => 'cart'], function () {
+    Route::group(['middleware' => 'checklogin','prefix' => 'cart'], function () {
         Route::get('add/{id}', 'CartController@getAddCart');
         Route::get('add_again/{id}','CustomerFrontendController@buyAgain')->name('buyAgain');
         Route::get('show', 'CartController@getShowCart')->name('cartshow');
@@ -84,6 +83,8 @@ Route::group(['middleware' => 'locale'], function () {
         Route::post('checkout', 'PurchaseController@postPurchase')->name('purchase')->middleware('checkaddress.phone');
         Route::post('add-address', 'CartController@addAddress')->name('addAddress');
         Route::get('getFeeFromProvince/{id}', 'CartController@getFeeFromProvince');
+        Route::get('purchase/{id}','CartController@getAddCart')->middleware('checklogin');
+
     });
 
     Route::get('complete', 'PurchaseController@getComplete')->name('complete');
