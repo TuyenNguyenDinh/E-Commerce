@@ -201,5 +201,7 @@ return [
     'We cannot find your phone number' => 'Chúng tôi không tìm thấy số điện thoại',
     'We cannot find your address' => 'Chúng tôi không tìm thấy địa chỉ',
 
+    'Add now'=> 'Thêm ngay',
+
 
 ];

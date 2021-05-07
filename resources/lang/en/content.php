@@ -198,4 +198,6 @@ return [
     'We cannot find your phone number' => 'We cannot find your phone number',
     'We cannot find your address' => 'We cannot find your address',
 
+    'Add now' => 'Add now',
+
 ];

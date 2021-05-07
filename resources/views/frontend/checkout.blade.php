@@ -32,13 +32,13 @@
                                             <div class="col-auto mt-0 addrs-respon">
                                                 <p><b>{{ $cus->name}}</b></p>
                                                 @if(is_null($cus->phone))
-                                                <p>{{ __('content.We cannot find your phone number')}}. <a href="{{asset('user/account/profile')}}">Add now</a></p>
+                                                <p>{{ __('content.We cannot find your phone number')}}. <a href="{{asset('user/account/profile')}}">{{ __('content.Add now')}}</a></p>
                                                 @else
                                                 <p>{{$cus->phone}}</p>
                                                 @endif
                                                 <!--  -->
                                                 @if(is_null($cus->address))
-                                                <p>{{ __('content.We cannot find your address')}}. <a href="{{asset('user/account/profile')}}">Add now</a></p>
+                                                <p>{{ __('content.We cannot find your address')}}. <a href="{{asset('user/account/profile')}}">{{ __('content.Add now')}}</a></p>
                                                 @else
                                                 <select class="delivery_address" name="delivery_address" id="delivery_address">
                                                     <option value="{{$cus->province->id}}||{{$cus->address}}">{{$cus->address}}</option>
@@ -193,7 +193,7 @@
             </div>
         </div>
     </div>
-git</div>
+</div>
 <script>
     $(function() {
         $('#provinceAdd').select2({

@@ -910,6 +910,7 @@ nav>li>a:focus,
     bottom: 0;
     margin-bottom: 20px;
     right: 5px;
+    z-index: 1;
 }
 
 

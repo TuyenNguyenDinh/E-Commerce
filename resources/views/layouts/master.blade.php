@@ -83,12 +83,12 @@
                             @if( app()->getLocale() == 'en')
                             <a class="nav-link dropdown-toggle" href="" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="flag-icon flag-icon-us"> </span> ENG</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown09">
-                                <a class="dropdown-item" href="{!! route('user.change-language', ['vn']) !!}"><span class="flag-icon flag-icon-vn"> </span> Vietnam</a>
+                                <a class="dropdown-item" href="{{ route('user.change-language', ['vn']) }}"><span class="flag-icon flag-icon-vn"> </span> Vietnam</a>
                             </div>
                             @else
                             <a class="nav-link dropdown-toggle" href="" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="flag-icon flag-icon-vn"> </span> VN</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown09">
-                                <a class="dropdown-item" href="{!! route('user.change-language', ['en']) !!}"><span class="flag-icon flag-icon-us"> </span> English</a>
+                                <a class="dropdown-item" href="{{ route('user.change-language', ['en']) }}"><span class="flag-icon flag-icon-us"> </span> English</a>
                             </div>
                             @endif
                         </li>

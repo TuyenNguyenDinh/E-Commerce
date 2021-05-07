@@ -34,7 +34,10 @@
                                                 </h3>
                                                 <h4 class="product-price">
                                                     {{number_format($product->price,0,',','.')}} đ
+                                                    @if($product->price == $product->old_price)
+                                                    @else
                                                     <del class="product-old-price">{{number_format($product->old_price,0,',','.')}} đ</del>
+                                                    @endif
                                                 </h4>
                                                 <div class="product-rating">
                                                     @for($i = 1; $i <= $product->like; $i++)

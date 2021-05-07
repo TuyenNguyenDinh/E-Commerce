@@ -110,6 +110,18 @@
                                                 <div class="d-flex">
                                                     <div class="address d-flex item-center">
                                                         @if(Auth::guard('customer')->check())
+                                                        @if(is_null(Auth::guard('customer')->user()->id_province))
+                                                        <select class="sl_province" name="province" id="province">
+                                                            <option value="0" selected disabled>{{ __('content.Choose province')}}</option>
+                                                            @foreach($provinces as $province)
+                                                            <option value="{{$province->id}}">{{ucfirst($province->province)}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <span>, </span>
+                                                        <select class="sl_district" name="district" id="district">
+                                                            <option value="0" selected disabled>{{ __('content.Choose district')}}</option>
+                                                        </select>
+                                                        @else
                                                         <select class="sl_province" name="province" id="province">
                                                             <option value="" selected disabled>{{Auth::guard('customer')->user()->province->province}}</option>
                                                             @foreach($provinces as $province)
@@ -120,6 +132,7 @@
                                                         <select class="sl_district" name="district" id="district">
                                                             <option value="0" selected disabled>{{Auth::guard('customer')->user()->district->district_name}}</option>
                                                         </select>
+                                                        @endif
                                                         @else
                                                         <select class="sl_province" name="province" id="province">
                                                             <option value="0" selected disabled>{{ __('content.Choose province')}}</option>
@@ -131,6 +144,7 @@
                                                         <select class="sl_district" name="district" id="district">
                                                             <option value="0" selected disabled>{{ __('content.Choose district')}}</option>
                                                         </select>
+
                                                         @endif
                                                     </div>
                                                 </div>
