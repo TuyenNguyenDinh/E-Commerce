@@ -38,7 +38,7 @@
                                     <div class="my-account__input-text">
                                         {{$cus->email}}
                                     </div>
-                                    <button type="button" class="my-account__no-background-button my-account-profile__change-button" data-toggle="modal" data-target="#changeEmail">Thay đổi</button>
+                                    <button type="button" class="my-account__no-background-button my-account-profile__change-button" data-toggle="modal" data-target="#changeEmail">{{ __('content.Change')}}</button>
                                 </div>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                                         {{$cus->phone}}
                                         @endif
                                     </div>
-                                    <button type="button" class="my-account__no-background-button my-account-profile__change-button" data-toggle="modal" data-target="#changePhone">Thay đổi</button>
+                                    <button type="button" class="my-account__no-background-button my-account-profile__change-button" data-toggle="modal" data-target="#changePhone"> {{ __('content.Change')}}</button>
                                 </div>
                             </div>
                         </div>
@@ -90,7 +90,7 @@
                                         {{$cus->province->province}}
                                         @endif
                                     </div>
-                                    <button type="button" class="my-account__no-background-button my-account-profile__change-button" data-toggle="modal" data-target="#changeProvinceDistrict">Thay đổi</button>
+                                    <button type="button" class="my-account__no-background-button my-account-profile__change-button" data-toggle="modal" data-target="#changeProvinceDistrict">{{ __('content.Change')}}</button>
                                 </div>
                             </div>
                         </div>
@@ -109,7 +109,7 @@
                                         {{$cus->district->district_name}}
                                         @endif
                                     </div>
-                                    <button type="button" class="my-account__no-background-button my-account-profile__change-button" data-toggle="modal" data-target="#changeProvinceDistrict">Thay đổi</button>
+                                    <button type="button" class="my-account__no-background-button my-account-profile__change-button" data-toggle="modal" data-target="#changeProvinceDistrict">{{ __('content.Change')}}</button>
                                 </div>
                             </div>
                         </div>

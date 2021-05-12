@@ -72,17 +72,19 @@ Route::group(['middleware' => 'locale'], function () {
         Route::post('password','CustomerFrontendController@postPasswrSocial')->name('postPasswrSocial');
     });
 
-    Route::group(['middleware' => 'checklogin', 'middleware' => 'checkpassword','prefix' => 'cart'], function () {
-        Route::get('add/{id}', 'CartController@getAddCart');
+    Route::group(['middleware' => 'checklogin','prefix' => 'cart'], function () {
+        Route::get('add/{id}/{qty}', 'CartController@getAddCart');
         Route::get('add_again/{id}','CustomerFrontendController@buyAgain')->name('buyAgain');
         Route::get('show', 'CartController@getShowCart')->name('cartshow');
         Route::get('delete/{id}', 'CartController@getDeleteCart')->name('deleteCart');
         Route::get('update', 'CartController@getUpdateCart');
         Route::get('cartdata', 'CartController@cartdata')->name('cartdata');
-        Route::get('checkout', 'CartController@getCheckout')->name('checkout')->middleware('verifi.customer');
+        Route::get('checkout', 'CartController@getCheckout')->name('checkout')->middleware('verifi.customer')->middleware('checkpassword');
         Route::post('checkout', 'PurchaseController@postPurchase')->name('purchase')->middleware('checkaddress.phone');
         Route::post('add-address', 'CartController@addAddress')->name('addAddress');
         Route::get('getFeeFromProvince/{id}', 'CartController@getFeeFromProvince');
+        Route::get('purchase/{id}/{qty}','CartController@getAddCart')->middleware('checklogin');
+
     });
 
     Route::get('complete', 'PurchaseController@getComplete')->name('complete');
@@ -103,6 +105,7 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admi
     Route::resource('orders', 'OrderController');
     Route::resource('orderdetails', 'OrderDetailController');
     Route::resource('attributes', 'AttributeController');
+    Route::resource('rated', 'RateController');
     Route::get('getAttrCategory/{id}', 'ProductController@getAttrCategory')->name('attrCate');
     Route::resource('banner','BannerController');
     Route::post('uploadMultiple','BannerController@uploadMultiple')->name('banner.uploadMultiple');
@@ -116,11 +119,11 @@ Route::prefix('admin')->group(function () {
         return view('admin.index');
     })->name('index');
     Route::resource('customers', 'CustomerController');
-    Route::resource('discount', 'DiscountController');
     Route::get('customers/{id}/orders', 'OrderController@getOrders');
     Route::resource('orders', 'OrderController');
     // Route::get('orders/{$id}/details', 'OrderDetailController@show');
     Route::resource('orderdetails', 'OrderDetailController');
+    Route::resource('rated', 'RateController');
 
 });
 

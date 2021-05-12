@@ -16,7 +16,8 @@ class DiscountController extends Controller
      */
     public function index()
     {
-        $products = Products::all();
+        define('paginate', 2);
+        $products = Products::paginate(paginate);
         return view('admin.discount.index', ['products' => $products]);
     }
 

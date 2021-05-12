@@ -123,17 +123,17 @@
                         },
                         success: function(response) {
                             swal({
-                                text: "Delete successfully, page will redirect after 2s",
+                                text: "Delete successfully, page will redirect after 1s",
                                 icon: "success",
                                 buttons: false,
                             })
                             setTimeout(function() {
-                                $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/cart/show");
-                            },2000)
+                                $(location).attr("href", "{{asset('cart/show')}}");
+                            },1000)
                         }
                     });
                 }else{
-                    $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/cart/show");
+                    $(location).attr("href", "{{asset('cart/show')}}");
                 }
             });
         }else{
@@ -155,17 +155,17 @@
                         },
                         success: function(response) {
                             swal({
-                                text: "Xóa thành công, Trang sẽ chuyển hướng sau 2s",
+                                text: "Xóa thành công, Trang sẽ chuyển hướng sau 1s",
                                 icon: "success",
                                 buttons: false,
                             })
                             setTimeout(function() {
-                                $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/cart/show");
-                            },2000)
+                                $(location).attr("href", "{{asset('cart/show')}}");
+                            },1000)
                         }
                     });
                 }else{
-                    $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/cart/show");
+                    $(location).attr("href", "{{asset('cart/show')}}");
                 }
             });
         }

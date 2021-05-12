@@ -20,9 +20,13 @@ class VerificationController extends Controller
      */
     public function show()
     {
-        !is_null(Auth::guard('customer')->user()->email_verified_at);
+        if(!is_null(Auth::guard('customer')->user()->email_verified_at)){
+            return redirect('/');
+        }else{
+            return view('frontend.verify_email');
 
-        return view('frontend.verify_email');
+        };
+
     }
 
     /**

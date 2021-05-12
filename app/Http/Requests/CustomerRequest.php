@@ -30,17 +30,10 @@ class CustomerRequest extends FormRequest
 
     public function messages()
     {
-        if (app()->getLocale() == 'en') {
             return [
-                'changePhone.required' => 'Phone number required',
-                'changePhone.max' => 'Phone number max: 11 number'
+                'changePhone.required' => 'Phone number is required',
+                'changePhone.max' => 'Phone number max: 11 numbers'
             ];
-        }
-        else{
-            return [
-                'changePhone.required' => 'Số điện thoại là bắt buộc',
-                'changePhone.max' => 'Số điện thoại không được quá 11 số'
-            ];
-        }
+
     }
 }

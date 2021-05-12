@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 @yield('profile')
-                
+
             </div>
         </div>
     </div>
@@ -52,14 +52,24 @@
 
 <script type="text/javascript">
     function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
+        var filePath = input.value;
+        var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.svg)$/i;
+        var FileSize = input.files[0].size / 1024 / 1024; // in MiB
+        console.log(FileSize);
+        if (!allowedExtensions.exec(filePath) || FileSize >5) {
+            alert('Invalid file type and max size = 5MB');
+            input.value = '';
+            return false;
+        } else {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
-            reader.onload = function(e) {
-                $('#img_upload').attr('src', e.target.result);
+                reader.onload = function(e) {
+                    $('#img_upload').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]); // convert to base64 string
             }
-
-            reader.readAsDataURL(input.files[0]); // convert to base64 string
         }
     }
 
@@ -79,27 +89,27 @@
                 if (response.success) {
                     location.href = "{{route ('changeEmail') }}";
                 } else {
-                    if("{{app()->getLocale() == 'en'}}"){
+                    if ("{{app()->getLocale() == 'en'}}") {
                         swal({
                             closeOnClickOutside: false,
                             icon: "warning",
                             title: 'Wrong password, please check again!',
                             showSpinner: true
                         });
-                    }else{
+                    } else {
                         swal({
-                        closeOnClickOutside: false,
-                        icon: "warning",
-                        title: 'Sai mật khẩu, vui lòng kiểm tra lại!',
-                        showSpinner: true
-                    });
+                            closeOnClickOutside: false,
+                            icon: "warning",
+                            title: 'Sai mật khẩu, vui lòng kiểm tra lại!',
+                            showSpinner: true
+                        });
                     }
                 }
             },
         })
         event.preventDefault();
     });
-    
+
     $('#verifyPassword').on('submit', function(event) {
         var route = $('#verifyPassword').data('route');
         var form_data = $(this);
@@ -112,28 +122,26 @@
                 if (response.success) {
                     location.href = "{{route ('changePhone') }}";
                 } else {
-                    if("{{app()->getLocale() == 'en'}}"){
+                    if ("{{app()->getLocale() == 'en'}}") {
                         swal({
                             closeOnClickOutside: false,
                             icon: "warning",
                             title: 'Wrong password, please check again!',
                             showSpinner: true
                         });
-                    }else{
+                    } else {
                         swal({
-                        closeOnClickOutside: false,
-                        icon: "warning",
-                        title: 'Sai mật khẩu, vui lòng kiểm tra lại!',
-                        showSpinner: true
-                    });
+                            closeOnClickOutside: false,
+                            icon: "warning",
+                            title: 'Sai mật khẩu, vui lòng kiểm tra lại!',
+                            showSpinner: true
+                        });
                     }
                 }
             },
         })
         event.preventDefault();
     });
-
-    
 </script>
 
 @stop

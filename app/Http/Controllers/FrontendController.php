@@ -7,6 +7,8 @@ use App\Models\Countdown;
 use App\Models\Brands;
 use App\Models\Categories;
 use App\Models\Comments;
+use App\Models\Customer_shipping_address;
+use App\Models\Customers;
 use App\Models\Products;
 use App\Models\Province;
 use App\Models\Transport_fee;
@@ -39,15 +41,17 @@ class FrontendController extends Controller
 
     public function getCategory($id)
     {
+        $paginate = 10;
         $data['cate_name'] = Categories::find($id);
-        $data['products'] = Products::where('id_category', $id)->paginate(2);
+        $data['products'] = Products::where('id_category', $id)->paginate($paginate);
         return view('frontend.category', $data);
     }
 
     public function getBrand($id)
     {
+        $paginate = 10;
         $data['brands'] = Brands::find($id);
-        $data['products_brand'] = Products::where('id_brand', $id)->get();
+        $data['products_brand'] = Products::where('id_brand', $id)->paginate($paginate);
         return view('frontend.brands', $data);
     }
 
@@ -172,7 +176,7 @@ class FrontendController extends Controller
         } else {
             if (app()->getLocale() == 'en') {
                 return redirect('/')->with('warning', 'Invalid email or password. Please try again!');
-            }else{
+            } else {
                 return redirect('/')->with('warning', 'Email hoặc mật khẩu không hợp lệ, vui lòng kiểm tra lại!');
             }
         }
@@ -209,4 +213,5 @@ class FrontendController extends Controller
             return redirect('/')->with('success', 'Xóa thành công!');
         }
     }
+
 }

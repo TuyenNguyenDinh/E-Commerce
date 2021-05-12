@@ -110,6 +110,18 @@
                                                 <div class="d-flex">
                                                     <div class="address d-flex item-center">
                                                         @if(Auth::guard('customer')->check())
+                                                        @if(is_null(Auth::guard('customer')->user()->id_province))
+                                                        <select class="sl_province" name="province" id="province">
+                                                            <option value="0" selected disabled>{{ __('content.Choose province')}}</option>
+                                                            @foreach($provinces as $province)
+                                                            <option value="{{$province->id}}">{{ucfirst($province->province)}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <span>, </span>
+                                                        <select class="sl_district" name="district" id="district">
+                                                            <option value="0" selected disabled>{{ __('content.Choose district')}}</option>
+                                                        </select>
+                                                        @else
                                                         <select class="sl_province" name="province" id="province">
                                                             <option value="" selected disabled>{{Auth::guard('customer')->user()->province->province}}</option>
                                                             @foreach($provinces as $province)
@@ -120,6 +132,7 @@
                                                         <select class="sl_district" name="district" id="district">
                                                             <option value="0" selected disabled>{{Auth::guard('customer')->user()->district->district_name}}</option>
                                                         </select>
+                                                        @endif
                                                         @else
                                                         <select class="sl_province" name="province" id="province">
                                                             <option value="0" selected disabled>{{ __('content.Choose province')}}</option>
@@ -131,6 +144,7 @@
                                                         <select class="sl_district" name="district" id="district">
                                                             <option value="0" selected disabled>{{ __('content.Choose district')}}</option>
                                                         </select>
+
                                                         @endif
                                                     </div>
                                                 </div>
@@ -142,9 +156,9 @@
                                                         @if(Auth::guard('customer')->check())
                                                         <div class="currency d-flex item-center">
                                                             <select class="fee_province" name="fee_province" id="fee_province">
-                                                            @foreach($transport_fee as $fee)
+                                                                @foreach($transport_fee as $fee)
                                                                 <option value="0" selected disabled>{{ number_format($fee->transport_fee,0,'.','.') }} đ</option>
-                                                            @endforeach
+                                                                @endforeach
                                                             </select>
                                                         </div>
                                                         @else
@@ -168,6 +182,7 @@
                                 <p>{{ __('content.Quantity')}}</p>
                             </div>
                             <div class="product_quant_input">
+                                @if($items->quantity != 0)
                                 <div style="margin-right: 15px">
                                     <div class="button_quant_input">
                                         <button class="_quant_minus" onclick="decrement()">-</button>
@@ -176,18 +191,36 @@
                                     </div>
                                 </div>
                                 <p>{{$items->quantity}} {{ __('content.Products available')}}</p>
+                                @else
+                                <div style="margin-right: 15px">
+                                    <div class="button_quant_input">
+                                        <button class="_quant_minus" onclick="decrement()">-</button>
+                                        <input class="_quant input_quant" type="number" id="qty_number" name="qty_number" value="0" min=0 max=0>
+                                        <button class="_quant_plus" onclick="increment()">+</button>
+                                    </div>
+                                </div>
+                                <p style="color: red;">Out of stock</p>
+                                @endif
                             </div>
                         </div>
                         <div class="button-add_cart">
-                            <a href="{{asset('cart/add/'.$items->id)}}">
-                                <button type="button" class="btn btn-primary add_wishlist">
-                                    <i class="fal fa-cart-plus"></i>
-                                    {{ __('content.Add to cart')}}
-                                </button>
-                            </a>
-                            <a href="#">
-                                <button type="button" class="btn btn-primary">{{ __('content.Buy now')}}</button>
-                            </a>
+                            @if($items->quantity !=0 )
+                            <!-- <a href="{{asset('cart/add/'.$items->id)}}"> -->
+                            <button type="button" id="bt-add-cart" class="btn btn-primary add_wishlist">
+                                <i class="fal fa-cart-plus"></i>
+                                {{ __('content.Add to cart')}}
+                            </button>
+                            <!-- </a> -->
+                            <!-- <a href="{{asset('cart/purchase/'. $items->id)}}"> -->
+                            <button type="button" id="bt-purchase" class="btn btn-primary">{{ __('content.Buy now')}}</button>
+                            <!-- </a> -->
+                            @else
+                            <button type="button" class="btn btn-primary disable-btn" disabled>
+                                <i class="fal fa-cart-plus"></i>
+                                {{ __('content.Add to cart')}}
+                            </button>
+                            <button type="button" class="btn btn-primary disable-btn" disabled>{{ __('content.Buy now')}}</button>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -223,7 +256,7 @@
                         <label class="label_title">{{ __('content.Size')}}</label>
                         <div class="product_track_side d-flex">
                             <span>{{$items->attributes}}</span>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -282,43 +315,43 @@
                     @else
                     <div class="product_reviews_content">
                         @foreach ($comments as $comment)
-                            <div class="reviews_wrapper">
-                                <div class="row">
-                                    <div class="col-lg-1 col-md-2">
-                                        <div class="logo_acc">
-                                            <div>
-                                                <img src="{{ asset('upload/'.$comment->customers->image_acc) }}" height="50px" width="50px">
-                                            </div>
+                        <div class="reviews_wrapper">
+                            <div class="row">
+                                <div class="col-lg-1 col-md-2">
+                                    <div class="logo_acc">
+                                        <div>
+                                            <img src="{{ asset('upload/'.$comment->customers->image_acc) }}" height="50px" width="50px">
                                         </div>
                                     </div>
-                                    <div class="col-lg-9 col-md-7">
-                                        <div class="user_acc d-flex align-items-center">
-                                            <div class="row">
-                                                <div class="username_acc">
-                                                    <span>{{$comment->customers->name}}</span>
-                                                </div>
-                                                <div class="datetime_post d-flex align-items-center">
-                                                    <span>{{$comment->created_at}}</span>
-                                                </div>
+                                </div>
+                                <div class="col-lg-9 col-md-7">
+                                    <div class="user_acc d-flex align-items-center">
+                                        <div class="row">
+                                            <div class="username_acc">
+                                                <span>{{$comment->customers->name}}</span>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-3">
-                                        <div class="user_rating">
-                                            <div class="star-icon">
-                                                @for($i = 1; $i <= $comment->rate; $i++)
-                                                    <i class="fas fa-star"></i>
-                                                @endfor
+                                            <div class="datetime_post d-flex align-items-center">
+                                                <span>{{$comment->created_at}}</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="user_reviews_content">
-                                    <p>{{$comment->comments}}
-                                    </p>
+                                <div class="col-lg-2 col-md-3">
+                                    <div class="user_rating">
+                                        <div class="star-icon">
+                                            @for($i = 1; $i <= $comment->rate; $i++)
+                                                <i class="fas fa-star"></i>
+                                                @endfor
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            @endforeach
+                            <div class="user_reviews_content">
+                                <p>{{$comment->comments}}
+                                </p>
+                            </div>
+                        </div>
+                        @endforeach
                     </div>
                     @endif
 
@@ -337,39 +370,167 @@
         buttontxtless: "read less",
 
     })
+
     $(function() {
         $(document).ready(function() {
+            $('#bt-add-cart').on('click', function() {
+                if ("{{Auth::guard('customer')->check()}}") {
+                    var id = "{{$items->id}}";
+                    var qty = $('#qty_number').val();
+                    $.ajax({
+                        type: 'GET',
+                        url: "{{asset('cart/add')}}/" + id + '/' + qty,
+                        success: function(response) {
+                            if ("{{app()->getLocale() == 'en'}}") {
+                                swal({
+                                    closeOnClickOutside: false,
+                                    icon: "success",
+                                    title: 'Add products in cart successfully',
+                                    showSpinner: true
+                                });
+                            } else {
+                                swal({
+                                    closeOnClickOutside: false,
+                                    icon: "success",
+                                    title: 'Thêm sản phẩm vào giỏ hàng thành công',
+                                    showSpinner: true
+                                });
+                            };
+                            setTimeout(function() {
+                                window.location.reload()
+                            }, 1000)
+                        },
+                        error: function(response) {
+                            if ("{{app()->getLocale() == 'en'}}") {
+                                swal({
+                                    closeOnClickOutside: false,
+                                    icon: "warning",
+                                    title: 'Error, please check again!',
+                                    showSpinner: true
+                                });
+                            } else {
+                                swal({
+                                    closeOnClickOutside: false,
+                                    icon: "warning",
+                                    title: 'Lỗi, vui lòng kiểm tra lại',
+                                    showSpinner: true
+                                });
+                            };
+                        }
+                    })
+                } else {
+                    if ("{{app()->getLocale() == 'en'}}") {
+                        swal({
+                            closeOnClickOutside: false,
+                            icon: "warning",
+                            title: 'Please login to continue!',
+                            showSpinner: true
+                        })
+                    } else {
+                        swal({
+                            closeOnClickOutside: false,
+                            icon: "warning",
+                            title: 'Vui lòng đăng nhập để tiếp tục!',
+                            showSpinner: true
+                        })
+                    }
+                    setTimeout(function() {
+                        $(location).attr('href', "{{asset('/')}}")
+                    }, 1000)
+                }
+            })
+            // 
+            $('#bt-purchase').on('click', function() {
+                if ("{{Auth::guard('customer')->check()}}") {
+                    var id = "{{$items->id}}"
+                    var qty = $('#qty_number').val();
+                    $.ajax({
+                        type: 'GET',
+                        url: "{{asset('cart/purchase')}}/" + id + '/' + qty,
+                        success: function(response) {
+                            if ("{{app()->getLocale() == 'en'}}") {
+                                swal({
+                                    closeOnClickOutside: false,
+                                    icon: "success",
+                                    title: 'Add products in cart successfully',
+                                    showSpinner: true
+                                });
+                            } else {
+                                swal({
+                                    closeOnClickOutside: false,
+                                    icon: "success",
+                                    title: 'Thêm sản phẩm vào giỏ hàng thành công',
+                                    showSpinner: true
+                                });
+                            };
+                            setTimeout(function() {
+                                $(location).attr('href', 'http://localhost/ecommerce/E-Commerce/public/cart/show')
+                            }, 1000)
+
+                        },
+                        error: function(response) {
+                            if ("{{app()->getLocale() == 'en'}}") {
+                                swal({
+                                    closeOnClickOutside: false,
+                                    icon: "warning",
+                                    title: 'Error, please check again!',
+                                    showSpinner: true
+                                });
+                            } else {
+                                swal({
+                                    closeOnClickOutside: false,
+                                    icon: "warning",
+                                    title: 'Lỗi, vui lòng kiểm tra lại',
+                                    showSpinner: true
+                                });
+                            }
+                        }
+                    })
+                } else {
+                    if ("{{app()->getLocale() == 'en'}}") {
+                        swal({
+                            closeOnClickOutside: false,
+                            icon: "warning",
+                            title: 'Please login to continue!',
+                            showSpinner: true
+                        })
+                    } else {
+                        swal({
+                            closeOnClickOutside: false,
+                            icon: "warning",
+                            title: 'Vui lòng đăng nhập để tiếp tục!',
+                            showSpinner: true
+                        })
+                    }
+                    setTimeout(function() {
+                        $(location).attr('href', "{{asset('/')}}")
+                    }, 1000)
+                }
+            })
+            // 
             $('#province').on('change', function() {
                 let id = $(this).val();
                 $('#district').empty();
                 $('#district').append(`<option value="0" disabled selected>Processing...</option>`);
+                // 
+                $('#fee_province').empty();
+                $('#fee_province').append(`<option value="0" disabled selected>Processing...</option>`);
                 $.ajax({
                     type: 'GET',
                     url: "{{asset('GetSubCatAgainstMainCatEdit')}}/" + id,
                     success: function(response) {
                         var response = JSON.parse(response);
-                        console.log(response);
                         $('#district').empty();
                         response.forEach(element => {
                             $('#district').append(`<option value="${element['id']}">${element['district_name']}</option>`);
                         });
                     }
                 });
-            });
-        });
-    })
-    $(function() {
-        $(document).ready(function() {
-            $('#province').on('change', function() {
-                let id = $(this).val();
-                $('#fee_province').empty();
-                $('#fee_province').append(`<option value="0" disabled selected>Processing...</option>`);
                 $.ajax({
                     type: 'GET',
                     url: "{{asset('getFeeProvince')}}/" + id,
                     success: function(response) {
                         var response = JSON.parse(response);
-                        console.log(response);
                         $('#fee_province').empty();
                         response.forEach(element => {
                             var fee = (element['transport_fee']);
@@ -379,8 +540,8 @@
                 });
             });
         });
-    })
 
+    })
 </script>
 
 @stop

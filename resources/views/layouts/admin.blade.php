@@ -46,12 +46,6 @@
 
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
-
-        <!-- Preloader -->
-        <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="{{asset('image/AdminLTELogo.png')}}" alt="AdminLTELogo" height="60" width="60">
-        </div>
-
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <!-- Left navbar links -->
@@ -60,122 +54,12 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index3.html" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
+                    <a href="{{asset('admin')}}" class="nav-link">Home</a>
                 </li>
             </ul>
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
-                <!-- Navbar Search -->
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                        <i class="fas fa-search"></i>
-                    </a>
-                    <div class="navbar-search-block">
-                        <form class="form-inline">
-                            <div class="input-group input-group-sm">
-                                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                                <div class="input-group-append">
-                                    <button class="btn btn-navbar" type="submit">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </li>
-
-                <!-- Messages Dropdown Menu -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="far fa-comments"></i>
-                        <span class="badge badge-danger navbar-badge">3</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <a href="#" class="dropdown-item">
-                            <!-- Message Start -->
-                            <div class="media">
-                                <img src="{{asset('image/user1-128x128.jpg')}}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-                                <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        Brad Diesel
-                                        <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                                    </h3>
-                                    <p class="text-sm">Call me whenever you can...</p>
-                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                </div>
-                            </div>
-                            <!-- Message End -->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <!-- Message Start -->
-                            <div class="media">
-                                <img src="{{asset('image/user8-128x128.jpg')}}" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                                <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        John Pierce
-                                        <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                                    </h3>
-                                    <p class="text-sm">I got your message bro</p>
-                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                </div>
-                            </div>
-                            <!-- Message End -->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <!-- Message Start -->
-                            <div class="media">
-                                <img src="{{asset('image/user3-128x128.jpg')}}" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                                <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        Nora Silvester
-                                        <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                                    </h3>
-                                    <p class="text-sm">The subject goes here</p>
-                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                </div>
-                            </div>
-                            <!-- Message End -->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-                    </div>
-                </li>
-                <!-- Notifications Dropdown Menu -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="far fa-bell"></i>
-                        <span class="badge badge-warning navbar-badge">15</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <span class="dropdown-item dropdown-header">15 Notifications</span>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-envelope mr-2"></i> 4 new messages
-                            <span class="float-right text-muted text-sm">3 mins</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-users mr-2"></i> 8 friend requests
-                            <span class="float-right text-muted text-sm">12 hours</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-file mr-2"></i> 3 new reports
-                            <span class="float-right text-muted text-sm">2 days</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-                    </div>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                         <i class="fas fa-expand-arrows-alt"></i>
@@ -195,7 +79,7 @@
             <!-- Brand Logo -->
             <a href="index3.html" class="brand-link">
                 <img src="{{asset('image/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
+                <span class="brand-text font-weight-light">AdminElectro</span>
             </a>
 
             <!-- Sidebar -->
@@ -228,7 +112,6 @@
                 <nav class="mt-2">
 
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
                         <li class="nav-item">
                             <a href="{{ route('admin') }}" class="nav-link {{ Request::is('admin') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -270,7 +153,7 @@
                         </li>
                         <li class="nav-item {{Request::is('admin/attributes') ? 'menu-open' : '' }} {{Request::is('admin/attributes/create') ? 'menu-open' : ''}}">
                             <a href="#" class="nav-link {{ Request::is('admin/attributes') ? 'active' : '' }} {{Request::is('admin/attributes/create') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon fas fa-list"></i>
                                 <p>
                                     Attributes
                                     <i class="fas fa-angle-left right"></i>
@@ -290,7 +173,7 @@
                                         <p>Create attributes</p>
                                     </a>
                                 </li>
-                                
+
                             </ul>
                         </li>
                         <li class="nav-item {{Request::is('admin/categories') ? 'menu-open' : '' }} {{Request::is('admin/categories/create') ? 'menu-open' : '' }}">
@@ -320,7 +203,7 @@
                         </li>
                         <li class="nav-item {{Request::is('admin/brands') ? 'menu-open' : ''}} {{Request::is('admin/brands/create') ? 'menu-open' : ''}}">
                             <a href="#" class="nav-link {{Request::is('admin/brands') ? 'active' : '' }} {{Request::is('admin/brands/create') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-chart-pie"></i>
+                                <i class="nav-icon fas fa-copyright"></i>
                                 <p>
                                     Brands
                                     <i class="right fas fa-angle-left"></i>
@@ -343,7 +226,7 @@
                         </li>
                         <li class="nav-item {{Request::is('admin/users') ? 'menu-open' : ''}} {{Request::is('admin/users/create') ? 'menu-open' : ''}}">
                             <a href="#" class="nav-link {{Request::is('admin/users') ? 'active' : ''}} {{Request::is('admin/users/create') ? 'active' : ''}}">
-                                <i class="nav-icon fas fa-tree"></i>
+                                <i class="nav-icon fas fa-user-tie"></i>
                                 <p>
                                     Users
                                     <i class="fas fa-angle-left right"></i>
@@ -399,9 +282,19 @@
                             </ul>
                         </li>
 
+                        <li class="nav-item">
+                            <a href="{{ route('rated.index') }}" class="nav-link {{ Request::is('admin/rated') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Rated
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                        </li>
+
                         <li class="nav-item {{Request::is('admin/banner') ? 'menu-open' : ''}}">
                             <a href="#" class="nav-link {{Request::is('admin/banner') ? 'active' : ''}}">
-                                <i class="nav-icon fas fa-file-invoice"></i>
+                                <i class="nav-icon fas fa-external-link-square-alt"></i>
                                 <p>
                                     Layout website
                                     <i class="fas fa-angle-left right"></i>
@@ -416,12 +309,12 @@
                                 </li>
                             </ul>
                         </li>
-                        
+
                         <li class="nav-header">LOG OUT</li>
                         <li class="nav-item">
                             <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
-                                <i class="nav-icon far fa-plus-square"></i>
+                                <i class="nav-icon fas fa-sign-out-alt"></i>
                                 <p>
                                     Logout
                                     <i class="fas fa-angle-left right"></i>
@@ -444,9 +337,9 @@
         </div>
         <!-- /.content-wrapper -->
         <footer class="main-footer">
-            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; <span id="year"></span> <a href="{{asset('admin')}}">AdminElectro</a>.</strong> All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
-                <b>Version</b> 3.1.0
+                <b>Version</b> 1.1.0
             </div>
         </footer>
 
@@ -462,22 +355,9 @@
     <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="{{ asset('js/frontend/showmore/jquery.show-more.js') }}"></script>
-    <!-- <script type="text/javascript">
-        var count = "{{DB::table('products')->count()}}";
-        console.log(count);
-        for (var i = 1; i <= count; i++) {
-            $('#description_content_' + i).showMore({
-                minheight: 150,
-                animationspeed: 250,
-                buttontxtmore: "read more",
-                buttontxtless: "read less",
-
-            })
-        }
-    </script> -->
+    <!--  -->
     <script src="http://code.jquery.com/jquery-3.4.1.js"></script>
-
-
+    <!--  -->
     <script src="{{asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
@@ -522,7 +402,10 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <!--  -->
     <script src="{{asset('js/backend/backend.js')}}"></script>
+    <script type="text/javascript" async src="https://www.google-analytics.com/analytics.js"></script>
     <script>
+        document.getElementById('year').append(new Date().getFullYear());
+
         function readURL(input, idimage, uploadwrp, content) {
             var filePath = input.value;
             var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.svg)$/i;

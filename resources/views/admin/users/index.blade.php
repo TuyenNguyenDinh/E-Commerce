@@ -27,7 +27,6 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">DataTable with minimal features & hover style</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -38,7 +37,7 @@
                                     <th>User name</th>
                                     <th>Email</th>
                                     <th>Role</th>
-                                    <th>Tùy chọn</th>
+                                    <th>Options</th>
                                 </tr>
                             </thead>
                             <tbody>

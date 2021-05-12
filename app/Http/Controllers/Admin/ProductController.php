@@ -22,15 +22,16 @@ class ProductController extends Controller
     protected $brands;
     protected $categories;
 
-    public function __construct(ProductEloquentRepository $products,
-                                BrandEloquentRepository $brands,
-                                CategoryEloquentRepository $categories)
-    {
+    public function __construct(
+        ProductEloquentRepository $products,
+        BrandEloquentRepository $brands,
+        CategoryEloquentRepository $categories
+    ) {
         $this->products = $products;
         $this->brands = $brands;
         $this->categories = $categories;
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -38,50 +39,48 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+        $paginate = 5;
         $products = $this->products->getAll();
-        $products = Products::paginate(2);
+        $products = Products::paginate($paginate);
         $categories = $this->categories->getAll();
         $brands = $this->brands->getAll();
-        
-        if($request->has('id_category')){
-            $products = Products::where('id_category',$request->id_category)->get();
+
+
+        if ($request->has('id_brand')) {
+            $products = Products::where('id_brand', $request->id_brand)->paginate($paginate);
         }
-        
-        if($request->has('id_brand')){
-            $products = Products::where('id_brand',$request->id_brand)->get();
-        }
-        
+
         if ($request->has('rangePriceAdmin')) {
             switch ($request->rangePriceAdmin) {
                 case 1:
-                    $products = Products::all();
+                    $products = Products::paginate($paginate);
                     break;
                 case 2:
-                    $products = Products::where('price', '<', 5000000)->get();
+                    $products = Products::where('price', '<', 5000000)->paginate($paginate);
                     break;
                 case 3:
-                    $products = Products::where('price', '>=', 5000000)->where('price','<=',10000000)->get();
+                    $products = Products::where('price', '>=', 5000000)->where('price', '<=', 10000000)->paginate($paginate);
                     break;
-               case 4:
-                    $products = Products::where('price', '>=', 10000000)->where('price','<=',15000000)->get();
+                case 4:
+                    $products = Products::where('price', '>=', 10000000)->where('price', '<=', 15000000)->paginate($paginate);
                     break;
-                case 5 :
-                    $products = Products::where('price', '>=', 15000000)->where('price','<=',20000000)->get();
+                case 5:
+                    $products = Products::where('price', '>=', 15000000)->where('price', '<=', 20000000)->paginate($paginate);
                     break;
-                case 6 :
-                    $products = Products::where('price','>=',20000000)->get();
+                case 6:
+                    $products = Products::where('price', '>=', 20000000)->paginate($paginate);
                     break;
             }
         }
 
         if ($request->has('searchAdmin')) {
-            $products = Products::where('name_product', 'like', '%' . $request->searchAdmin . '%')->get();
+            $products = Products::where('name_product', 'like', '%' . $request->searchAdmin . '%')->paginate($paginate);
         }
 
 
         return view('admin.products.index', array(
             'products' => $products,
-            'categories' => $categories, 
+            'categories' => $categories,
             'brands' => $brands,
         ));
     }
@@ -99,7 +98,8 @@ class ProductController extends Controller
     }
 
 
-    public function getAttrCategory($id){
+    public function getAttrCategory($id)
+    {
         echo json_encode(DB::table('attributes')->where('id_category', $id)->get());
     }
 
@@ -118,19 +118,24 @@ class ProductController extends Controller
         $fileName4 = $this->products->doUpload($request->file('image4'));;
         $old_price = $request->price;
         $price = $old_price;
-        $attributes = ($request->attr1.': ' .$request->attr_name1. '-' .$request->attr2. ': ' .$request->attr_name2.'-'
-        . $request->attr3. ': ' .$request->attr_name3 
-        .'-'.$request->attr4. ': ' .$request->attr_name4);
-        $products = $this->products->create(array_merge($request->all(),["old_price" => $old_price],
-         ["price" => $price],
-         ["discount" => 0],
-         ["image1" =>$fileName1], ["image2" => $fileName2], 
-         ["image3" => $fileName3], ["image4" => $fileName4],
-        ['attributes' => $attributes]));
+        $attributes = ($request->attr1 . ': ' . $request->attr_name1 . '-' . $request->attr2 . ': ' . $request->attr_name2 . '-'
+            . $request->attr3 . ': ' . $request->attr_name3
+            . '-' . $request->attr4 . ': ' . $request->attr_name4);
+        $products = $this->products->create(array_merge(
+            $request->all(),
+            ["old_price" => $old_price],
+            ["price" => $price],
+            ["discount" => 0],
+            ["image1" => $fileName1],
+            ["image2" => $fileName2],
+            ["image3" => $fileName3],
+            ["image4" => $fileName4],
+            ['attributes' => $attributes]
+        ));
 
         return response()->json($products);
         // return redirect()->route('products.create');
-        
+
     }
 
 
@@ -161,15 +166,19 @@ class ProductController extends Controller
         $fileName2 = $this->products->doUpload($request->file('image2'));
         $fileName3 = $this->products->doUpload($request->file('image3'));
         $fileName4 = $this->products->doUpload($request->file('image4'));
-        $attributes = ($request->attr1.': ' .$request->attr_name1. '-' .$request->attr2. ': ' .$request->attr_name2.'-'
-        . $request->attr3. ': ' .$request->attr_name3 
-        .'-'.$request->attr4. ': ' .$request->attr_name4);
-        $products = $this->products->update($id,array_merge($request->all()
-        ,["discount" => 0]
-        ,["image1" =>$fileName1], ["image2" => $fileName2]
-        , ["image3" => $fileName3], ["image4" => $fileName4]
-    ,['attributes' => $attributes]));
-       
+        $attributes = ($request->attr1 . ': ' . $request->attr_name1 . '-' . $request->attr2 . ': ' . $request->attr_name2 . '-'
+            . $request->attr3 . ': ' . $request->attr_name3
+            . '-' . $request->attr4 . ': ' . $request->attr_name4);
+        $products = $this->products->update($id, array_merge(
+            $request->all(),
+            ["discount" => 0],
+            ["image1" => $fileName1],
+            ["image2" => $fileName2],
+            ["image3" => $fileName3],
+            ["image4" => $fileName4],
+            ['attributes' => $attributes]
+        ));
+
         return response()->json($products);
     }
 
@@ -181,8 +190,12 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
+        // $products = Products::find($id);
+        $this->products->unlinkfile($id, 'image1');
+        $this->products->unlinkfile($id, 'image2');
+        $this->products->unlinkfile($id, 'image3');
+        $this->products->unlinkfile($id, 'image4');        
         $this->products->delete($id);
-        // return redirect()->route('products.index');
         return response()->json("ok");
     }
 }

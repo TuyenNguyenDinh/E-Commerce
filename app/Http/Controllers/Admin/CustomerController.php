@@ -24,7 +24,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
+        define('paginate', 2);
         $customers = $this->customers->getAll();
+        $customers = Customers::paginate(paginate);
         return view('admin.customers.index', ['customers' => $customers]);
     }
 

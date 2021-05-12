@@ -20,15 +20,15 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class CartController extends Controller
 {
-    public function getAddCart($id)
+    public function getAddCart($id, $qty)
     {
         $product = Products::find($id);
         Cart::add([
-            'id' => $id, 'name' => $product->name_product, 'weight' => 0, 'qty' => 1, 'price' => $product->price,
+            'id' => $id, 'name' => $product->name_product, 'weight' => 0, 'qty' => $qty, 'price' => $product->price,
             'options' => ['img' => $product->image1, 'brands' => $product->brands->name, 'categories' => $product->categories->name]
         ]);
         return redirect('cart/show');
-        // return dd($qty);
+        // return response()->json('add ok');
     }
 
     public function getShowCart()

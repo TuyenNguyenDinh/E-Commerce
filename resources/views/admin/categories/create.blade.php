@@ -23,20 +23,21 @@
 
 <!-- Main content -->
 <section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">General</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
+    <form id="create_category" data-route="{{ route('categories.store') }}" method="post" enctype="multipart/form-data">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">General</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <form action="{{ route('categories.store') }}" method="post" enctype="multipart/form-data">
+                        <div class="card-body">
+
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <label for="inputName">Name category</label>
@@ -47,23 +48,55 @@
                                 </span>
                                 @endif
                             </div>
+                        </div>
+                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card-body -->
+                    <!-- /.card -->
                 </div>
-                <!-- /.card -->
+                <!-- /.col -->
             </div>
-            <!-- /.col -->
+            <!-- /.row (main row) -->
+        </div><!-- /.container-fluid -->
+        <div class="row">
+            <div class="col-12">
+                <a href="#" class="btn btn-secondary">Cancel</a>
+                <input type="submit" value="Create new categories" class="btn btn-success float-right">
+            </div>
         </div>
-        <!-- /.row (main row) -->
-    </div><!-- /.container-fluid -->
-    <div class="row">
-        <div class="col-12">
-            <a href="#" class="btn btn-secondary">Cancel</a>
-            <input type="submit" value="Create new categories" class="btn btn-success float-right">
-        </div>
-    </div>
     </form>
 </section>
 <!-- /.content -->
+<script>
+    $('#create_category').submit(function(event) {
+        var route = $('#create_category').data('route');
+        var form_data = $(this);
+        $.ajax({
+            method: 'POST',
+            url: route,
+            processData: false, // Important!
+            contentType: false,
+            cache: false,
+            data: new FormData(this),
+            success: function(response) {
+                swal({
+                    closeOnClickOutside: false,
+                    icon: "success",
+                    title: 'Success, create sussecfully!',
+                    showSpinner: true
+                });
+                $(location).attr("href", "{{asset('admin/categories')}}");
+            },
+            error: function(response) {
+                $(".print-error-msg").find("ul").html('');
+                $(".print-error-msg").css('display', 'block');
+                var err = JSON.parse(response.responseText);
+                $.each(err.errors, function(key, value) {
+                    $(".print-error-msg").find("ul").append('<li>' + value[0] + '</li>');
+                })
 
+            }
+        })
+        event.preventDefault();
+    });
+</script>
 @endsection

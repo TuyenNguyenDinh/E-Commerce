@@ -31,11 +31,11 @@ $rangePriceAdmin = request()->get('rangePriceAdmin');
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Filter</h3>
-                        
-                            <table class="table">
-                                <thead>
-                                    <tr class="filters">
-                                        <th>Brands
+
+                        <table class="table">
+                            <thead>
+                                <tr class="filters">
+                                    <th>Brands
                                         <form id="form_find" method="get">
                                             <select id="assigned-user-filter" name="id_brand" class="form-control" onchange='if(this.value != 0) { this.form.submit(); }'>
                                                 <option value="0" selected>Choose brand</option>
@@ -48,24 +48,24 @@ $rangePriceAdmin = request()->get('rangePriceAdmin');
                                     </th>
                                     <th>Price
                                         <form method="get">
-                                            <select id="assigned-user-filter"  name="rangePriceAdmin" class="form-control" onchange='if(this.value != 0) { this.form.submit(); }'>
+                                            <select id="assigned-user-filter" name="rangePriceAdmin" class="form-control" onchange='if(this.value != 0) { this.form.submit(); }'>
                                                 <option value="0" selected>Choose range price</option>
-                                                <option {{($rangePriceAdmin==1)?'selected':""}} value="1"> 
-                                                    {{ __('All')}}                                                
+                                                <option {{($rangePriceAdmin==1)?'selected':""}} value="1">
+                                                    {{ __('All')}}
                                                 </option>
-                                                <option {{($rangePriceAdmin==2)?'selected':""}} value="2"> 
+                                                <option {{($rangePriceAdmin==2)?'selected':""}} value="2">
                                                     {{ __('Less 5.000.000 đ')}}
                                                 </option>
-                                                <option {{($rangePriceAdmin==3)?'selected':""}} value="3"> 
+                                                <option {{($rangePriceAdmin==3)?'selected':""}} value="3">
                                                     {{ __('5 - 10.000.000 đ')}}
                                                 </option>
-                                                <option {{($rangePriceAdmin==4)?'selected':""}} value="4"> 
+                                                <option {{($rangePriceAdmin==4)?'selected':""}} value="4">
                                                     {{ __('10 - 15.000.000 đ')}}
                                                 </option>
-                                                <option {{($rangePriceAdmin==5)?'selected':""}} value="5"> 
+                                                <option {{($rangePriceAdmin==5)?'selected':""}} value="5">
                                                     {{ __('15 -20.000.000 đ')}}
                                                 </option>
-                                                <option {{($rangePriceAdmin==6)?'selected':""}} value="6"> 
+                                                <option {{($rangePriceAdmin==6)?'selected':""}} value="6">
                                                     {{ __('20.000.000 đ more')}}
                                                 </option>
                                             </select>
@@ -73,7 +73,7 @@ $rangePriceAdmin = request()->get('rangePriceAdmin');
                                         </form>
                                     </th>
                                     <th>Search
-                                        <form class= "d-flex flex-row" id="assigned-user-filter" name="searchAdmin" method="GET" action="{{asset('/admin/products')}}">
+                                        <form class="d-flex flex-row" id="assigned-user-filter" name="searchAdmin" method="GET" action="{{asset('/admin/products')}}">
                                             <input class="form-control" type="search" placeholder="Search here" name="searchAdmin" aria-label="Search" required>
                                             <button type="submit" class="btn btn-primary search-btn">Search</button>
                                         </form>
@@ -85,6 +85,7 @@ $rangePriceAdmin = request()->get('rangePriceAdmin');
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
+                        @if(count($products) != 0)
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr class="bg-primary text-center">
@@ -130,7 +131,7 @@ $rangePriceAdmin = request()->get('rangePriceAdmin');
                                 @endforeach
                             </tbody>
                             <tfoot>
-                                <tr>
+                                <tr class="text-center">
                                     <th>ID</th>
                                     <th>Categories</th>
                                     <th>Brands</th>
@@ -143,6 +144,19 @@ $rangePriceAdmin = request()->get('rangePriceAdmin');
                                 </tr>
                             </tfoot>
                         </table>
+                        <div id="pagination" >
+                            {{$products->links()}}
+                        </div>
+                        @else
+                        <div class="error-page">
+                            <div class="error-content">
+                                <div class="wrapper">
+                                    <h3><i class="fas fa-exclamation-triangle text-warning"></i>{{ __('Oops! Not found.')}}</h3>
+                                </div>
+                            </div>
+                            <!-- /.error-content -->
+                        </div>
+                        @endif
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -185,8 +199,8 @@ $rangePriceAdmin = request()->get('rangePriceAdmin');
                                 showSpinner: true
                             });
                             setTimeout(function() {
-                                $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/admin/products");
-                            },2000)
+                                $(location).attr("href", "{{asset('admin/products')}}");
+                            }, 2000)
                         },
                         error: function(response) {
                             console.log(response)

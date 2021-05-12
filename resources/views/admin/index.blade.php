@@ -1,6 +1,10 @@
 @extends('layouts.admin')
 @section('title','Admin')
 @section('main')
+<!-- Preloader -->
+<div class="preloader flex-column justify-content-center align-items-center">
+	<img class="animation__shake" src="{{asset('image/AdminLTELogo.png')}}" alt="AdminLTELogo" height="60" width="60">
+</div>
 
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -36,7 +40,7 @@
 					<div class="icon">
 						<i class="ion ion-bag"></i>
 					</div>
-					<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+					<a href="{{ asset('admin/orders') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 				</div>
 			</div>
 			<!-- ./col -->
@@ -44,8 +48,7 @@
 				<!-- small box -->
 				<div class="small-box bg-success">
 					<div class="inner">
-						<h3>53<sup style="font-size: 20px">%</sup></h3>
-
+						<h3>{{round((DB::table('comments')->count() / DB::table('customers')->count()) * 100)}}<sup style="font-size: 20px">%</sup></h3>
 						<p>Rate</p>
 					</div>
 					<div class="icon">
@@ -61,12 +64,12 @@
 					<div class="inner">
 						<h3>{{DB::table('customers')->count()}}</h3>
 
-						<p>User Registrations</p>
+						<p>Customer Registrations</p>
 					</div>
 					<div class="icon">
 						<i class="ion ion-person-add"></i>
 					</div>
-					<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+					<a href="{{ asset('admin/customers') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 				</div>
 			</div>
 			<!-- ./col -->
@@ -80,7 +83,7 @@
 					<div class="icon">
 						<i class="ion ion-pie-graph"></i>
 					</div>
-					<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+					<a href="{{ asset('admin/orders?totalPrice=0&statusOrder=6') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 				</div>
 			</div>
 			<!-- ./col -->

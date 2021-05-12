@@ -7,6 +7,7 @@ use App\Http\Requests\CategoryRequest;
 use App\Models\Categories;
 use Illuminate\Http\Request;
 use App\Repositories\CategoryEloquentRepository;
+use WindowsAzure\Common\Internal\Atom\Category;
 
 class CategoryController extends Controller
 {
@@ -24,7 +25,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $paginate = 10;
         $categories = $this->categories->getAll();
+        $categories = Categories::paginate($paginate);
         return view('admin.categories.index', array('categories' => $categories));
     }
     /**
@@ -46,11 +49,9 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
         $data = $request->all();
-        $result = $this->categories->create($data);
-        if ($result) {
-            return redirect()->route('categories.index');
-        }
-        return redirect()->route('categories.create');
+       $this->categories->create($data);
+        return response()->json('ok');
+       
     }
 
 
@@ -88,7 +89,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $categories = $this->categories->delete($id);
-        return redirect()->route('categories.index');
+        $this->categories->delete($id);
+        // return redirect()->route('categories.index');
+        return response()->json('ok');
+        // return dd($id);  
     }
 }

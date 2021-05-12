@@ -4,9 +4,9 @@
     <div class="my-account-section d-flex">
         <div class="my-account-section__header d-flex">
             <div class="my-account-section__header-left">
-                <div class="my-account-section__header-title">Đổi số điện thoại</div>
+                <div class="my-account-section__header-title">{{ __('content.Change phone number')}}</div>
                 <div class="my-account-section__header-subtitle">
-                    Vui lòng nhập số điện thoại mới.
+                    {{ __('content.Please input new phone number')}}.
                 </div>
             </div>
         </div>
@@ -15,7 +15,7 @@
                 <div class="input-with-label">
                     <div class="input-with-label__wrapper">
                         <div class="input-with-label__label">
-                            <label>Số điện thoại</label>
+                            <label>{{ __('content.Phone number')}}</label>
                         </div>
                         <div class="input-with-label__content">
                             <div class="my-account__inline-container">
@@ -35,7 +35,7 @@
                     <div class="input-with-label">
                         <div class="input-with-label__wrapper">
                             <div class="input-with-label__label">
-                                <label>Số điện thoại mới</label>
+                                <label>{{ __('content.New phone number')}}</label>
                             </div>
                             <div class="input-with-label__content">
                                 <div class="input-with-validator-wrapper">
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                     <div class="my-account-page__submit">
-                        <button type="submit" class="btn btn-primary btn--m btn--inline" aria-disabled="false">Lưu</button>
+                        <button type="submit" class="btn btn-primary btn--m btn--inline" aria-disabled="false">{{ __('content.Save')}}</button>
                     </div>
                 </form>
             </div>

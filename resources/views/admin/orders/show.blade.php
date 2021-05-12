@@ -31,6 +31,7 @@
                         <h3 class="card-title">Order for {{ $customers->name }}</h3>
                     </div>
                     <!-- /.card-header -->
+                    @if(count($orders) != 0)
                     <div class="card-body">
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
@@ -60,7 +61,6 @@
                                     <td>
                                         <div class="btn-group btn-group-sm">
                                             <a href="{{ route('orderdetails.show', $order->id) }}" class="btn btn-info"><i class="fas fa-info"></i></a>
-                                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -80,7 +80,20 @@
                                 </tr>
                             </tfoot>
                         </table>
+                        <div id="pagination">
+                            {{$orders->links()}}
+                        </div>
                     </div>
+                    @else
+                    <div class="error-page">
+                            <div class="error-content">
+                                <div class="wrapper">
+                                    <h3><i class="fas fa-exclamation-triangle text-warning"></i>{{ __('Oops! Not found.')}}</h3>
+                                </div>
+                            </div>
+                            <!-- /.error-content -->
+                        </div>
+                    @endif
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->

@@ -34,16 +34,16 @@ class UsersRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Không được để trống',
-            'name.max' => 'Tên không được quá 30 kí tự',
-            'password.required' => 'Mật khẩu không được để trống',
-            'password.max' => 'Mật khẩu tối đa 10 kí tự',
-            'password.min' => 'Mật khẩu ít nhất là 5 kí tự',
-            'rePassword.required' => 'Mật khẩu không được để trống',
-            'rePassword.same' => 'Mật khẩu nhập lại không khớp',
-            'email.required' => 'Email không được để trống',
-            'email.email' => 'Sai định dạng, phải là ...@example.com',
-            'email.unique' => 'Email đã tồn tại, vui lòng nhập 1 email khác',
+            'name.required' => 'The name is required',
+            'name.max' => 'The name is no more than 30 characters',
+            'password.required' => 'The password is required',
+            'password.max' => 'The password is no more than 10 characters',
+            'password.min' => 'The password minimum required is 5 characters',
+            'rePassword.required' => 'The password is required',
+            'rePassword.same' => 'The password is not match',
+            'email.required' => 'The email is required',
+            'email.email' => 'Invalid format, it must be ...@example.com',
+            'email.unique' => 'Email already exists, please enter another email',
         ];
     }
 }

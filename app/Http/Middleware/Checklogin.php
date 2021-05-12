@@ -19,7 +19,11 @@ class Checklogin
         if (Auth::guard('customer')->check()) {
             return $next($request);
         } else {
-            return redirect('/')->with('warning','Vui lòng đăng nhập để tiếp tục!.');
+            if (app()->getLocale() == 'en') {
+                return redirect('/')->with('warning','Please login to continue!');
+            }else{
+                return redirect('/')->with('warning','Vui lòng đăng nhập để tiếp tục!');    
+            }
         }
         return $next($request);
     }

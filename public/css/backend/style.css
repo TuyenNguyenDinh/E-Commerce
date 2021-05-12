@@ -104,6 +104,11 @@
     z-index: 10;
 }
 
+.pagination {
+    padding-top: 20px;
+    justify-content: center;
+}
+
 .products-slick-nav_left .slick-prev:before,
 .products-slick-nav .slick-next:before {
     font-size: 14px;

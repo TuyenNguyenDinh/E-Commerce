@@ -83,12 +83,12 @@
                             @if( app()->getLocale() == 'en')
                             <a class="nav-link dropdown-toggle" href="" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="flag-icon flag-icon-us"> </span> ENG</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown09">
-                                <a class="dropdown-item" href="{!! route('user.change-language', ['vn']) !!}"><span class="flag-icon flag-icon-vn"> </span> Vietnam</a>
+                                <a class="dropdown-item" href="{{ route('user.change-language', ['vn']) }}"><span class="flag-icon flag-icon-vn"> </span> Vietnam</a>
                             </div>
                             @else
                             <a class="nav-link dropdown-toggle" href="" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="flag-icon flag-icon-vn"> </span> VN</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown09">
-                                <a class="dropdown-item" href="{!! route('user.change-language', ['en']) !!}"><span class="flag-icon flag-icon-us"> </span> English</a>
+                                <a class="dropdown-item" href="{{ route('user.change-language', ['en']) }}"><span class="flag-icon flag-icon-us"> </span> English</a>
                             </div>
                             @endif
                         </li>
@@ -130,7 +130,7 @@
                                                     <i class="fab fa-facebook"></i>
                                                 </button>
                                             </a>
-                                            
+
                                             </di>
                                         </div>
                                         <div class="modal-footer d-flex justify-content-center">
@@ -244,6 +244,7 @@
 
             </div>
         </nav>
+        <button id="backtotop" title="Go to top" class="btn" style="display: block;"><i class="fa fa-arrow-up"></i></button>
         @yield('main')
         <footer id="footer">
             <div class="section">
@@ -369,9 +370,10 @@
                             </ul>
                             <span class="copyright">
                                 Copyright@
+                                <span id="year"></span>
                                 <script type="text/javascript" async src="https://www.google-analytics.com/analytics.js"></script>
                                 <script>
-                                    // document.write(new Date().getFullYear());
+                                    document.getElementById('year').append(new Date().getFullYear());
                                 </script>
                                 All rights reserved | This template is made with
                                 <i class="far fa-heart"></i>
@@ -380,7 +382,6 @@
                             </span>
                         </div>
                     </div>
-
                 </div>
             </div>
         </footer>
@@ -398,6 +399,24 @@
     <script src="{{asset('js/frontend/frontend.js')}}"></script>
     @include('sweetalert::alert')
     <script>
+        $(window).scroll(function() {
+            if ($(this).scrollTop()) {
+                $('#backtotop').fadeIn();
+            } else {
+                $('#backtotop').fadeOut();
+            }
+        });
+
+        $("#backtotop").click(function() {
+            //1 second of animation time
+            //html works for FFX but not Chrome
+            //body works for Chrome but not FFX
+            //This strange selector seems to work universally
+            $("html, body").animate({
+                scrollTop: 0
+            }, 1000);
+        });
+
         $(function() {
             $(document).ready(function() {
                 $('#province').on('change', function() {

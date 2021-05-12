@@ -97,7 +97,7 @@
     })
 
     function deleteCart(rowId) {
-        if("{{app()->getLocale() == 'en'}}"){
+        if ("{{app()->getLocale() == 'en'}}") {
             swal({
                     title: "Delete?",
                     text: "Are you sure delete this products?",
@@ -105,7 +105,31 @@
                     buttons: true,
                     dangerMode: true,
                 })
-        }else{
+                .then((willDelete) => {
+                    if (willDelete) {
+                        var url = "{{asset('cart/delete')}}" + '/' + rowId;
+                        $.ajax({
+                            method: 'get',
+                            url: url,
+                            data: {
+                                rowId: rowId
+                            },
+                            success: function(response) {
+                                swal({
+                                    text: "Delete successfully, page will redirect after 1s",
+                                    icon: "success",
+                                    buttons: false,
+                                })
+                                setTimeout(function() {
+                                    $(location).attr("href", "{{asset('cart/show')}}");
+                                }, 1000)
+                            }
+                        });
+                    } else {
+                        $(location).attr("href", "{{asset('cart/show')}}");
+                    }
+                });
+        } else {
             swal({
                     title: "Xóa?",
                     text: "Bạn có muốn xóa sản phẩm này?",
@@ -113,38 +137,31 @@
                     buttons: true,
                     dangerMode: true,
                 })
-        }
-            .then((willDelete) => {
-                if (willDelete) {
-                    var url = "{{asset('cart/delete')}}" + '/' + rowId;
-                    $.ajax({
-                        method: 'get',
-                        url: url,
-                        data: {
-                            rowId: rowId
-                        },
-                        success: function(response) {
-                            if("{{app()->getLocale() == 'en'}}"){
+                .then((willDelete) => {
+                    if (willDelete) {
+                        var url = "{{asset('cart/delete')}}" + '/' + rowId;
+                        $.ajax({
+                            method: 'get',
+                            url: url,
+                            data: {
+                                rowId: rowId
+                            },
+                            success: function(response) {
                                 swal({
-                                    text: "Delete successfully, page will redirect after 2s",
+                                    text: "Xóa thành công, Trang sẽ chuyển hướng sau 1s",
                                     icon: "success",
                                     buttons: false,
                                 })
-                            }else{
-                                swal({
-                                text: "Xóa thành công, Trang sẽ chuyển hướng sau 2s",
-                                icon: "success",
-                                buttons: false,
-                            })
+                                setTimeout(function() {
+                                    $(location).attr("href", "{{asset('cart/show')}}");
+                                }, 1000)
                             }
-                            setTimeout(function() {
-                                $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/cart/show");
-                            },2000)
-                        }
-                    });
-                }else{
-                    $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/cart/show");
-                }
-            });
+                        });
+                    } else {
+                        $(location).attr("href", "{{asset('cart/show')}}");
+                    }
+                });
+        }
+
     }
 </script>

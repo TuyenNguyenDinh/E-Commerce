@@ -32,16 +32,22 @@
                                             <div class="col-auto mt-0 addrs-respon">
                                                 <p><b>{{ $cus->name}}</b></p>
                                                 @if(is_null($cus->phone))
-                                                <p>We cannot find your phone number. <a href="{{asset('user/account/profile')}}">Add now</a></p>
+                                                <p>{{ __('content.We cannot find your phone number')}}. <a href="{{asset('user/account/profile')}}">{{ __('content.Add now')}}</a></p>
                                                 @else
                                                 <p>{{$cus->phone}}</p>
                                                 @endif
+                                                <!--  -->
+                                                @if(is_null($cus->address))
+                                                <p>{{ __('content.We cannot find your address')}}. <a href="{{asset('user/account/profile')}}">{{ __('content.Add now')}}</a></p>
+                                                @else
                                                 <select class="delivery_address" name="delivery_address" id="delivery_address">
                                                     <option value="{{$cus->province->id}}||{{$cus->address}}">{{$cus->address}}</option>
                                                     @foreach($ship_addrs as $addrs)
                                                     <option value="{{$addrs->province->id}}||{{$addrs->address_detail}}">{{$addrs->address_detail}}</option>
                                                     @endforeach
                                                 </select>
+                                                @endif
+                                                
                                             </div>
                                             <div class="col-auto mt-0" style="padding-top: 23px;">
                                                 <a data-toggle="modal" data-target="#addAddress" style="cursor:pointer">
@@ -67,32 +73,7 @@
                                                 <textarea name="notes" id="notes" cols="50" rows="2" style="height: 50px; resize: none;  width: calc(100% - 50px);"></textarea>
                                             </div>
                                         </div>
-                                        <!-- <div class="row mt-4">
-                                        <div class="col">
-                                            <p class="text-muted mb-2">SHIPPING UNIT</p>
-                                            <hr class="mt-0">
-                                            <div class="shipping-unit_wrapper d-flex">
-                                                <div class="d-flex align-items-baseline flex-column">
-                                                    <div class="shipping_unit-name-group">
-                                                        <input type="checkbox" name="shipping-unit-name" id="shipping-unit-name">
-                                                        <label for="shipping-unit-name">
-                                                            <div class="shipping-unit_wrapper-name">
-                                                                <h5>Giao hàng tiết kiệm</h5>
-                                                            </div>
-                                                        </label>
-                                                    </div>
-                                                    <div class="shipping_unit-name-group">
-                                                        <input type="checkbox" name="shipping-unit-name" id="shipping-unit-name">
-                                                        <label for="shipping-unit-name">
-                                                            <div class="shipping-unit_wrapper-name">
-                                                                <h5>Giao hàng tiết kiệm</h5>
-                                                            </div>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> -->
+
                                     </div>
                                 </div>
                             </div>
@@ -225,7 +206,6 @@
     })
 
 
-
     $(document).ready(function() {
         $('#provinceAdd').on('change', function() {
             let id = $(this).val();
@@ -252,12 +232,12 @@
                 url: "{{asset('cart/getFeeFromProvince')}}" + '/' + id,
                 success: function(response) {
                     var response = JSON.parse(response);
-                    console.log(response);
                     response.forEach(element => {
-                        $('#fee_fetch').number(true, 2).append(`<option value="${element['transport_fee']}"> ${number_format(element['transport_fee'],0,',','.')}  đ</option>`);
+                        var nf = Intl.NumberFormat();
+                        $('#fee_fetch').append(`<option value="${element['transport_fee']}" selected> ${nf.format(element['transport_fee'])}  đ</option>`);
                         var sub = <?php echo Cart::subtotal(0, "", "") ?>;
-                        var total = (element['transport_fee']) + sub;
-                        $('.total_fetch').number(true, 2).append(`<option value="${total}"> ${number_format(total,0,',','.')} đ</option>`);
+                        var totalfetch = sub + (element['transport_fee']);
+                        $('.total_fetch').html(`<option value=" ${totalfetch}" selected> ${nf.format(totalfetch)} đ</option>`);
 
                     });
                 }
@@ -277,35 +257,35 @@
             url: route,
             data: form_data.serialize(),
             success: function(response) {
-                if("{{app()->getLocale() == 'en'}}"){
+                if ("{{app()->getLocale() == 'en'}}") {
                     swal({
                         closeOnClickOutside: false,
-                        icon: "Success",
+                        icon: "success",
                         title: 'Add address successfully!',
                         showSpinner: true,
-                });
-                }else{
+                    });
+                } else {
                     swal({
                         closeOnClickOutside: false,
-                        icon: "Success",
+                        icon: "success",
                         title: 'Thêm địa chỉ thành công!',
                         showSpinner: true,
-                });
+                    });
                 }
                 window.location.reload();
             },
             error: function(response) {
-                if("{{app()->getLocale() == 'en'}}"){
+                if ("{{app()->getLocale() == 'en'}}") {
                     swal({
                         closeOnClickOutside: false,
-                        icon: "Warning",
+                        icon: "warning",
                         title: 'Error, please try again',
                         showSpinner: true
                     });
-                }else{
+                } else {
                     swal({
                         closeOnClickOutside: false,
-                        icon: "Warning",
+                        icon: "warning",
                         title: 'Lỗi, vui lòng thử lại',
                         showSpinner: true
                     });
@@ -316,11 +296,15 @@
     });
     if ('{{is_null($cus->phone)}}') {
         $('#push_order').submit(function(event) {
-            
+
         });
     } else {
         $('#push_order').submit(function(event) {
-            swal({title: 'Please wating...'});
+            swal({
+                title: 'Please wating...',
+                closeOnClickOutside:false,
+                
+            });
             var route = $('#push_order').data('route');
             var form_data = $(this);
             $.ajax({
@@ -331,21 +315,23 @@
                 cache: false,
                 data: new FormData(this),
                 success: function(response) {
-                    if("{{app()->getLocale() == 'en'}}"){
+                    if ("{{app()->getLocale() == 'en'}}") {
                         swal({
                             icon: "success",
                             title: 'Success, thanks for shopping! Page will redirect after 2s',
                             showSpinner: true
                         });
-                    }else{
+                    } else {
                         swal({
                             icon: "success",
                             title: 'Đặt hàng thành công! Trang sẽ chuyển hướng sau 2s',
                             showSpinner: true
-                    });
+                        });
                     }
-                    setTimeout(function(){$(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/")},2000)
-                    
+                    setTimeout(function() {
+                        $(location).attr("href", "{{asset('/')}}")
+                    }, 2000)
+
                 },
                 error: function(response) {
                     alert(response)

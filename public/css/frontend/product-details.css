@@ -55,6 +55,14 @@
             }
             /* Product-details */
             
+            .slick-slide {
+                opacity: 0.4;
+            }
+            
+            .slick-center {
+                opacity: unset;
+            }
+            
             .product-img_slide .slick-slide {
                 max-width: 147px;
             }
@@ -214,6 +222,11 @@
                 border: 2px solid #D10024;
             }
             
+            .disable-btn {
+                background: #D10024!important;
+                border: 2px solid #D10024!important;
+            }
+            
             .product_details,
             .product_description,
             .product_benefits,
@@ -346,6 +359,10 @@
             }
             
             .username_acc {
+                flex: 1;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
                 font-size: 20px;
                 font-weight: 600;
             }
