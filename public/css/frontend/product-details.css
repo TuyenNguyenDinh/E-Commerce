@@ -55,6 +55,14 @@
             }
             /* Product-details */
             
+            .slick-slide {
+                opacity: 0.4;
+            }
+            
+            .slick-center {
+                opacity: unset;
+            }
+            
             .product-img_slide .slick-slide {
                 max-width: 147px;
             }
@@ -351,6 +359,10 @@
             }
             
             .username_acc {
+                flex: 1;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
                 font-size: 20px;
                 font-weight: 600;
             }

@@ -232,12 +232,12 @@
                 url: "{{asset('cart/getFeeFromProvince')}}" + '/' + id,
                 success: function(response) {
                     var response = JSON.parse(response);
-                    console.log(response);
                     response.forEach(element => {
-                        $('#fee_fetch').number(true, 2).append(`<option value="${element['transport_fee']}"> ${number_format(element['transport_fee'],0,',','.')}  đ</option>`);
+                        var nf = Intl.NumberFormat();
+                        $('#fee_fetch').append(`<option value="${element['transport_fee']}" selected> ${nf.format(element['transport_fee'])}  đ</option>`);
                         var sub = <?php echo Cart::subtotal(0, "", "") ?>;
-                        var total = (element['transport_fee']) + sub;
-                        $('.total_fetch').number(true, 2).append(`<option value="${total}"> ${number_format(total,0,',','.')} đ</option>`);
+                        var totalfetch = sub + (element['transport_fee']);
+                        $('.total_fetch').html(`<option value=" ${totalfetch}" selected> ${nf.format(totalfetch)} đ</option>`);
 
                     });
                 }
@@ -301,7 +301,9 @@
     } else {
         $('#push_order').submit(function(event) {
             swal({
-                title: 'Please wating...'
+                title: 'Please wating...',
+                closeOnClickOutside:false,
+                
             });
             var route = $('#push_order').data('route');
             var form_data = $(this);
@@ -327,7 +329,7 @@
                         });
                     }
                     setTimeout(function() {
-                        $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/")
+                        $(location).attr("href", "{{asset('/')}}")
                     }, 2000)
 
                 },

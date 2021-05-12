@@ -23,7 +23,7 @@ class BannerController extends Controller
 
     public function uploadMultiple(Request $request)
     {
-      
+
         if ($request->hasFile('file')) {
             // Upload path
             $destinationPath = 'upload/';
@@ -45,11 +45,8 @@ class BannerController extends Controller
                 $banner = new Banner();
                 $banner->image = $fileName;
                 $banner->save();
-
             }
         }
-
- 
     }
 
     /**
@@ -108,28 +105,27 @@ class BannerController extends Controller
         $image = $this->doUpload($request);
         $id = Banner::find($id)->update(['image' => $image]);
         return response()->json('OK');
-
     }
 
 
-    public function doUpload(BannerRequest $request){
+    public function doUpload(BannerRequest $request)
+    {
 
         $fileName = "";
         //Kiểm tra file
         if ($request->file('image')->isValid()) {
-			// File này có thực, bắt đầu đổi tên và move
-			$fileExtension = $request->file('image')->getClientOriginalExtension(); // Lấy . của file
-			
-			// Filename cực shock để khỏi bị trùng
-			$fileName = time() . "_" . rand(0,9999999) . "_" . md5(rand(0,9999999)) . "." . $fileExtension;
-						
-			// Thư mục upload
-			$uploadPath = public_path('/upload'); // Thư mục upload
-			
-			// Bắt đầu chuyển file vào thư mục
-			$request->file('image')->move($uploadPath, $fileName);
-		}
-		else {
+            // File này có thực, bắt đầu đổi tên và move
+            $fileExtension = $request->file('image')->getClientOriginalExtension(); // Lấy . của file
+
+            // Filename cực shock để khỏi bị trùng
+            $fileName = time() . "_" . rand(0, 9999999) . "_" . md5(rand(0, 9999999)) . "." . $fileExtension;
+
+            // Thư mục upload
+            $uploadPath = public_path('/upload'); // Thư mục upload
+
+            // Bắt đầu chuyển file vào thư mục
+            $request->file('image')->move($uploadPath, $fileName);
+        } else {
         }
         return $fileName;
     }
@@ -142,7 +138,10 @@ class BannerController extends Controller
      */
     public function destroy($id)
     {
-        Banner::find($id)->delete();
+        $banner = Banner::find($id);
+        if (file_exists('upload/' . $banner->image))
+            unlink('upload/' . $banner->image);
+        $banner->delete();
         return response()->json('OK');
     }
 }

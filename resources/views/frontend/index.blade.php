@@ -108,21 +108,21 @@
                                             </div>
                                         </div>
                                         <div class="add-to-cart">
-                                        @if($product->quantity != 0)
-                                            <a href="{{asset('cart/add/'.$product->id)}}">
+                                            @if($product->quantity != 0)
+                                            <a href="{{asset('cart/add/'.$product->id.'/1')}}">
                                                 <button class="add-to-cart-btn">
                                                     <i class="far fa-shopping-cart">
                                                     </i>
                                                     {{ __('content.add to cart')}}
                                                 </button>
                                             </a>
-                                        @else
+                                            @else
                                             <button class="add-to-cart-btn">
                                                 <i class="far fa-shopping-cart">
                                                 </i>
                                                 {{ __('content.out of stock')}}
                                             </button>
-                                        @endif
+                                            @endif
                                         </div>
                                     </div>
                                     @endforeach
@@ -137,13 +137,13 @@
 </div>
 <div id="hot-deal" class="section">
     <div class="container">
-                <div class="hot-deal">
-                    @foreach($banner as $img)                   
-                    <img src="{{asset('upload/'.$img->image)}}" alt="">
-                    @endforeach
-                </div>
+        <div class="hot-deal">
+            @foreach($banner as $img)
+            <img src="{{asset('upload/'.$img->image)}}" alt="">
+            @endforeach
         </div>
     </div>
+</div>
 </div>
 <div class="section">
     <div class="container">
@@ -156,7 +156,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="col-md-12">
                 <div class="container">
@@ -264,11 +263,20 @@
 </div>
 <div class="partent-logo">
     <div class="container">
+        <div class="col-md-12">
+            <div class="section-title">
+                <h3 class="title">{{ __('content.Brands')}}</h3>
+                <div class="section-nav">
+                    <div class="section-tab-nav tab-nav">
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="logo-slick">
             @foreach($brands_image as $brand)
             <div>
                 <a href="{{asset('brands/'.$brand->id.'.html')}}">
-                    <img src="{{asset('upload/'.  $brand->image)}}" alt=""></a>
+                    <img src="{{asset('upload/'.  $brand->image)}}" alt="Click details"></a>
             </div>
             @endforeach
         </div>

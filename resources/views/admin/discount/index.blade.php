@@ -71,6 +71,9 @@
                                 </tr>
                             </tfoot>
                         </table>
+                        <div id="pagination">
+                            {{$products->links()}}
+                        </div>
                     </div>
                     <!-- /.card-body -->
                 </div>

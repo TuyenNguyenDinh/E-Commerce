@@ -49,11 +49,9 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
         $data = $request->all();
-        $result = $this->categories->create($data);
-        if ($result) {
-            return redirect()->route('categories.index');
-        }
-        return redirect()->route('categories.create');
+       $this->categories->create($data);
+        return response()->json('ok');
+       
     }
 
 
@@ -91,7 +89,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $categories = $this->categories->delete($id);
-        return redirect()->route('categories.index');
+        $this->categories->delete($id);
+        // return redirect()->route('categories.index');
+        return response()->json('ok');
+        // return dd($id);  
     }
 }

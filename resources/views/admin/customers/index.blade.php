@@ -55,7 +55,7 @@
                                     <td>{{ $customer->address}}</td>
                                     <td class="text-center py-0 align-middle">
                                         <div class="btn-group btn-group-sm">
-                                            <a href="{{ route('orders.edit', $customer->id) }}" class="btn btn-info"><i class="fas fa-info"></i></a>
+                                            <a href="{{ route('orders.show', $customer->id) }}" class="btn btn-info"><i class="fas fa-info"></i></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -73,6 +73,9 @@
                                 </tr>
                             </tfoot>
                         </table>
+                        <div id="pagination">
+                            {{$customers->links()}}
+                        </div>
                     </div>
                     <!-- /.card-body -->
                 </div>

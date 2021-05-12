@@ -183,7 +183,7 @@
 					title: 'Success, create sussecfully!',
 					showSpinner: true
 				});
-				$(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/admin/products");
+				$(location).attr("href", "{{asset('admin/products')}}");
 			},
 			error: function(response) {
 				$(".print-error-msg").find("ul").html('');

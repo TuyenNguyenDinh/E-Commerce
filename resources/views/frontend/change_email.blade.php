@@ -4,9 +4,9 @@
     <div class="my-account-section d-flex">
         <div class="my-account-section__header d-flex">
             <div class="my-account-section__header-left">
-                <div class="my-account-section__header-title">Đổi Hộp Thư</div>
+                <div class="my-account-section__header-title">{{ __('content.Change email')}}</div>
                 <div class="my-account-section__header-subtitle">
-                    Vui lòng nhập địa chỉ email mới. Thư xác nhận sẽ được gửi đến hộp thư của bạn
+                    {{ __('content.Please input new email')}}.
                 </div>
             </div>
         </div>
@@ -16,7 +16,7 @@
                 <div class="input-with-label">
                     <div class="input-with-label__wrapper">
                         <div class="input-with-label__label">
-                            <label>Địa Chỉ Email</label>
+                            <label>{{ __('content.Email address')}}</label>
                         </div>
                         <div class="input-with-label__content">
                             <div class="my-account__inline-container">
@@ -32,7 +32,7 @@
                     <div class="input-with-label">
                         <div class="input-with-label__wrapper">
                             <div class="input-with-label__label">
-                                <label>Địa Chỉ Hộp Thư Mới</label>
+                                <label>{{ __('content.New email address')}}</label>
                             </div>
                             <div class="input-with-label__content">
                                 <div class="input-with-validator-wrapper">
@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <div class="my-account-page__submit">
-                    <button type="submit" class="btn btn-primary btn--m btn--inline" aria-disabled="false">Lưu</button>
+                    <button type="submit" class="btn btn-primary btn--m btn--inline" aria-disabled="false">{{ __('content.Save')}}</button>
                     </div>
                 </form>
             </div>

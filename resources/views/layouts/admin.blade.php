@@ -112,7 +112,6 @@
                 <nav class="mt-2">
 
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
                         <li class="nav-item">
                             <a href="{{ route('admin') }}" class="nav-link {{ Request::is('admin') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -283,6 +282,16 @@
                             </ul>
                         </li>
 
+                        <li class="nav-item">
+                            <a href="{{ route('rated.index') }}" class="nav-link {{ Request::is('admin/rated') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Rated
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                        </li>
+
                         <li class="nav-item {{Request::is('admin/banner') ? 'menu-open' : ''}}">
                             <a href="#" class="nav-link {{Request::is('admin/banner') ? 'active' : ''}}">
                                 <i class="nav-icon fas fa-external-link-square-alt"></i>
@@ -346,22 +355,9 @@
     <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="{{ asset('js/frontend/showmore/jquery.show-more.js') }}"></script>
-    <!-- <script type="text/javascript">
-        var count = "{{DB::table('products')->count()}}";
-        console.log(count);
-        for (var i = 1; i <= count; i++) {
-            $('#description_content_' + i).showMore({
-                minheight: 150,
-                animationspeed: 250,
-                buttontxtmore: "read more",
-                buttontxtless: "read less",
-
-            })
-        }
-    </script> -->
+    <!--  -->
     <script src="http://code.jquery.com/jquery-3.4.1.js"></script>
-
-
+    <!--  -->
     <script src="{{asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
@@ -409,8 +405,7 @@
     <script type="text/javascript" async src="https://www.google-analytics.com/analytics.js"></script>
     <script>
         document.getElementById('year').append(new Date().getFullYear());
-    </script>
-    <script>
+
         function readURL(input, idimage, uploadwrp, content) {
             var filePath = input.value;
             var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.svg)$/i;

@@ -111,8 +111,8 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+
+    public function show($id){
         $paginate = 10;
         $data['customers'] = $this->customers->find($id);
         $data['orders'] = Orders::where('id_customer', $id)->paginate($paginate);

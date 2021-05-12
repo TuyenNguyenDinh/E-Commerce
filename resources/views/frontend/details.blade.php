@@ -374,30 +374,12 @@
     $(function() {
         $(document).ready(function() {
             $('#bt-add-cart').on('click', function() {
-                if ("Auth::guard('customer')->check()") {
-                    if ("{{app()->getLocale() == 'en'}}") {
-                        swal({
-                            closeOnClickOutside: false,
-                            icon: "warning",
-                            title: 'Please login to continue!',
-                            showSpinner: true
-                        })
-                    } else {
-                        swal({
-                            closeOnClickOutside: false,
-                            icon: "warning",
-                            title: 'Vui lòng đăng nhập để tiếp tục!',
-                            showSpinner: true
-                        })
-                    }
-                    setTimeout(function() {
-                        $(location).attr('href', 'http://localhost/ecommerce/E-Commerce/public/')
-                    }, 1000)
-                } else {
+                if ("{{Auth::guard('customer')->check()}}") {
                     var id = "{{$items->id}}";
+                    var qty = $('#qty_number').val();
                     $.ajax({
                         type: 'GET',
-                        url: "{{asset('cart/add')}}/" + id,
+                        url: "{{asset('cart/add')}}/" + id + '/' + qty,
                         success: function(response) {
                             if ("{{app()->getLocale() == 'en'}}") {
                                 swal({
@@ -436,13 +418,7 @@
                             };
                         }
                     })
-                }
-            })
-        });
-
-        $(document).ready(function() {
-            $('#bt-purchase').on('click', function() {
-                if ("Auth::guard('customer')->check()") {
+                } else {
                     if ("{{app()->getLocale() == 'en'}}") {
                         swal({
                             closeOnClickOutside: false,
@@ -459,13 +435,18 @@
                         })
                     }
                     setTimeout(function() {
-                        $(location).attr('href', 'http://localhost/ecommerce/E-Commerce/public/')
+                        $(location).attr('href', "{{asset('/')}}")
                     }, 1000)
-                } else {
+                }
+            })
+            // 
+            $('#bt-purchase').on('click', function() {
+                if ("{{Auth::guard('customer')->check()}}") {
                     var id = "{{$items->id}}"
+                    var qty = $('#qty_number').val();
                     $.ajax({
                         type: 'GET',
-                        url: "{{asset('cart/purchase')}}/" + id,
+                        url: "{{asset('cart/purchase')}}/" + id + '/' + qty,
                         success: function(response) {
                             if ("{{app()->getLocale() == 'en'}}") {
                                 swal({
@@ -491,30 +472,49 @@
                             if ("{{app()->getLocale() == 'en'}}") {
                                 swal({
                                     closeOnClickOutside: false,
-                                    icon: "Warning",
+                                    icon: "warning",
                                     title: 'Error, please check again!',
                                     showSpinner: true
                                 });
                             } else {
                                 swal({
                                     closeOnClickOutside: false,
-                                    icon: "Warning",
+                                    icon: "warning",
                                     title: 'Lỗi, vui lòng kiểm tra lại',
                                     showSpinner: true
                                 });
                             }
                         }
                     })
+                } else {
+                    if ("{{app()->getLocale() == 'en'}}") {
+                        swal({
+                            closeOnClickOutside: false,
+                            icon: "warning",
+                            title: 'Please login to continue!',
+                            showSpinner: true
+                        })
+                    } else {
+                        swal({
+                            closeOnClickOutside: false,
+                            icon: "warning",
+                            title: 'Vui lòng đăng nhập để tiếp tục!',
+                            showSpinner: true
+                        })
+                    }
+                    setTimeout(function() {
+                        $(location).attr('href', "{{asset('/')}}")
+                    }, 1000)
                 }
             })
-        })
-
-
-        $(document).ready(function() {
+            // 
             $('#province').on('change', function() {
                 let id = $(this).val();
                 $('#district').empty();
                 $('#district').append(`<option value="0" disabled selected>Processing...</option>`);
+                // 
+                $('#fee_province').empty();
+                $('#fee_province').append(`<option value="0" disabled selected>Processing...</option>`);
                 $.ajax({
                     type: 'GET',
                     url: "{{asset('GetSubCatAgainstMainCatEdit')}}/" + id,
@@ -526,14 +526,6 @@
                         });
                     }
                 });
-            });
-        });
-
-        $(document).ready(function() {
-            $('#province').on('change', function() {
-                let id = $(this).val();
-                $('#fee_province').empty();
-                $('#fee_province').append(`<option value="0" disabled selected>Processing...</option>`);
                 $.ajax({
                     type: 'GET',
                     url: "{{asset('getFeeProvince')}}/" + id,
@@ -548,6 +540,7 @@
                 });
             });
         });
+
     })
 </script>
 

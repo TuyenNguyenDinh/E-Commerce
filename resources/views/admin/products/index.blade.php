@@ -199,7 +199,7 @@ $rangePriceAdmin = request()->get('rangePriceAdmin');
                                 showSpinner: true
                             });
                             setTimeout(function() {
-                                $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/admin/products");
+                                $(location).attr("href", "{{asset('admin/products')}}");
                             }, 2000)
                         },
                         error: function(response) {

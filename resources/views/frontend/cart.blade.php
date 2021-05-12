@@ -128,12 +128,12 @@
                                 buttons: false,
                             })
                             setTimeout(function() {
-                                $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/cart/show");
+                                $(location).attr("href", "{{asset('cart/show')}}");
                             },1000)
                         }
                     });
                 }else{
-                    $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/cart/show");
+                    $(location).attr("href", "{{asset('cart/show')}}");
                 }
             });
         }else{
@@ -160,12 +160,12 @@
                                 buttons: false,
                             })
                             setTimeout(function() {
-                                $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/cart/show");
+                                $(location).attr("href", "{{asset('cart/show')}}");
                             },1000)
                         }
                     });
                 }else{
-                    $(location).attr("href", "http://localhost/ecommerce/E-Commerce/public/cart/show");
+                    $(location).attr("href", "{{asset('cart/show')}}");
                 }
             });
         }

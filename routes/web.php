@@ -73,7 +73,7 @@ Route::group(['middleware' => 'locale'], function () {
     });
 
     Route::group(['middleware' => 'checklogin','prefix' => 'cart'], function () {
-        Route::get('add/{id}', 'CartController@getAddCart');
+        Route::get('add/{id}/{qty}', 'CartController@getAddCart');
         Route::get('add_again/{id}','CustomerFrontendController@buyAgain')->name('buyAgain');
         Route::get('show', 'CartController@getShowCart')->name('cartshow');
         Route::get('delete/{id}', 'CartController@getDeleteCart')->name('deleteCart');
@@ -83,7 +83,7 @@ Route::group(['middleware' => 'locale'], function () {
         Route::post('checkout', 'PurchaseController@postPurchase')->name('purchase')->middleware('checkaddress.phone');
         Route::post('add-address', 'CartController@addAddress')->name('addAddress');
         Route::get('getFeeFromProvince/{id}', 'CartController@getFeeFromProvince');
-        Route::get('purchase/{id}','CartController@getAddCart')->middleware('checklogin');
+        Route::get('purchase/{id}/{qty}','CartController@getAddCart')->middleware('checklogin');
 
     });
 
@@ -105,6 +105,7 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admi
     Route::resource('orders', 'OrderController');
     Route::resource('orderdetails', 'OrderDetailController');
     Route::resource('attributes', 'AttributeController');
+    Route::resource('rated', 'RateController');
     Route::get('getAttrCategory/{id}', 'ProductController@getAttrCategory')->name('attrCate');
     Route::resource('banner','BannerController');
     Route::post('uploadMultiple','BannerController@uploadMultiple')->name('banner.uploadMultiple');
@@ -118,11 +119,11 @@ Route::prefix('admin')->group(function () {
         return view('admin.index');
     })->name('index');
     Route::resource('customers', 'CustomerController');
-    Route::resource('discount', 'DiscountController');
     Route::get('customers/{id}/orders', 'OrderController@getOrders');
     Route::resource('orders', 'OrderController');
     // Route::get('orders/{$id}/details', 'OrderDetailController@show');
     Route::resource('orderdetails', 'OrderDetailController');
+    Route::resource('rated', 'RateController');
 
 });
 

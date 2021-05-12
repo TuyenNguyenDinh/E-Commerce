@@ -37,7 +37,7 @@
                                     <th>User name</th>
                                     <th>Email</th>
                                     <th>Role</th>
-                                    <th>Tùy chọn</th>
+                                    <th>Options</th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -67,7 +67,7 @@
                                     </div>
                                     <div class="add-to-cart">
                                         @if($product_list->products->quantity != 0)
-                                        <a href="{{asset('cart/add/'.$product_list->products->id)}}">
+                                        <a href="{{asset('cart/add/'.$product_list->products->id.'/1')}}">
                                             <button class="add-to-cart-btn">
                                                 <i class="far fa-shopping-cart">
                                                 </i>

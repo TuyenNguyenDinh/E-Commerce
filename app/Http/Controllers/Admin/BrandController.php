@@ -90,6 +90,7 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
+        $this->brands->unlinkfile($id, 'image');
         $this->brands->delete($id);
         return response()->json("ok");
     }

@@ -141,7 +141,10 @@
 							</div>
 							<div class="form4">
 							</div>
-							<!--  -->
+							<div class="form-group">
+								<label>Description</label><br>
+								<textarea name="description" id="summernote" class="input100 @error('description') is-invalid @enderror"></textarea>
+							</div>
 							<div class="alert alert-danger print-error-msg" style="display:none">
 								<ul></ul>
 							</div>
